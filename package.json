@@ -1,0 +1,28 @@
+{
+  "name": "restaurant_sidechain",
+  "version": "1.0.0",
+  "description": "restaurant business using Lisk blockchain",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davilinfo/restaurant_sidechain.git"
+  },
+  "keywords": [
+    "sidechain",
+    "restaurant",
+    "Lisk",
+    "menu"
+  ],
+  "author": "Davi L Alves",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/davilinfo/restaurant_sidechain/issues"
+  },
+  "homepage": "https://github.com/davilinfo/restaurant_sidechain#readme",
+  "dependencies": {
+    "lisk-sdk": "^2.3.7"
+  }
+}
