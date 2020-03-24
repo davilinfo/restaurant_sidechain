@@ -3,6 +3,7 @@ const { Application, genesisBlockDevnet, configDevnet } = require ('lisk-sdk');
 
 configDevnet.app.label = 'restaurant-sidechain-app';
 configDevnet.components.storage.port = 5435;
+configDevnet.components.storage.password = 'lisk';
 configDevnet.components.storage.database = 'lisk_dev';
 configDevnet.components.storage.host = 'localhost'
 
