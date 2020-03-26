@@ -1,4 +1,5 @@
 const { Application, genesisBlockDevnet, configDevnet } = require ('lisk-sdk');
+const EntranceTransaction = require('./transactions/EntranceTransaction_1');
 
 
 configDevnet.app.label = 'restaurant-sidechain-app';
@@ -10,6 +11,8 @@ configDevnet.components.storage.host = 'localhost'
 configDevnet.app.genesisConfig.BLOCK_TIME = 5;
 
 const app = new Application(genesisBlockDevnet, configDevnet);
+
+app.registerTransaction(EntranceTransaction);
 
 app.run()
     .then(() => app.logger.info('App started...') )
