@@ -14,7 +14,7 @@ let txEntrance1 = new Entrance({
         description: '12 fresh oisters served in a boil',
     },
     amount: `${transactions.utils.convertLSKToBeddows('9')}`,
-    fee: EntranceTransaction_1.Fee(),
+    fee: `${transactions.utils.convertLSKToBeddows('0.5')}`,
     recipientId: '10881167371402274308L', //restaurant lisk address
     timestamp: getTimestamp()
 });
