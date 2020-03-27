@@ -46,14 +46,14 @@ class EntranceTransaction_1 extends BaseTransaction {
             );
         }
         
-        if (!this.asset.value || typeof this.asset.value !== 'number' || this.asset.value <= 0){
+        if (!this.amount || this.amount <= 0){
             errors.push(
                 new TransactionError(
                     'Invalid "value" defined on transaction',
                     this.id,
-                    '.asset.value',
-                    this.asset.value,
-                    'A string value no longer than 200 characters'
+                    '.amount',
+                    this.asset.amount,
+                    'A value bigger than 0'
                 )
             );
         }
@@ -62,7 +62,7 @@ class EntranceTransaction_1 extends BaseTransaction {
 
     applyAsset(store){            
         const sender = store.account.get(this.senderId);
-        const newObj = {...sender, asset: { name: this.asset.name, description: this.asset.description, value: this.asset.value }};
+        const newObj = {...sender, asset: { name: this.asset.name, description: this.asset.description }};
         store.account.set(sender.address, newObj);
         return [];
     }
