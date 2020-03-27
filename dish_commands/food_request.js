@@ -11,7 +11,7 @@ const getTimestamp = () => {
 let txEntrance1 = new Entrance({
     asset: {
         name: 'oisters',
-        description: '12 fresh oisters served in a boil',
+        description: '12 fresh oisters served in a plate',
     },
     amount: `${transactions.utils.convertLSKToBeddows('9')}`,
     fee: `${transactions.utils.convertLSKToBeddows('0.5')}`,
