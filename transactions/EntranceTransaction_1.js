@@ -46,13 +46,13 @@ class EntranceTransaction_1 extends BaseTransaction {
             );
         }
         
-        if (!this.asset.amount || this.asset.amount <= 0){
+        if (!this.amount || this.amount <= 0){
             errors.push(
                 new TransactionError(
                     'Invalid "value" defined on transaction',
                     this.id,
                     '.amount',
-                    this.asset.amount,
+                    this.amount,
                     'A value bigger than 0'
                 )
             );
