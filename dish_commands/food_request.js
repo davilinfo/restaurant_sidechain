@@ -12,9 +12,8 @@ let txEntrance1 = new Entrance({
     asset: {
         name: 'oysters',
         description: '12 fresh oysters served in a plate',
-        amount: `${transactions.utils.convertLSKToBeddows('90')}`,
+        amount: `${transactions.utils.convertLSKToBeddows('48')}`
     },
-    fee: `${transactions.utils.convertLSKToBeddows('12.8')}`,
     recipientId: '10881167371402274308L', //restaurant lisk address
     timestamp: getTimestamp()
 });
