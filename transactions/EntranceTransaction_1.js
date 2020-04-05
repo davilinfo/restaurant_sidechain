@@ -9,7 +9,7 @@ class EntranceTransaction_1 extends BaseTransaction {
     }
 
     static get FEE () {
-		return `${20 ** 7}`;
+		return `${10 ** 7}`;
     };
     
     async prepare(store) {
@@ -37,7 +37,7 @@ class EntranceTransaction_1 extends BaseTransaction {
         if (!this.asset.description || typeof this.asset.description !== 'string' || this.asset.name.length > 500){
             errors.push(
                 new TransactionError(
-                    'Invalid "entrance description" defined on transaction',
+                    'Invalid "description" defined on transaction',
                     this.id,
                     '.asset.description',
                     this.asset.name,
@@ -62,7 +62,7 @@ class EntranceTransaction_1 extends BaseTransaction {
 
     applyAsset(store){            
         const sender = store.account.get(this.senderId);
-        const newObj = {...sender, asset: { name: this.asset.name, description: this.asset.description }};
+        const newObj = {...sender, asset: { name: this.asset.name, description: this.asset.description, requestingAccount: this.asset.requestingAccount }};
         store.account.set(sender.address, newObj);
         return [];
     }
