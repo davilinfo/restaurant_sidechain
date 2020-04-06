@@ -1,0 +1,18 @@
+{
+    "nodes": ["http://172.18.84.46:4000"],
+    "genesisPassphrase": "wagon stock borrow episode laundry kitten salute link globe zero feed marble",
+    "demoPubKeys": [
+      "8b8e09711165d6eebaf93643149bca1dc0ec86f9e77214748f20ea39aeb134bc",
+      "42bc27cf003bdcd71559dab2694d28fc85afb1d89186d30b22d63d7a3cce05c5",
+      "9bcb2dc8da68c081b4a37022d0814db3137c5f47025ccbf038cb518005fdaf2c",
+      "125f749c75b953e062e098f5ec0e8b35443453f9033ab3987333ece700578ad3",
+      "ae6e58aa5f719b2e2aa2098fbf3d5c951da7808f29ccb0b3bc9d2c81ae1d3695",
+      "3a54d5c1aa482584cb727e215b0eadc9c19f291a8b3742c11a9d744181ef759d",
+      "24ea7ae35ea6fc94fd32af802d195b2c2d8bbcf0b8f7ee1d6f49dc41b27a6ebd",
+      "ad17a81f5b509da3df88682b41e228ff16435256497e7f89f7d25e75f9f70982",
+      "89d53e6f136bcd72230c18080bd5c53b1c6efec1f6bcbd15ff1079ee4ab643fa",
+      "19dcaf63c7112cd1524951f86e9d4fdd33486ab901a13ca810594136d923eeda",
+      "5d4031b06f695fd46b16a291e08647ec0bbedd2c197272faa13fa9ca097d72c7",
+      "98d52f1da0907f94d803563fca5135ce5725b3f5cc74a9a06389ebf0754cd6a1"
+    ]
+}

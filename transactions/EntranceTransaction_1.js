@@ -62,7 +62,7 @@ class EntranceTransaction_1 extends BaseTransaction {
 
     applyAsset(store){            
         const sender = store.account.get(this.senderId);
-        const newObj = {...sender, asset: { name: this.asset.name, description: this.asset.description, requestingAccount: this.asset.requestingAccount }};
+        const newObj = {...sender, asset: { name: this.asset.name, description: this.asset.description }};
         store.account.set(sender.address, newObj);
         return [];
     }

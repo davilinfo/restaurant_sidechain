@@ -1,0 +1,2 @@
+# backend of restaurant_sidechain
+The backend of Sidechain restaurant business based on Lisk blockchain is the responsible to perform any request to the sidechain blockchain. Also, it is responsible to receive requests from any client and perform responses to the client ant request to the sidechain.
