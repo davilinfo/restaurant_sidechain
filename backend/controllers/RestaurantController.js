@@ -44,10 +44,8 @@ module.exports = {
                 break;
             
             case 4:                
-                const dessert = new VanillaIceCreamDessert();
-                /* giving discount in menu option */
-                dessert.Food().amount = 3;
-                /* decorator design pattern */
+                const dessert = new VanillaIceCreamDessert();                
+                /* Decorator design pattern. Menu applies discount in desserts */
                 const menu1 = new RibsOnTheBarbecueMenu(dessert);           
                 result = await menu1.registerPayment(passphrase, table, request_type, userid);
                 break;

@@ -7,7 +7,7 @@ class RibsOnTheBarbecueMenu extends RestaurantFood{
         super();                 
         food.name= "Ribs on the barbecue".concat(" + ").concat(dessert.Food().name);
         food.description= '10 baked ribs on the barbecue sauce'.concat(" + ").concat(dessert.Food().description);
-        food.amount= 50 + dessert.Food().amount;
+        food.amount= 50 + (dessert.Food().amount * 0.3);
     }
 
     registerPayment(passphrase, table, request_type, userid) {
