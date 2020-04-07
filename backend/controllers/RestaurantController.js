@@ -1,22 +1,16 @@
 const OysterEntrance = require ('../entrances/oyster_entrance');
+const MoulesEntrance = require ('../entrances/moules_entrance');
+const VanillaIceCreamDessert = require ('../dessert/vanillaicecream_dessert');
+const RibsOnTheBarbecueMenu = require ('../menu/ribsonthebarbecue_menu');
 const User = require ('../models/user');
-const reader = require('fs');
-var food_types = null;
+const { food_type } = require ('../foodTypes/food_types.json');
+
 
 module.exports = {
-    async index(request, response){        
-        food_types = {
-            "food_type": [
-                {
-                    "food": "oysters",
-                    "type": 1
-                }
-            ]
-        };
-
+    async index(request, response){
         return response.json({
             status: "ok",
-            result: await food_types
+            result: await food_type
         })
     },
 
@@ -24,28 +18,51 @@ module.exports = {
         /*to be developed*/
         return response.json({
             status: "ok",
-            result: food_types
+            result: null
         })
     },
 
     async store(request, response){
         const { request_type, passphrase, userid, username, table } = request.body;        
 
-        if (request_type === 1){                                    
+        var result = null;        
+        console.log("registering payment");
+        switch (request_type) {
+            case 1:
+                const entrance1 = new OysterEntrance();           
+                result = await entrance1.registerPayment(passphrase, table, request_type, userid);
+                break;
+        
+            case 2:
+                const entrance2 = new MoulesEntrance();           
+                result = await entrance2.registerPayment(passphrase, table, request_type, userid);
+                break;
 
-            console.log("registering payment"); 
-            const entrance = new OysterEntrance();           
-            const result = await entrance.registerPayment(passphrase, table, request_type, userid);
+            case 3:
+                const dessert3 = new VanillaIceCreamDessert();           
+                result = await dessert3.registerPayment(passphrase, table, request_type, userid);
+                break;
+            
+            case 4:                
+                const dessert = new VanillaIceCreamDessert();
+                /* giving discount in menu option */
+                dessert.Food().amount = 3;
+                /* decorator design pattern */
+                const menu1 = new RibsOnTheBarbecueMenu(dessert);           
+                result = await menu1.registerPayment(passphrase, table, request_type, userid);
+                break;
 
-            return response.json({
-                status: "performing transaction",
-                result: result
-            });
-        }else{
-            return response.json({
-                status: "invalid request type",
-                result: null
-            })
+            default:
+                return response.json({
+                    status: "invalid request type",
+                    result: null
+                })
+                break;
         }
-    }
+
+        return response.json({
+            status: "transaction completed",
+            result: result
+        });        
+    },    
 }

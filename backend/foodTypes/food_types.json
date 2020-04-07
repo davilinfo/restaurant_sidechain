@@ -1,8 +1,20 @@
 {
     "food_type": [
         {
-            "food": "oysters",
+            "food": "oysters entrance",
             "type": 1
+        },
+        {
+            "food": "cooked moules entrance",
+            "type": 2
+        },
+        {
+            "food": "vanilla ice cream dessert",
+            "type": 3
+        },
+        {
+            "food": "Ribs on the barbecue + vanilla ice cream dessert",
+            "type": 4
         }
     ]
 }

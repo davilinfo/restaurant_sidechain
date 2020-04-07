@@ -1,17 +1,18 @@
 const RestaurantFood = require( '../baseClasses/RestaurantFood');
 const food = require("../models/food");
 
-class OysterEntrance extends RestaurantFood{
+class MoulesEntrance extends RestaurantFood{
 
     constructor(){ 
         super(); 
-        food.name= "oysters";
-        food.description= '12 fresh oysters served in a plate';
-        food.amount= 50;
+
+        food.name= "cooked moules";
+        food.description= '12 fresh moules à la creme';
+        food.amount= 40;
     }
 
     registerPayment(passphrase, table, request_type, userid) {
-                        
+                              
         food.table= table;
         food.request_type= request_type;
         food.user_id= userid;
@@ -23,4 +24,4 @@ class OysterEntrance extends RestaurantFood{
     }
 }
 
-module.exports = OysterEntrance;
+module.exports = MoulesEntrance;

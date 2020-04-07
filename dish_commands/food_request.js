@@ -1,4 +1,4 @@
-const Entrance = require("../transactions/EntranceTransaction_1");
+const Entrance = require("../transactions/FoodTransaction");
 const transactions = require("@liskhq/lisk-transactions");
 const { EPOCH_TIME } = require("@liskhq/lisk-constants");
 
