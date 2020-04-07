@@ -6,7 +6,8 @@ configDevnet.app.label = 'restaurant-sidechain-app';
 configDevnet.components.storage.port = 5435;
 configDevnet.components.storage.password = 'lisk';
 configDevnet.components.storage.database = 'lisk_dev';
-configDevnet.components.storage.host = 'localhost'
+configDevnet.components.storage.host = 'localhost';
+configDevnet.modules.http_api.access.public = true;
 
 configDevnet.app.genesisConfig.BLOCK_TIME = 5;
 
