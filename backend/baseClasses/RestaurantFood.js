@@ -3,6 +3,7 @@ const { getAddressFromPassphrase } = require ("@liskhq/lisk-cryptography");
 const transactions = require("@liskhq/lisk-transactions");
 const blockchainClient = require ("../APIClient/blockchainClient");
 const Entrance = require("../../transactions/FoodTransaction");
+var transactioResult = null;
 
 class RestaurantFood{            
 
@@ -13,12 +14,16 @@ class RestaurantFood{
         const inSeconds = ((millisSinceEpoc) / 1000).toFixed(0);
         return parseInt(inSeconds);
     }
+
+    getTransaction(){
+        return transactioResult;
+    }
     
     broadcastTransaction = (transaction) => {                        
         return blockchainClient.transactions.broadcast(transaction.toJSON());
     }
 
-    getAccount(passphrase){
+    getAccount = (passphrase) => {
         const address = getAddressFromPassphrase(passphrase);
         return blockchainClient.accounts.get({ address, limit: 1 });
     };
@@ -36,11 +41,9 @@ class RestaurantFood{
         });
 
         txFood.sign(passphrase);
-        console.log("transaction created", txFood);
-        return  { 
-                "transaction": txFood,
-                "result" : this.broadcastTransaction(txFood)
-                };
+        transactioResult = txFood;                 
+        
+        return this.broadcastTransaction(txFood);
     }
 }
 

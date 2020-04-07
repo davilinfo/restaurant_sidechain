@@ -1,5 +1,6 @@
 const RestaurantFood = require( '../baseClasses/RestaurantFood');
 const food = require("../models/food");
+const ResultSchema = require("../models/result");
 
 class OysterEntrance extends RestaurantFood{
 
@@ -10,17 +11,19 @@ class OysterEntrance extends RestaurantFood{
         food.amount= 50;
     }
 
-    registerPayment(passphrase, table, request_type, userid) {
+    async registerPayment(passphrase, table, request_type, userid) {
                         
         food.table= table;
         food.request_type= request_type;
         food.user_id= userid;
-        food.closed= true;
-                       
-        console.log("Food: ", food);
+        food.closed= true;                           
 
-        return super.commandFood(passphrase, food);
-    }
+        ResultSchema.broadcastInfo = await super.commandFood(passphrase, food);
+        ResultSchema.transaction = super.getTransaction();
+        console.log(ResultSchema);
+
+        return ResultSchema;
+    }    
 }
 
 module.exports = OysterEntrance;

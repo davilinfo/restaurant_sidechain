@@ -53,14 +53,14 @@ module.exports = {
             default:
                 return response.json({
                     status: "invalid request type",
-                    result: null
+                    response: null
                 })
                 break;
         }
 
         return response.json({
             status: "transaction completed",
-            result: result
+            response: result
         });        
     },    
 }
