@@ -8,9 +8,10 @@ const { food_type } = require ('../foodTypes/food_types.json');
 
 module.exports = {
     async index(request, response){
+        console.log(food_type);
         return response.json({
             status: "ok",
-            result: await food_type
+            result: food_type
         })
     },
 

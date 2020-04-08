@@ -2,18 +2,26 @@
     "food_type": [
         {
             "food": "oysters entrance",
+            "description": "12 fresh oysters served in a plate",
+            "img": "images/img_recipes.jpg",
             "type": 1
         },
         {
             "food": "cooked moules entrance",
+            "description": "12 fresh moules à la creme",
+            "img": "images/img_recipes.jpg",
             "type": 2
         },
         {
             "food": "vanilla ice cream dessert",
+            "description": "vanilla ice cream with strawberry syrup",
+            "img": "images/img_recipes.jpg",
             "type": 3
         },
         {
             "food": "Ribs on the barbecue + vanilla ice cream dessert",
+            "description": "10 baked ribs on the barbecue sauce + vanilla ice cream with strawberry syrup",
+            "img": "images/img_recipes.jpg",
             "type": 4
         }
     ]
