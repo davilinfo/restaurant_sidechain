@@ -26,7 +26,7 @@ class RestaurantFood{
     getAccount = (passphrase) => {
         const address = getAddressFromPassphrase(passphrase);
         return blockchainClient.accounts.get({ address, limit: 1 });
-    };
+    };    
 
     commandFood(passphrase, food) {
 

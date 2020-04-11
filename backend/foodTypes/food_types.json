@@ -3,26 +3,32 @@
         {
             "food": "oysters entrance",
             "description": "12 fresh oysters served in a plate",
-            "img": "images/img_recipes.jpg",
+            "img": "images/ostras-in-natura.jpg",
             "type": 1
         },
         {
             "food": "cooked moules entrance",
-            "description": "12 fresh moules à la creme",
-            "img": "images/img_recipes.jpg",
+            "description": "Several cooked fresh moules à la creme",
+            "img": "images/moulmari.jpg",
             "type": 2
         },
         {
             "food": "vanilla ice cream dessert",
             "description": "vanilla ice cream with strawberry syrup",
-            "img": "images/img_recipes.jpg",
+            "img": "images/vanilla_icecream_strawberry_syrup.jpg",
             "type": 3
         },
         {
             "food": "Ribs on the barbecue + vanilla ice cream dessert",
             "description": "10 baked ribs on the barbecue sauce + vanilla ice cream with strawberry syrup",
-            "img": "images/img_recipes.jpg",
+            "img": "images/ribs_on_the_barbie.jpg",
             "type": 4
+        },
+        {
+            "food": "oysters with baked cheese entrance",
+            "description": "12 fresh oysters with baked cheeses served in a plate",
+            "img": "images/oysters_gratines_aux_fromages.jpg",
+            "type": 5
         }
     ]
 }

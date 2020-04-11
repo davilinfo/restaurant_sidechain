@@ -1,6 +1,6 @@
 const RestaurantFood = require( '../baseClasses/RestaurantFood');
-const food = require("../models/food");
 const ResultSchema = require("../models/result");
+const food = require("../models/food");
 
 class MoulesEntrance extends RestaurantFood{
 
@@ -10,6 +10,10 @@ class MoulesEntrance extends RestaurantFood{
         food.name= "cooked moules";
         food.description= '12 fresh moules à la creme';
         food.amount= 40;
+    }
+
+    getFood(){
+        return food;
     }
 
     async registerPayment(passphrase, table, request_type, userid) {

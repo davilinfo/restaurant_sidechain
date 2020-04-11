@@ -1,14 +1,18 @@
 const RestaurantFood = require( '../baseClasses/RestaurantFood');
-const food = require("../models/food");
 const ResultSchema = require("../models/result");
+const food = require("../models/food");
 
 class RibsOnTheBarbecueMenu extends RestaurantFood{
     
     constructor(dessert){ 
         super();                 
-        food.name= "Ribs on the barbecue".concat(" + ").concat(dessert.Food().name);
-        food.description= '10 baked ribs on the barbecue sauce'.concat(" + ").concat(dessert.Food().description);
-        food.amount= 50 + (dessert.Food().amount * 0.3);
+        food.name= "Ribs on the barbecue".concat(" + ").concat(dessert.getFood().name);
+        food.description= '10 baked ribs on the barbecue sauce'.concat(" + ").concat(dessert.getFood().description);
+        food.amount= 50 + (dessert.getFood().amount * 0.3);
+    }
+
+    getFood(){
+        return food;
     }
 
     async registerPayment(passphrase, table, request_type, userid) {

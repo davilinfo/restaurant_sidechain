@@ -1,6 +1,6 @@
 {
   "name": "web",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "web app that consumes restaurant blockchain backend",
   "main": "index.js",
   "scripts": {
@@ -21,6 +21,8 @@
     "axios": "^0.19.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-router": "^5.1.2",
+    "react-router-dom": "^5.0.0",
     "react-scripts": "^3.4.0"
   },
   "eslintConfig": {
