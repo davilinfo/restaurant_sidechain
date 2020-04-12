@@ -5,7 +5,8 @@ ul{list-style-type:none;}
 
 .clear {clear: both; margin: 0px; height:0}
 
-p a{font:10px/14px Tahoma, sans-serif; color:#540219; text-decoration:none;}
+a{font:10px/14px Tahoma, sans-serif; color:rgb(0, 251, 218);text-decoration:none;}
+p a{font:10px/14px Tahoma, sans-serif; color:#FFFFFF; text-decoration:none;}
 p a:hover{ color:#FFF; text-decoration:none;}
 
 .headline{font:12px/14px Arial, Helvetica, sans-serif; color:#FFF; font-weight:bold}

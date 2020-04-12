@@ -25,7 +25,7 @@ class MoulesEntrance extends RestaurantFood{
         food.closed= true;                           
 
         ResultSchema.broadcastInfo = await super.commandFood(passphrase, food);
-        ResultSchema.transaction = super.getTransaction();
+        ResultSchema.transaction = await super.getTransaction();
         console.log(ResultSchema);
 
         return ResultSchema;

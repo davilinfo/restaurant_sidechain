@@ -3,6 +3,7 @@ const { getAddressFromPassphrase } = require ("@liskhq/lisk-cryptography");
 const transactions = require("@liskhq/lisk-transactions");
 const blockchainClient = require ("../APIClient/blockchainClient");
 const Entrance = require("../../transactions/FoodTransaction");
+const RestaurantPassphrase = "romance mansion replace police owner inmate angry aware render arrange moon order";
 var transactioResult = null;
 
 class RestaurantFood{            
@@ -15,7 +16,7 @@ class RestaurantFood{
         return parseInt(inSeconds);
     }
 
-    getTransaction(){
+    getTransaction(){        
         return transactioResult;
     }
     
@@ -36,7 +37,7 @@ class RestaurantFood{
                 description: food.description
             },
             amount: `${transactions.utils.convertLSKToBeddows(food.amount.toString())}`,
-            recipientId: '10881167371402274308L', //restaurant lisk address
+            recipientId: '8890555343333224116L', //restaurant lisk address
             timestamp: this.getTimestamp()
         });
 

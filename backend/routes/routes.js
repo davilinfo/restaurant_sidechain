@@ -9,7 +9,8 @@ const routes = Router();
 
 routes.get('/list', RestaurantController.index)
 routes.get('/foodDetail/:id', RestaurantController.foodDetail);
-routes.get('/userRequest/:userid', RestaurantController.userRequest);
+routes.post('/account', RestaurantController.getAccount);
+routes.post('/refund/', RestaurantController.refund);
 routes.post('/userRequest', RestaurantController.store);
 
 module.exports = routes;

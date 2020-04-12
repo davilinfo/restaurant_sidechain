@@ -23,7 +23,7 @@ class RefundTransaction extends BaseTransaction {
     validateAsset(){
         const errors = [];                
         
-        if (!this.amount || this.amount <= 0 || this.amount > 1000){
+        if (!this.amount || this.amount <= 0){
             errors.push(
                 new TransactionError(
                     'Invalid "value" defined on transaction',
@@ -39,7 +39,7 @@ class RefundTransaction extends BaseTransaction {
 
     applyAsset(store){            
         const sender = store.account.get(this.senderId);
-        const newObj = {...sender, asset: { name: this.asset.name, description: this.asset.description }};
+        const newObj = {...sender, asset: { transactionId: this.asset.transactionId }};
         store.account.set(sender.address, newObj);
         return [];
     }

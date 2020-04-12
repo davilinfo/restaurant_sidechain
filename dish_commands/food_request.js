@@ -14,7 +14,7 @@ let txEntrance1 = new Entrance({
         description: '12 fresh oysters served in a plate'
     },
     amount: `${transactions.utils.convertLSKToBeddows('48')}`,
-    recipientId: '10881167371402274308L', //restaurant lisk address
+    recipientId: '8890555343333224116L', //restaurant lisk address
     timestamp: getTimestamp()
 });
 

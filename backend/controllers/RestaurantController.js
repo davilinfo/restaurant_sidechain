@@ -3,6 +3,8 @@ const MoulesEntrance = require ('../entrances/moules_entrance');
 const VanillaIceCreamDessert = require ('../dessert/vanillaicecream_dessert');
 const RibsOnTheBarbecueMenu = require ('../menu/ribsonthebarbecue_menu');
 const BakedCheeseOysterEntrance = require('../entrances/baked_oyster_entrance');
+const Refund = require('../baseClasses/RefundRestaurant');
+const ResultSchema = require("../models/result");
 const User = require ('../models/user');
 const { food_type } = require ('../foodTypes/food_types.json');
 
@@ -45,12 +47,31 @@ module.exports = {
         })
     },
 
-    async userRequest(request, response, userid) {
-        /*to be developed*/
-        return response.json({
-            status: "ok",
-            result: null
-        })
+    async getAccount(request, response){
+        response.setHeader('Access-Control-Allow-Origin', '*');
+        var restaurant = new Refund();
+        const { passphrase } = request.body;
+        return response.json({ response: await restaurant.getAccount(passphrase)});
+    },
+
+    async refund(request, response) {
+        response.setHeader('Access-Control-Allow-Origin', '*');
+        
+        const { transactionId, amount, recipientAddress, password } = request.body;        
+
+        var result = null;
+        if (password == "pocFoodRestaurant"){
+            const refund = new Refund();
+            ResultSchema.broadcastInfo = await refund.commandRefund(transactionId, amount, recipientAddress);
+            ResultSchema.transaction = await refund.getTransaction();
+
+            return response.json({ status: "transaction completed", response: ResultSchema});
+        }else{
+            return response.json({
+                status: "wrong password",
+                response: null
+            });
+        }
     },
 
     async store(request, response){
@@ -98,8 +119,7 @@ module.exports = {
                     response: null
                 })                
         }
-
-        console.log(result);
+        
         return response.json({
             status: "transaction completed",
             response: result

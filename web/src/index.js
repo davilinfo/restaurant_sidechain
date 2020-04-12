@@ -2,9 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import History from './components/History';
+import Menu from './components/Menu';
 import FoodOrder from './components/FoodOrder';
+import FoodRefund from './components/FoodRefund';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Contact from './components/Contact';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 
 const routing = (
@@ -13,7 +16,10 @@ const routing = (
         <Switch>
             <Route exact path="/" component={App} />
             <Route path="/History" component={History} />
-            <Route path="/FoodOrder" component={FoodOrder} />            
+            <Route path="/Menu" component={Menu} />
+            <Route path="/FoodOrder" component={FoodOrder} />
+            <Route path="/Refund" component={FoodRefund} />
+            <Route path="/Contact" component={Contact} />
         </Switch>
         <Footer/>        
     </Router>

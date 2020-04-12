@@ -17,7 +17,7 @@ function History(){
                 This site represents a sea food luxury restaurant. It's possible to list all the food offered by this restaurant in the home page.
                 </p></div>
                 <div className="headline2" align="center">
-                    Also, it is possible to click on a food preference and command a food option desired. 
+                    Also, it is possible to click on a food preference and command a desired food option. 
                 </div>
                 <div className="headline2" align="center">    
                     Once commanded the food then a FoodTransaction will be created
