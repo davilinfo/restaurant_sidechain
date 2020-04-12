@@ -21,18 +21,7 @@ class RefundTransaction extends BaseTransaction {
     }
 
     validateAsset(){
-        const errors = [];
-        if (!this.asset.name || typeof this.asset.name !== 'string' || this.asset.name.length > 200){
-            errors.push(
-                new TransactionError(
-                    'Invalid "food name" defined on transaction',
-                    this.id,
-                    '.asset.name',
-                    this.asset.name,
-                    'A string value no longer than 200 characters'
-                )
-            );
-        }        
+        const errors = [];                
         
         if (!this.amount || this.amount <= 0 || this.amount > 1000){
             errors.push(
