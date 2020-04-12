@@ -29,10 +29,14 @@ function FormOrder({onSubmit}){
                     <input type="hidden" id="request_type" name="request_type"></input>
                     <div>
                         <label>Your Name</label>
+                    </div>
+                    <div>
                         <input type="text" id="username" name="username" required onChange={e=> setUsername(e.target.value)}/>
                     </div>
                     <div>
                         <label>Your Lisk Passphrase</label>
+                    </div>
+                    <div>
                         <input type="text" id="passphrase" name="passphrase" required onChange={e=> setPassphrase(e.target.value)}/>
                     </div>
                     <div>

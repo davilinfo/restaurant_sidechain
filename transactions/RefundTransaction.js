@@ -3,9 +3,9 @@ const {
     TransactionError
 } = require('@liskhq/lisk-transactions');
 
-class FoodTransaction extends BaseTransaction {
+class RefundTransaction extends BaseTransaction {
     static get TYPE() {
-        return 20;
+        return 19;
     }
 
     static get FEE () {
@@ -21,21 +21,20 @@ class FoodTransaction extends BaseTransaction {
     }
 
     validateAsset(){
-        const errors = [];        
-
-        if (!this.asset.description || typeof this.asset.description !== 'string' || this.asset.name.length > 1500){
+        const errors = [];
+        if (!this.asset.name || typeof this.asset.name !== 'string' || this.asset.name.length > 200){
             errors.push(
                 new TransactionError(
-                    'Invalid "description" defined on transaction',
+                    'Invalid "food name" defined on transaction',
                     this.id,
-                    '.asset.description',
+                    '.asset.name',
                     this.asset.name,
-                    'A string value no longer than 1500 characters'
+                    'A string value no longer than 200 characters'
                 )
             );
-        }
+        }        
         
-        if (!this.amount || this.amount <= 0){
+        if (!this.amount || this.amount <= 0 || this.amount > 1000){
             errors.push(
                 new TransactionError(
                     'Invalid "value" defined on transaction',
@@ -64,4 +63,4 @@ class FoodTransaction extends BaseTransaction {
     }
 }
 
-module.exports = FoodTransaction;
+module.exports = RefundTransaction;

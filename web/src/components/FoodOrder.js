@@ -33,10 +33,12 @@ function FoodOrder(props){
     return (
         <div id="app">
             <div id="content" align="center">
-                <img src={food.img} width="200" height="200" alt="" />
+                <img src={`../${food.img}`} width="200" height="200" alt="" />
                 <div className="recipes_topic">                     
-                    <p><span className="headline">{food.food}</span> <br />
-                    {food.description}
+                    <p>
+                    {food.food}                    
+                    <br />
+                    Food description: {food.description}
                     <br/>
                     Amount: {food.amount}
                     </p>

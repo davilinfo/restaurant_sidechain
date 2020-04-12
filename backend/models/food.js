@@ -5,6 +5,7 @@ const FoodSchema = {
     table: Number,
     request_type: Number,
     user_id: Number,
+    img: String,
     closed: Boolean
 };
 

@@ -9,6 +9,7 @@ class RibsOnTheBarbecueMenu extends RestaurantFood{
         food.name= "Ribs on the barbecue".concat(" + ").concat(dessert.getFood().name);
         food.description= '10 baked ribs on the barbecue sauce'.concat(" + ").concat(dessert.getFood().description);
         food.amount= 50 + (dessert.getFood().amount * 0.3);
+        food.img=  "images/ribs_on_the_barbie.jpg";
     }
 
     getFood(){

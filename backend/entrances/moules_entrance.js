@@ -10,6 +10,7 @@ class MoulesEntrance extends RestaurantFood{
         food.name= "cooked moules";
         food.description= '12 fresh moules à la creme';
         food.amount= 40;
+        food.img = "images/moulmari.jpg";
     }
 
     getFood(){

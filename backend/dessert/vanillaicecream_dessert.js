@@ -10,6 +10,7 @@ class VanillaIceCreamDessert extends RestaurantFood{
         food.name= "vanilla ice cream dessert";
         food.description= 'vanilla ice cream with strawberry syrup';
         food.amount= 10;  
+        food.img= "images/vanilla_icecream_strawberry_syrup.jpg";
     }
 
     getFood(){
