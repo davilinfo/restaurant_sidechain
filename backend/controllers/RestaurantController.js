@@ -77,40 +77,42 @@ module.exports = {
     async store(request, response){
         response.setHeader('Access-Control-Allow-Origin', '*');
 
-        const { request_type, passphrase, userid, username, table } = request.body;        
+        const { request_type, passphrase, userid, username, table, phone, deliveryaddress } = request.body;        
 
         var result = null;        
         console.log("registering payment");
         console.log("request ".concat( request_type));
         console.log("username ".concat( username));        
         console.log("userid ".concat( userid));
+        console.log("phone ".concat( phone));
+        console.log("deliveryaddress ".concat( deliveryaddress));
         
         switch (request_type.toString()) {
             case "1":
                 const entrance1 = new OysterEntrance();           
-                result = await entrance1.registerPayment(passphrase, table, request_type, userid);
+                result = await entrance1.registerPayment(passphrase, table, request_type, username, phone, deliveryaddress);
                 break;
         
             case "2":
                 const entrance2 = new MoulesEntrance();           
-                result = await entrance2.registerPayment(passphrase, table, request_type, userid);
+                result = await entrance2.registerPayment(passphrase, table, request_type, username, phone, deliveryaddress);
                 break;
 
             case "3":
                 const dessert3 = new VanillaIceCreamDessert();           
-                result = await dessert3.registerPayment(passphrase, table, request_type, userid);
+                result = await dessert3.registerPayment(passphrase, table, request_type, username, phone, deliveryaddress);
                 break;
             
             case "4":                
                 const dessert = new VanillaIceCreamDessert();                
                 /* Decorator design pattern. Menu applies discount in desserts */
                 const menu1 = new RibsOnTheBarbecueMenu(dessert);           
-                result = await menu1.registerPayment(passphrase, table, request_type, userid);
+                result = await menu1.registerPayment(passphrase, table, request_type, username, phone, deliveryaddress);
                 break;
             
             case "5":
                 const entrance3 = new BakedCheeseOysterEntrance();
-                resut = await entrance3.registerPayment(passphrase, table, request_type, userid);
+                resut = await entrance3.registerPayment(passphrase, table, request_type, username, phone, deliveryaddress);
                 break;
 
             default:

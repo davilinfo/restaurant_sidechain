@@ -51,7 +51,7 @@ class FoodTransaction extends BaseTransaction {
 
     applyAsset(store){            
         const sender = store.account.get(this.senderId);
-        const newObj = {...sender, asset: { name: this.asset.name, description: this.asset.description }};
+        const newObj = {...sender, asset: { name: this.asset.name, description: this.asset.description, foodType: this.asset.foodType, username: this.asset.username, phone: this.asset.phone, deliveryaddress: this.asset.deliveryaddress }};
         store.account.set(sender.address, newObj);
         return [];
     }

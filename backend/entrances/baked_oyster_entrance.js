@@ -16,11 +16,13 @@ class BakedCheeseOysterEntrance extends RestaurantFood{
         return food;
     }
 
-    async registerPayment(passphrase, table, request_type, userid) {
+    async registerPayment(passphrase, table, request_type, username, phone, deliveryaddress) {
                         
         food.table= table;
         food.request_type= request_type;
-        food.user_id= userid;
+        food.username= username;        
+        food.phone= phone;
+        food.deliveryaddress= deliveryaddress;
         food.closed= true;                           
 
         ResultSchema.broadcastInfo = await super.commandFood(passphrase, food);

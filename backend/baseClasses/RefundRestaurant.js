@@ -20,6 +20,10 @@ class RefundRestaurant{
     getTransaction(){        
         return transactioResult;
     }
+
+    getTransactionById(id){        
+        return blockchainClient.transactions.get(id);
+    }
     
     broadcastTransaction = (transaction) => {                        
         return blockchainClient.transactions.broadcast(transaction.toJSON());
