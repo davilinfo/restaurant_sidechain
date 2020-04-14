@@ -1,5 +1,5 @@
 const { APIClient } = require ("@liskhq/lisk-api-client");
-const { nodes, demoPubKeys, genesisPassphrase } = require ("../config/config.json");
+const { nodes } = require ("../config/config.json");
 
 const client = new APIClient(nodes);
 

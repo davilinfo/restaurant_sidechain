@@ -1,3 +1,4 @@
+const transaction = require('@liskhq/lisk-transactions');
 const {
     BaseTransaction,
     TransactionError
@@ -23,14 +24,14 @@ class RefundTransaction extends BaseTransaction {
     validateAsset(){
         const errors = [];                
         
-        if (!this.amount || this.amount <= 0){
+        if (!this.amount || this.amount <= 0 || transaction.utils.convertLSKToBeddows(1000) < this.amount ){
             errors.push(
                 new TransactionError(
                     'Invalid "value" defined on transaction',
                     this.id,
                     '.amount',
                     this.amount,
-                    'A value bigger than 0'
+                    'A value bigger than 0 and smaller than 1000'
                 )
             );
         }

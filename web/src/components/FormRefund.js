@@ -40,13 +40,13 @@ function FormRefund({onSubmit}){
                         <input type="text" id="transactionId" name="transactionId" required onChange={e=> setTransaction(e.target.value)}/>
                     </div>
                     <div>
-                        <label>Amount</label>
+                        <label>LSK Amount</label>
                     </div>
                     <div>
                         <input type="text" id="amount" name="amount" required onChange={e=> setAmount(e.target.value)}/>
                     </div>
                     <div>
-                        <label>Recipient address to be refunded</label>
+                        <label>LSK Recipient address to be refunded</label>
                     </div>
                     <div>
                         <input type="text" id="recipientAddress" name="recipientAddress" required onChange={e=> setRecipientAddress(e.target.value)}/>

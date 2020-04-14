@@ -4,7 +4,9 @@ import '../styles.css';
 
 function FormOrder({onSubmit}){
     const [username, setUsername] = useState('');
-    const [passphrase, setPassphrase] = useState('');    
+    const [passphrase, setPassphrase] = useState('');
+    const [phone, setPhone] = useState('');
+    const [deliveryaddress, setDeliveryAddress] = useState('');
 
     useEffect(() => {
 
@@ -15,10 +17,14 @@ function FormOrder({onSubmit}){
 
         await onSubmit({
             username,
+            phone,
+            deliveryaddress,
             passphrase
         });
 
         setUsername('');
+        setPhone('');
+        setDeliveryAddress('');
         setPassphrase('');        
     }
 
@@ -32,6 +38,18 @@ function FormOrder({onSubmit}){
                     </div>
                     <div>
                         <input type="text" id="username" name="username" required onChange={e=> setUsername(e.target.value)}/>
+                    </div>
+                    <div>
+                        <label>Your phone</label>
+                    </div>
+                    <div>
+                        <input type="text" id="phone" name="phone" required onChange={e=> setPhone(e.target.value)}/>
+                    </div>
+                    <div>
+                        <label>Delivery address</label>
+                    </div>
+                    <div>
+                        <textarea rows="5" id="deliveryaddress" name="deliveryaddress" required onChange={e=> setDeliveryAddress(e.target.value)}/>
                     </div>
                     <div>
                         <label>Your Lisk Passphrase</label>

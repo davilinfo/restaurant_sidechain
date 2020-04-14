@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import api from '../services/api';
 import FormRefund from './FormRefund';
-
 import '../styles.css';
+const transactions = require("@liskhq/lisk-transactions");
 
 function FoodRefund(props){                   
     var [order, setOrder] = useState([]);            
@@ -19,7 +19,7 @@ function FoodRefund(props){
                 <br />
                 Refund Transaction id: {order.data.response.transaction.id}
                 <br/>
-                Paid Amount: {order.data.response.transaction.amount}
+                Paid Amount: LSK {transactions.utils.convertBeddowsToLSK(order.data.response.transaction.amount)}
                 <br/>
                 Payer address: {order.data.response.transaction.senderId}
                 <br/>

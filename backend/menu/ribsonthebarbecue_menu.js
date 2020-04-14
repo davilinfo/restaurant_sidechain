@@ -14,23 +14,7 @@ class RibsOnTheBarbecueMenu extends RestaurantFood{
 
     getFood(){
         return food;
-    }
-
-    async registerPayment(passphrase, table, request_type, username, phone, deliveryaddress) {
-                        
-        food.table= table;
-        food.request_type= request_type;
-        food.username= username;        
-        food.phone= phone;
-        food.deliveryaddress= deliveryaddress;
-        food.closed= true;                           
-
-        ResultSchema.broadcastInfo = await super.commandFood(passphrase, food);
-        ResultSchema.transaction = await super.getTransaction();
-        console.log(ResultSchema);
-
-        return ResultSchema;
-    }
+    }    
 }
 
 module.exports = RibsOnTheBarbecueMenu;
