@@ -40,6 +40,54 @@ class FoodTransaction extends BaseTransaction {
                 )
             );
         }
+
+        if (!this.asset.foodType || this.asset.foodType <= 0){
+            errors.push(
+                new TransactionError(
+                    'Invalid "food type" defined on transaction',
+                    this.id,
+                    '.foodType',
+                    this.asset.foodType,
+                    'A value bigger than 0'
+                )
+            );
+        }
+
+        if (!this.asset.deliveryaddress){
+            errors.push(
+                new TransactionError(
+                    'Invalid "delivery address" defined on transaction',
+                    this.id,
+                    '.deliveryaddress',
+                    this.asset.phone,
+                    'A string value bigger than 0'
+                )
+            );
+        }
+
+        if (!this.asset.phone){
+            errors.push(
+                new TransactionError(
+                    'Invalid "phone" defined on transaction',
+                    this.id,
+                    '.phone',
+                    this.asset.phone,
+                    'A value bigger than 0'
+                )
+            );
+        }
+
+        if (!this.asset.username){
+            errors.push(
+                new TransactionError(
+                    'Invalid "username" defined on transaction',
+                    this.id,
+                    '.username',
+                    this.asset.username,
+                    'A string value bigger than 0'
+                )
+            );
+        }
         
         if (!this.amount || this.amount <= 0){
             errors.push(

@@ -5,7 +5,7 @@ const blockchainClient = require ("../APIClient/blockchainClient");
 const Refund = require("../../transactions/RefundTransaction");
 const restaurantPassphrase = "unfair canvas settle chief pattern solar three village fat barely mean ethics";
 const restaurantAddress = '12155463429267245415L';
-var transactioResult = null;
+const ResultSchema = require("../models/result");
 
 class RefundRestaurant{            
 
@@ -15,11 +15,7 @@ class RefundRestaurant{
         const millisSinceEpoc = Date.now() - Date.parse(EPOCH_TIME);
         const inSeconds = ((millisSinceEpoc) / 1000).toFixed(0);
         return parseInt(inSeconds);
-    }
-
-    getTransaction(){        
-        return transactioResult;
-    }
+    }    
 
     getTransactionById(id){        
         return blockchainClient.transactions.get(id);
@@ -34,7 +30,7 @@ class RefundRestaurant{
         return blockchainClient.accounts.get({ address, limit: 1 });
     };    
 
-    commandRefund(transactionId, amount, recipientAddress) {
+    async commandRefund(transactionId, amount, recipientAddress) {
 
         console.log(transactionId, amount, recipientAddress);
         const txFood = new Refund({
@@ -45,11 +41,14 @@ class RefundRestaurant{
             recipientId: recipientAddress, //refund lisk address
             timestamp: this.getTimestamp()
         });
-
-        txFood.sign(restaurantPassphrase); //restaurant passphrase          
-        transactioResult = txFood;               
         
-        return this.broadcastTransaction(txFood);
+        txFood.sign(restaurantPassphrase); //restaurant passphrase
+        ResultSchema.broadcastInfo = await this.broadcastTransaction(txFood);
+        ResultSchema.transaction = txFood;   
+        console.log(ResultSchema);
+
+        
+        return ResultSchema;
     }
 }
 

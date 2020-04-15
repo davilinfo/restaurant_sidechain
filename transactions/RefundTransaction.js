@@ -39,12 +39,25 @@ class RefundTransaction extends BaseTransaction {
                 )
             );
         }
+
+        if (!this.asset.transactionId){
+            errors.push(
+                new TransactionError(
+                    'Invalid "transactionId" defined on transaction',
+                    this.id,
+                    '.transactionId',
+                    this.asset.username,
+                    'A string value bigger than 0'
+                )
+            );
+        }
+
         return errors;
     }
 
     applyAsset(store){            
         const restaurantAccount = store.account.get(this.senderId);
-        const restaurantAccountBalanceDeducted= new utils.BigNum(sender.balance).sub(new utils.BigNum(this.amount));
+        const restaurantAccountBalanceDeducted= new utils.BigNum(restaurantAccount.balance).sub(new utils.BigNum(this.amount));
 
         const updatedRestaurant = {
             ...restaurantAccount,

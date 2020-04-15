@@ -62,10 +62,9 @@ module.exports = {
         var result = null;
         if (password == "pocFoodRestaurant"){
             const refund = new Refund();
-            ResultSchema.broadcastInfo = await refund.commandRefund(transactionId, amount, recipientAddress);
-            ResultSchema.transaction = await refund.getTransaction();
+            result = await refund.commandRefund(transactionId, amount, recipientAddress);            
 
-            return response.json({ status: "transaction completed", response: ResultSchema});
+            return response.json({ status: "transaction completed", response: result});
         }else{
             return response.json({
                 status: "wrong password",

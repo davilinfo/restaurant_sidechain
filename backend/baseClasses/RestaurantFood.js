@@ -2,7 +2,7 @@ const { EPOCH_TIME } = require ("@liskhq/lisk-constants");
 const { getAddressFromPassphrase } = require ("@liskhq/lisk-cryptography");
 const transactions = require("@liskhq/lisk-transactions");
 const blockchainClient = require ("../APIClient/blockchainClient");
-const Entrance = require("../../transactions/FoodTransaction");
+const FoodRequest = require("../../transactions/FoodTransaction");
 const ResultSchema = require("../models/result");
 const restaurantAddress = "12155463429267245415L";
 
@@ -38,7 +38,7 @@ class RestaurantFood{
         food.deliveryaddress= deliveryaddress;
         food.closed= true;
 
-        const txFood = new Entrance({
+        const txFood = new FoodRequest({
             asset: {
                 name: food.name,
                 description: food.description,
