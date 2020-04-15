@@ -44,7 +44,7 @@ class RefundTransaction extends BaseTransaction {
 
     applyAsset(store){            
         const restaurantAccount = store.account.get(this.senderId);
-        const restaurantAccountBalanceDeducted= utils.BigNum(sender.balance).sub(this.amount);
+        const restaurantAccountBalanceDeducted= new utils.BigNum(sender.balance).sub(new utils.BigNum(this.amount));
 
         const updatedRestaurant = {
             ...restaurantAccount,
@@ -53,7 +53,7 @@ class RefundTransaction extends BaseTransaction {
         store.account.set(restaurantAccount.address, updatedRestaurant);
 
         const client = store.account.get(this.recipientId);
-        const clientRefunded = utils.BigNum(client.balance).add(this.amount);
+        const clientRefunded = new utils.BigNum(client.balance).add(new utils.BigNum(this.amount));
 
         const clientUpdated = {
             ...client,
@@ -70,7 +70,7 @@ class RefundTransaction extends BaseTransaction {
 
     undoAsset(store){
         const restaurantAccount = store.account.get(this.senderId);
-        const restaurantAccountWithFoodRequest= utils.BigNum(sender.balance).add(this.amount);
+        const restaurantAccountWithFoodRequest= new utils.BigNum(sender.balance).add(new utils.BigNum(this.amount));
 
         const updatedRestaurant = {
             ...restaurantAccount,
@@ -79,7 +79,7 @@ class RefundTransaction extends BaseTransaction {
         store.account.set(restaurantAccount.address, updatedRestaurant);
 
         const client = store.account.get(this.recipientId);
-        const clientDeducted = utils.BigNum(client.balance).sub(this.amount);
+        const clientDeducted = new utils.BigNum(client.balance).sub(new utils.BigNum(this.amount));
 
         const clientUpdated = {
             ...client,

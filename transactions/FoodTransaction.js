@@ -57,9 +57,7 @@ class FoodTransaction extends BaseTransaction {
 
     applyAsset(store){            
         const sender = store.account.get(this.senderId);
-        const senderBalanceDeducted = new utils.BigNum(sender.balance).sub(new utils.BigNum(this.amount));
-        
-        console.log("request food: deducting fee =".concat(senderBalanceDeducted.toString()));
+        const senderBalanceDeducted = new utils.BigNum(sender.balance).sub(new utils.BigNum(this.amount));        
 
         const updatedSender = {
             ...sender,
