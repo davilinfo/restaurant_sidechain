@@ -3,8 +3,8 @@ const { getAddressFromPassphrase } = require ("@liskhq/lisk-cryptography");
 const transactions = require("@liskhq/lisk-transactions");
 const blockchainClient = require ("../APIClient/blockchainClient");
 const Refund = require("../../transactions/RefundTransaction");
-const restaurantPassphrase = "romance mansion replace police owner inmate angry aware render arrange moon order";
-const restaurantAddress = '8890555343333224116L';
+const restaurantPassphrase = "unfair canvas settle chief pattern solar three village fat barely mean ethics";
+const restaurantAddress = '12155463429267245415L';
 var transactioResult = null;
 
 class RefundRestaurant{            

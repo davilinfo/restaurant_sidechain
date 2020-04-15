@@ -11,14 +11,17 @@ class RefundTransaction extends BaseTransaction {
     }
 
     static get FEE () {
-		return `${10 ** 5}`;
+		return `0`;
     };
     
     async prepare(store) {
         await store.account.cache([
             {
-                address: this.senderId,
+                address: this.recipientId,
             },
+            {
+                address: this.senderId,
+            }
         ]);
     }
 

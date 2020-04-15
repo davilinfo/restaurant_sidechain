@@ -4,6 +4,7 @@ const transactions = require("@liskhq/lisk-transactions");
 const blockchainClient = require ("../APIClient/blockchainClient");
 const Entrance = require("../../transactions/FoodTransaction");
 const ResultSchema = require("../models/result");
+const restaurantAddress = "12155463429267245415L";
 
 class RestaurantFood{            
 
@@ -47,7 +48,7 @@ class RestaurantFood{
                 foodType: food.request_type
             },
             amount: `${transactions.utils.convertLSKToBeddows(food.amount.toString())}`,
-            recipientId: '8890555343333224116L', //restaurant lisk address
+            recipientId: restaurantAddress, //restaurant lisk address
             timestamp: this.getTimestamp()
         });
 

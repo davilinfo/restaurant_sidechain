@@ -10,14 +10,19 @@ class FoodTransaction extends BaseTransaction {
     }
 
     static get FEE () {
-		return `${10 ** 5}`;
-    };
-    
+		return `0`;
+    };        
+
+    /* Prepare function stores both sender and recipient account in the cache so it is possible to
+       modify the accounts during the `applyAsset` and `undoAsset` steps. */
     async prepare(store) {
         await store.account.cache([
             {
-                address: this.senderId,
+                address: this.recipientId,
             },
+            {
+                address: this.senderId,
+            }
         ]);
     }
 
@@ -54,6 +59,8 @@ class FoodTransaction extends BaseTransaction {
         const sender = store.account.get(this.senderId);
         const senderBalanceDeducted = new utils.BigNum(sender.balance).sub(new utils.BigNum(this.amount));
         
+        console.log("request food: deducting fee =".concat(senderBalanceDeducted.toString()));
+
         const updatedSender = {
             ...sender,
             balance: senderBalanceDeducted.toString()
