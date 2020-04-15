@@ -31,8 +31,7 @@ class RefundRestaurant{
     };    
 
     async commandRefund(transactionId, amount, recipientAddress) {
-
-        console.log(transactionId, amount, recipientAddress);
+        
         const txFood = new Refund({
             asset: {               
                 transactionId: transactionId

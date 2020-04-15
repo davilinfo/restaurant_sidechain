@@ -28,7 +28,7 @@ class RefundTransaction extends BaseTransaction {
     validateAsset(){
         const errors = [];                
         
-        if (!this.amount || this.amount <= 0 || transaction.utils.convertLSKToBeddows(1000) < this.amount ){
+        if (!this.amount || this.amount <= 0 || 100000000000 < this.amount ){
             errors.push(
                 new TransactionError(
                     'Invalid "value" defined on transaction',
@@ -46,7 +46,7 @@ class RefundTransaction extends BaseTransaction {
                     'Invalid "transactionId" defined on transaction',
                     this.id,
                     '.transactionId',
-                    this.asset.username,
+                    this.asset.transactionId,
                     'A string value bigger than 0'
                 )
             );
@@ -83,7 +83,7 @@ class RefundTransaction extends BaseTransaction {
 
     undoAsset(store){
         const restaurantAccount = store.account.get(this.senderId);
-        const restaurantAccountWithFoodRequest= new utils.BigNum(sender.balance).add(new utils.BigNum(this.amount));
+        const restaurantAccountWithFoodRequest= new utils.BigNum(restaurantAccount.balance).add(new utils.BigNum(this.amount));
 
         const updatedRestaurant = {
             ...restaurantAccount,
