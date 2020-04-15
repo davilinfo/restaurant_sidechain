@@ -1,7 +1,8 @@
 const transaction = require('@liskhq/lisk-transactions');
 const {
     BaseTransaction,
-    TransactionError
+    TransactionError,
+    utils
 } = require('@liskhq/lisk-transactions');
 
 class RefundTransaction extends BaseTransaction {
@@ -39,16 +40,52 @@ class RefundTransaction extends BaseTransaction {
     }
 
     applyAsset(store){            
-        const sender = store.account.get(this.senderId);
-        const newObj = {...sender, asset: { transactionId: this.asset.transactionId }};
-        store.account.set(sender.address, newObj);
+        const restaurantAccount = store.account.get(this.senderId);
+        const restaurantAccountBalanceDeducted= utils.BigNum(sender.balance).sub(this.amount);
+
+        const updatedRestaurant = {
+            ...restaurantAccount,
+            balance: restaurantAccountBalanceDeducted.toString()
+        }
+        store.account.set(restaurantAccount.address, updatedRestaurant);
+
+        const client = store.account.get(this.recipientId);
+        const clientRefunded = utils.BigNum(client.balance).add(this.amount);
+
+        const clientUpdated = {
+            ...client,
+            ...{ balance: clientRefunded.toString(),
+                asset: {
+                    transactionId: this.asset.transactionId
+                }
+            }
+        };
+        
+        store.account.set(client.address, clientUpdated);
         return [];
     }
 
     undoAsset(store){
-        const sender = store.account.get(this.senderId);
-        const oldObj = {...sender, asset: null };
-        store.account.set(sender.address, oldObj);
+        const restaurantAccount = store.account.get(this.senderId);
+        const restaurantAccountWithFoodRequest= utils.BigNum(sender.balance).add(this.amount);
+
+        const updatedRestaurant = {
+            ...restaurantAccount,
+            balance: restaurantAccountWithFoodRequest.toString()
+        }
+        store.account.set(restaurantAccount.address, updatedRestaurant);
+
+        const client = store.account.get(this.recipientId);
+        const clientDeducted = utils.BigNum(client.balance).sub(this.amount);
+
+        const clientUpdated = {
+            ...client,
+            ...{ balance: clientDeducted.toString(),
+                asset: null
+            }
+        };
+                
+        store.account.set(client.address, clientUpdated);
         return [];
     }
 }

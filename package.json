@@ -1,6 +1,6 @@
 {
   "name": "restaurant_sidechain",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "restaurant business using Lisk blockchain",
   "main": "index.js",
   "scripts": {
