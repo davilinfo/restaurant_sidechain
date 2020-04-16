@@ -5,7 +5,7 @@ const food = require("../models/food");
 class RibsOnTheBarbecueMenu extends RestaurantFood{
     
     constructor(dessert){ 
-        super();                 
+        super();
         food.name= "Ribs on the barbecue".concat(" + ").concat(dessert.getFood().name);
         food.description= '10 baked ribs on the barbecue sauce'.concat(" + ").concat(dessert.getFood().description);
         food.amount= 50 + (dessert.getFood().amount * 0.3);

@@ -4,11 +4,12 @@ const food = require("../models/food");
 
 class OysterEntrance extends RestaurantFood{
 
-    constructor(){ 
+    constructor(meat){ 
         super(); 
-        food.name= "oysters";
-        food.description= '12 fresh oysters served in a plate';
-        food.amount= 50;
+        food.name= "oysters".concat( meat != null ? "+".concat( meat.getFood().name) : "" );
+        food.description= '12 fresh oysters served in a plate'.concat( meat != null ? "+".concat( meat.getFood().description) : "" );
+        food.amount= 50 + (meat != null ? meat.getFood().amount * meat.getFood().discount : 0);
+        food.discount = 1; // it means 0%
         food.img= "images/ostras-in-natura.jpg";
     }
 

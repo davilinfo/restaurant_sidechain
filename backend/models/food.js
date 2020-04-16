@@ -6,7 +6,8 @@ const FoodSchema = {
     request_type: Number,
     user_id: Number,
     img: String,
-    closed: Boolean
+    closed: Boolean,
+    discount: Number
 };
 
 module.exports = FoodSchema;
