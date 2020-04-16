@@ -9,7 +9,7 @@ function FoodItemDetail(props){
 
     return (        
         <>
-            <p className="headline2">{food.food}</p>
+            
 
             <Link exact to={`/FoodOrder/${food.type}`}>
                 <div className="recipes_topic"> 

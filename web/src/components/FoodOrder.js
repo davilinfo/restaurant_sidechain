@@ -34,7 +34,9 @@ function FoodOrder(props){
             <div className="recipes_topic">    
                 <img src={`../${food.img}`} width="200" height="200" alt="" /> 
                 <br />
-                Food description: {food.description}                
+                <p>
+                Food description:  {food.description} 
+                </p>
                 <p>
                 Transaction result: {order.data.status}
                 <br />
@@ -63,7 +65,9 @@ function FoodOrder(props){
                     <p>
                     {food.food}                    
                     <br />
-                    Food description: {food.description}
+                    <p style={{width: 300}}>
+                        Food description: {food.description}
+                    </p>
                     <br/>
                     Amount: {food.amount}
                     </p>

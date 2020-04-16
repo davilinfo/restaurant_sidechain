@@ -4,37 +4,43 @@
             "food": "oysters entrance",
             "description": "12 fresh oysters served in a plate",
             "img": "images/ostras-in-natura.jpg",
-            "type": 1
+            "type": 1,
+            "category": 1
         },
         {
             "food": "cooked moules entrance",
             "description": "Several cooked fresh moules à la creme",
             "img": "images/moulmari.jpg",
-            "type": 2
+            "type": 2,
+            "category": 1
         },
         {
             "food": "vanilla ice cream dessert",
             "description": "vanilla ice cream with strawberry syrup",
             "img": "images/vanilla_icecream_strawberry_syrup.jpg",
-            "type": 3
+            "type": 3,
+            "category": 3
         },
         {
             "food": "Ribs on the barbecue + vanilla ice cream dessert",
             "description": "10 baked ribs on the barbecue sauce + vanilla ice cream with strawberry syrup",
             "img": "images/ribs_on_the_barbie.jpg",
-            "type": 4
+            "type": 4,
+            "category": 2
         },
         {
             "food": "oysters with baked cheese entrance",
             "description": "12 fresh oysters with baked cheeses served in a plate",
             "img": "images/oysters_gratines_aux_fromages.jpg",
-            "type": 5
+            "type": 5,
+            "category": 1
         },
         {
             "food": "oysters with baked cheese entrance + ribs on the barbecue + vanilla ice cream dessert",
             "description": "12 fresh oysters with baked cheeses served in a plate + 10 baked ribs on the barbecue sauce + vanilla ice cream with strawberry syrup",
-            "img": "images/ribs_on_the_barbie.jpg",
-            "type": 6
+            "img": "images/baked-oysters-plus-ribs.jpg",
+            "type": 6,
+            "category": 2
         }
     ]
 }

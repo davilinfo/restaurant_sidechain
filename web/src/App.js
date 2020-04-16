@@ -37,7 +37,7 @@ function App() {
                     <p className="headline2">You have the option to choose the following entrances.</p>
                     <ul >
                     {                       
-                        foods.filter(entrances=> entrances.type <= 2 || entrances.type === 5 ).map(food => (
+                        foods.filter(entrances=> entrances.category === 1 ).map(food => (
                             <FoodItem key={food.type} food={food}></FoodItem>
                         ))
                     }              
@@ -47,8 +47,11 @@ function App() {
                     <p className="headline2">You have the option to choose the following menu.</p>
                     <ul >
                     {                       
-                        foods.filter(menu=> menu.type === 4 ).map(food => (
+                        foods.filter(menu=> menu.category === 2 ).map(food => (
+                            <>
                             <FoodItem key={food.type} food={food}></FoodItem>
+                            <br/>
+                            </>                            
                         ))
                     }              
                     </ul>
@@ -57,7 +60,7 @@ function App() {
                     <p className="headline2">You have the option to choose the following desserts.</p>
                     <ul >
                     {                       
-                        foods.filter(entrances=> entrances.type === 3 ).map(food => (
+                        foods.filter(entrances=> entrances.category === 3 ).map(food => (
                             <FoodItem key={food.type} food={food}></FoodItem>
                         ))
                     }              

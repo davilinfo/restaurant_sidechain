@@ -34,7 +34,7 @@ function generateDish(foodType){
             const ribsmenu = new RibsOnTheBarbecueMenu(new VanillaIceCreamDessert());
             ribsmenu.getFood().discount = 0.6;
             const menu = new BakedCheeseOysterEntrance(ribsmenu);            
-            menu.getFood().img = ribsmenu.getFood().img;
+            menu.getFood().img = "images/baked-oysters-plus-ribs.jpg";
             return menu;
 
             break;

@@ -23,18 +23,23 @@ function Menu() {
     return (
         <div id="app">
             <div id="content">
-                <div id="leftPan">
-                    <div id="recipes">
-                        <ul>
+                <br/>
+                <br/>                
+                    <div id="rightPan">
+                        <ul style={{marginLeft: 280, width:300}}>
                         {                       
-                            foods.filter(menu=> menu.type === 4 ).map(food => (                            
-                                <FoodItemDetail key={food.type} food={food}></FoodItemDetail>                            
+                            foods.filter(menu=> menu.category === 2 ).map(food => (
+                                <>
+                                    <FoodItemDetail key={food.type} food={food}></FoodItemDetail>
+                                    <br/>
+                                </>
                             ))
                         }              
                         </ul>
-                    </div>            
-                    <div className="clear" id="end"></div>
-                </div>
+                    </div>           
+                    <div className="clear" id="end"></div>                
+                <br/>
+                <br/>
             </div>            
         </div>        
     );    
