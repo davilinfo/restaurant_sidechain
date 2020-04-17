@@ -45,14 +45,7 @@ class FoodTransaction extends BaseTransaction {
                 "client public key",
                 this.senderPublicKey
             ));
-        }
-
-        if (!utils.verifyTransaction(this.toJSON())){
-            errors.push(new TransactionError(
-                'Invalid transaction "Lisk transaction" defined',
-                this.id
-            ));
-        }        
+        }                
 
         if (!this.asset.description || typeof this.asset.description !== 'string' || this.asset.name.length > 1500){
             errors.push(

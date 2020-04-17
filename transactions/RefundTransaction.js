@@ -45,7 +45,7 @@ class RefundTransaction extends BaseTransaction {
                 'Invalid client "Lisk address" defined on transaction',
                 this.id,
                 "client lisk address",
-                this.senderId
+                this.recipientId
             ));
         }
 
@@ -54,16 +54,9 @@ class RefundTransaction extends BaseTransaction {
                 'Invalid client "Lisk public key" defined on transaction',
                 this.id,
                 "client public key",
-                this.senderPublicKey
+                this.recipientPublicKey
             ));
-        }
-
-        if (!utils.verifyTransaction(this.toJSON())){
-            errors.push(new TransactionError(
-                'Invalid transaction "Lisk transaction" defined',
-                this.id
-            ));
-        }
+        }        
 
         if (!this.asset.transactionId){
             errors.push(
