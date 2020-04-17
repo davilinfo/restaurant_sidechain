@@ -29,6 +29,31 @@ class FoodTransaction extends BaseTransaction {
     validateAsset(){
         const errors = [];        
 
+        if(!utils.validateAddress(this.senderId)){
+            errors.push(new TransactionError(
+                'Invalid client "Lisk address" defined on transaction',
+                this.id,
+                "client lisk address",
+                this.senderId
+            ));
+        }
+
+        if (!utils.validatePublicKey(this.senderPublicKey)){
+            errors.push(new TransactionError(
+                'Invalid client "Lisk public key" defined on transaction',
+                this.id,
+                "client public key",
+                this.senderPublicKey
+            ));
+        }
+
+        if (!utils.verifyTransaction(this.toJSON())){
+            errors.push(new TransactionError(
+                'Invalid transaction "Lisk transaction" defined',
+                this.id
+            ));
+        }        
+
         if (!this.asset.description || typeof this.asset.description !== 'string' || this.asset.name.length > 1500){
             errors.push(
                 new TransactionError(

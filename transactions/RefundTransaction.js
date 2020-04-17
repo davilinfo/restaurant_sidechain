@@ -40,6 +40,31 @@ class RefundTransaction extends BaseTransaction {
             );
         }
 
+        if(!utils.validateAddress(this.recipientId)){
+            errors.push(new TransactionError(
+                'Invalid client "Lisk address" defined on transaction',
+                this.id,
+                "client lisk address",
+                this.senderId
+            ));
+        }
+
+        if (!utils.validatePublicKey(this.recipientPublicKey)){
+            errors.push(new TransactionError(
+                'Invalid client "Lisk public key" defined on transaction',
+                this.id,
+                "client public key",
+                this.senderPublicKey
+            ));
+        }
+
+        if (!utils.verifyTransaction(this.toJSON())){
+            errors.push(new TransactionError(
+                'Invalid transaction "Lisk transaction" defined',
+                this.id
+            ));
+        }
+
         if (!this.asset.transactionId){
             errors.push(
                 new TransactionError(
