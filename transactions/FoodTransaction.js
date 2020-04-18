@@ -127,10 +127,10 @@ class FoodTransaction extends BaseTransaction {
         const errors = [];
         
         const sender = store.account.get(this.senderId);        
-        if (sender.balance < this.amount){
+        if (!sender.balance || sender.balance < this.amount){
             errors.push(
                 new TransactionError(
-                    'Insufficient "balance"',
+                    'Invalid "balance"',
                     this.id
                 )
             );
