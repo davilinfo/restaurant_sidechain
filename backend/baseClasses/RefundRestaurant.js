@@ -11,7 +11,7 @@ class RefundRestaurant{
 
     constructor(){}
 
-    getTimestamp = () => {
+    getTimestamp(){
         const millisSinceEpoc = Date.now() - Date.parse(EPOCH_TIME);
         const inSeconds = ((millisSinceEpoc) / 1000).toFixed(0);
         return parseInt(inSeconds);
@@ -21,11 +21,11 @@ class RefundRestaurant{
         return blockchainClient.transactions.get(id);
     }
     
-    broadcastTransaction = (transaction) => {                        
+    broadcastTransaction(transaction){                        
         return blockchainClient.transactions.broadcast(transaction.toJSON());
     }
 
-    getAccount = (passphrase) => {
+    getAccount(passphrase){
         const address = getAddressFromPassphrase(passphrase);
         return blockchainClient.accounts.get({ address, limit: 1 });
     };    
