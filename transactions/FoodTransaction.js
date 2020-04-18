@@ -46,6 +46,18 @@ class FoodTransaction extends BaseTransaction {
                 this.senderPublicKey
             ));
         }                
+    
+        const sender = store.account.get(this.senderId);
+        if (sender.balance < this.amount){
+            errors.push(
+                new TransactionError(
+                    'Insufficient "balance"',
+                    this.id
+                )
+            );
+        }
+
+        if (!utils.verifyAmountBalance())
 
         if (!this.asset.description || typeof this.asset.description !== 'string' || this.asset.name.length > 1500){
             errors.push(
