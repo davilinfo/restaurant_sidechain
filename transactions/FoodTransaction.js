@@ -124,16 +124,7 @@ class FoodTransaction extends BaseTransaction {
     applyAsset(store){               
         const errors = [];
         
-        const sender = store.account.get(this.senderId);        
-        
-        if (!sender.balance || new utils.BigNum(sender.balance) < new utils.BigNum(this.amount)){
-            errors.push(
-                new TransactionError(
-                    'Invalid "balance"',
-                    this.id
-                )
-            );
-        }
+        const sender = store.account.get(this.senderId);
 
         const senderBalanceDeducted = new utils.BigNum(sender.balance).sub(new utils.BigNum(this.amount));        
 
