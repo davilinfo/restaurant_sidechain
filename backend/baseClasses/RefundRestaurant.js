@@ -41,11 +41,26 @@ class RefundRestaurant{
             timestamp: this.getTimestamp()
         });
         
-        txFood.sign(restaurantPassphrase); //restaurant passphrase
-        ResultSchema.broadcastInfo = await this.broadcastTransaction(txFood);
-        ResultSchema.transaction = txFood;   
-        console.log(ResultSchema);
-
+        try{
+            txFood.sign(restaurantPassphrase); //restaurant passphrase
+            ResultSchema.broadcastInfo = await this.broadcastTransaction(txFood);
+            ResultSchema.transaction = txFood;   
+            console.log(ResultSchema);
+        }catch(e){
+            console.log(e);
+            ResultSchema.transaction = {
+                "message": "not completed"
+            };
+            ResultSchema.broadcastInfo = {
+                "meta": {
+                  "status": false
+                },
+                "data": {
+                  "message": e
+                },
+                "links": {}
+            }
+        }
         
         return ResultSchema;
     }

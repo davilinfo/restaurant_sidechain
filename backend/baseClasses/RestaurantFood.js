@@ -53,13 +53,12 @@ class RestaurantFood{
         });
 
         try{
-
-        txFood.sign(passphrase);
-        
-        ResultSchema.broadcastInfo = await this.broadcastTransaction(txFood);
-        ResultSchema.transaction = txFood;   
-        console.log(ResultSchema);
+            txFood.sign(passphrase);            
+            ResultSchema.broadcastInfo = await this.broadcastTransaction(txFood);
+            ResultSchema.transaction = txFood;   
+            console.log(ResultSchema);
         }catch(e){
+            console.log(e);
             ResultSchema.transaction = {
                 "message": "not completed"
             };
@@ -68,10 +67,10 @@ class RestaurantFood{
                   "status": false
                 },
                 "data": {
-                  "message": "Transaction(s) refused: ".concat(e.message)
+                  "message": e
                 },
                 "links": {}
-              }
+            }
         }
         
         return ResultSchema;
