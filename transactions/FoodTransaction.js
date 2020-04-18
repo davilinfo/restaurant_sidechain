@@ -45,9 +45,7 @@ class FoodTransaction extends BaseTransaction {
                 "client public key",
                 this.senderPublicKey
             ));
-        }                        
-
-        if (!utils.verifyAmountBalance())
+        }                               
 
         if (!this.asset.description || typeof this.asset.description !== 'string' || this.asset.name.length > 1500){
             errors.push(
@@ -127,7 +125,8 @@ class FoodTransaction extends BaseTransaction {
         const errors = [];
         
         const sender = store.account.get(this.senderId);        
-        if (!sender.balance || sender.balance < this.amount){
+        
+        if (!sender.balance || new utils.BigNum(sender.balance) < new utils.BigNum(this.amount)){
             errors.push(
                 new TransactionError(
                     'Invalid "balance"',
@@ -162,7 +161,7 @@ class FoodTransaction extends BaseTransaction {
 
         store.account.set(restaurantAccount.address, updatedRestaurantAccount);
                 
-        return [];
+        return errors;
     }
 
     /* UndoAsset function tells the blockchain how to rollback changes made in the applyAsset function.
