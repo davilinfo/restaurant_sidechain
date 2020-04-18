@@ -52,11 +52,27 @@ class RestaurantFood{
             timestamp: this.getTimestamp()
         });
 
+        try{
+
         txFood.sign(passphrase);
         
         ResultSchema.broadcastInfo = await this.broadcastTransaction(txFood);
         ResultSchema.transaction = txFood;   
         console.log(ResultSchema);
+        }catch(e){
+            ResultSchema.transaction = {
+                "message": "not completed"
+            };
+            ResultSchema.broadcastInfo = {
+                "meta": {
+                  "status": false
+                },
+                "data": {
+                  "message": "Transaction(s) refused: ".concat(e.message)
+                },
+                "links": {}
+              }
+        }
         
         return ResultSchema;
     }

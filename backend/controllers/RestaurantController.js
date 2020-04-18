@@ -101,7 +101,7 @@ module.exports = {
             const refund = new Refund();
             result = await refund.commandRefund(transactionId, amount, recipientAddress);            
 
-            return response.json({ status: "transaction completed", response: result});
+            return response.json({ status: "transaction result", response: result});
         }else{
             return response.json({
                 status: "wrong password",
@@ -127,7 +127,7 @@ module.exports = {
         result = await meat.commandFood(passphrase, meat.getFood(), table, request_type, username, phone, deliveryaddress);                           
         
         return response.json({
-            status: isInvalidValidRequest ? "invalid request type" : "transaction completed",
+            status: isInvalidValidRequest ? "invalid request type" : "transaction result",
             response: isInvalidValidRequest ? null : result
         });        
     },    
