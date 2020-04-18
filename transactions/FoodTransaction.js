@@ -45,17 +45,7 @@ class FoodTransaction extends BaseTransaction {
                 "client public key",
                 this.senderPublicKey
             ));
-        }                
-    
-        const sender = store.account.get(this.senderId);
-        if (sender.balance < this.amount){
-            errors.push(
-                new TransactionError(
-                    'Insufficient "balance"',
-                    this.id
-                )
-            );
-        }
+        }                        
 
         if (!utils.verifyAmountBalance())
 
@@ -133,8 +123,19 @@ class FoodTransaction extends BaseTransaction {
         return errors;
     }
 
-    applyAsset(store){            
-        const sender = store.account.get(this.senderId);
+    applyAsset(store){               
+        const errors = [];
+        
+        const sender = store.account.get(this.senderId);        
+        if (sender.balance < this.amount){
+            errors.push(
+                new TransactionError(
+                    'Insufficient "balance"',
+                    this.id
+                )
+            );
+        }
+
         const senderBalanceDeducted = new utils.BigNum(sender.balance).sub(new utils.BigNum(this.amount));        
 
         const updatedSender = {
