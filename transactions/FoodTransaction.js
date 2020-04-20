@@ -1,6 +1,7 @@
 const {
     BaseTransaction,
     TransactionError,
+    transactions,
     utils
 } = require('@liskhq/lisk-transactions');
 
@@ -126,7 +127,7 @@ class FoodTransaction extends BaseTransaction {
         
         const sender = store.account.get(this.senderId);
 
-        /*if (!sender){           
+        if (!sender){           
             errors.push(
                 new TransactionError(
                     'Invalid "sender", please verify your passphrase',
@@ -136,7 +137,7 @@ class FoodTransaction extends BaseTransaction {
                     'Verify your passpahrase and address'
                 )
             );            
-        }*/
+        }
 
         const senderBalanceDeducted = new utils.BigNum(sender.balance).sub(new utils.BigNum(this.amount));
 
