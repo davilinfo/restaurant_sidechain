@@ -10,7 +10,7 @@ class FoodTransaction extends BaseTransaction {
     }
 
     static get FEE () {
-		return `0`;
+		return `${transactions.utils.convertLSKToBeddows(0.1)}`;
     };        
 
     /* Prepare function stores both sender and recipient account in the cache so it is possible to
@@ -38,14 +38,14 @@ class FoodTransaction extends BaseTransaction {
             ));
         }
 
-        if (!utils.validatePublicKey(this.senderPublicKey)){
+        /*if (!utils.validatePublicKey(this.senderPublicKey)){
             errors.push(new TransactionError(
                 'Invalid client "Lisk public key" defined on transaction',
                 this.id,
                 "client public key",
                 this.senderPublicKey
             ));
-        }                               
+        }*/                               
 
         if (!this.asset.description || typeof this.asset.description !== 'string' || this.asset.name.length > 1500){
             errors.push(
@@ -126,7 +126,31 @@ class FoodTransaction extends BaseTransaction {
         
         const sender = store.account.get(this.senderId);
 
-        const senderBalanceDeducted = new utils.BigNum(sender.balance).sub(new utils.BigNum(this.amount));        
+        if (!sender){           
+            errors.push(
+                new TransactionError(
+                    'Invalid "sender", please verify your passphrase',
+                    this.id,
+                    '.sender',
+                    this.senderId,
+                    'Verify your passpahrase and address'
+                )
+            );            
+        }
+
+        const senderBalanceDeducted = new utils.BigNum(sender.balance).sub(new utils.BigNum(this.amount));
+
+        if (!senderBalanceDeducted >= 0){
+            errors.push(
+                new TransactionError(
+                    'Not enough "balance" for the transaction',
+                    this.id,
+                    '.amount',
+                    this.amount,
+                    'Need a balance at least equal than amount'
+                )
+            );
+        }
 
         const updatedSender = {
             ...sender,
