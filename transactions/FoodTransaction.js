@@ -11,7 +11,7 @@ class FoodTransaction extends BaseTransaction {
     }
 
     static get FEE () {
-		return `${transactions.utils.convertLSKToBeddows(0.1)}`;
+		return `10000000`;
     };        
 
     /* Prepare function stores both sender and recipient account in the cache so it is possible to
