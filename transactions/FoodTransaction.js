@@ -38,14 +38,14 @@ class FoodTransaction extends BaseTransaction {
             ));
         }
 
-        /*if (!utils.validatePublicKey(this.senderPublicKey)){
+        if (!utils.validatePublicKey(this.senderPublicKey)){
             errors.push(new TransactionError(
                 'Invalid client "Lisk public key" defined on transaction',
                 this.id,
                 "client public key",
                 this.senderPublicKey
             ));
-        }*/                               
+        }                               
 
         if (!this.asset.description || typeof this.asset.description !== 'string' || this.asset.name.length > 1500){
             errors.push(
@@ -126,7 +126,7 @@ class FoodTransaction extends BaseTransaction {
         
         const sender = store.account.get(this.senderId);
 
-        if (!sender){           
+        /*if (!sender){           
             errors.push(
                 new TransactionError(
                     'Invalid "sender", please verify your passphrase',
@@ -136,11 +136,11 @@ class FoodTransaction extends BaseTransaction {
                     'Verify your passpahrase and address'
                 )
             );            
-        }
+        }*/
 
         const senderBalanceDeducted = new utils.BigNum(sender.balance).sub(new utils.BigNum(this.amount));
 
-        if (!senderBalanceDeducted >= 0){
+        if (senderBalanceDeducted < 0){
             errors.push(
                 new TransactionError(
                     'Not enough "balance" for the transaction',
