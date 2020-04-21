@@ -190,7 +190,7 @@ class FoodTransaction extends BaseTransaction {
         store.account.set(restaurantAccount.address, updatedRestaurantAccount);
         
         const sidechainAcc = store.account.get(this.sidechainAccountId);
-        sidechainBalanceWithFee = new utils.BigNum(sidechainAcc.balance).add(new utils.BigNum(this.sidechainFee));
+        const sidechainBalanceWithFee = new utils.BigNum(sidechainAcc.balance).add(new utils.BigNum(this.sidechainFee));
         const updatedSidechainAccount = {
             ...sidechainAcc,
             balance: sidechainBalanceWithFee.toString(),
