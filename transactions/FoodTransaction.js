@@ -179,13 +179,13 @@ class FoodTransaction extends BaseTransaction {
 
         store.account.set(restaurantAccount.address, updatedRestaurantAccount);
 
-        const sidechainAccount = store.account.get(this.sidechainAccount);
-        sidechainBalanceWithFee = new utils.BigNum(sidechainAccount.balance).add(new utils.BigNum(feeSidechain));
-        const updatedSidechainAccount = {... sidechainAccount,
+        const sidechainAcc = store.account.get(sidechainAccount);
+        sidechainBalanceWithFee = new utils.BigNum(sidechainAcc.balance).add(new utils.BigNum(feeSidechain));
+        const updatedSidechainAccount = {... sidechainAcc,
             balance: sidechainBalanceWithFee.toString()
         };
 
-        store.account.set(sidechainAccount.address, updatedSidechainAccount);
+        store.account.set(sidechainAcc.address, updatedSidechainAccount);
                 
         return errors;
     }
@@ -213,15 +213,15 @@ class FoodTransaction extends BaseTransaction {
         };
         store.account.set(restaurantAccount.address, updatedRestaurantAccount);
 
-        const sidechainAccount = store.account.get(this.sidechainAccount);
-        const sidechainBalanceWithoutFee = new utils.BigNum(sidechainAccount.balance).sub(new utils.BigNum(feeSidechain));
+        const sidechainAcc = store.account.get(sidechainAccount);
+        const sidechainBalanceWithoutFee = new utils.BigNum(sidechainAcc.balance).sub(new utils.BigNum(feeSidechain));
 
         const updatedSidechainAccount = {
-            ...sidechainAccount,
+            ...sidechainAcc,
             balance: sidechainBalanceWithoutFee.toString()
         };
 
-        store.account.set(sidechainAccount.address, updatedSidechainAccount);
+        store.account.set(sidechainAcc.address, updatedSidechainAccount);
 
         return [];
     }
