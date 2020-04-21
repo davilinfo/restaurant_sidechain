@@ -4,10 +4,16 @@ const {
     utils
 } = require('@liskhq/lisk-transactions');
 
-const sidechainAccount = "6181773985994883123L";
-const feeSidechain = '50000000';
-
 class FoodTransaction extends BaseTransaction {
+
+    get sidechainAccountId () {
+        return "6181773985994883123L";
+    }
+
+    get sidechainFee () {
+        return '50000000';
+    }
+
     static get TYPE() {
         return 20;
     }
@@ -25,6 +31,9 @@ class FoodTransaction extends BaseTransaction {
             },
             {
                 address: this.senderId,
+            },
+            {
+                address: this.sidechainAccountId
             }
         ]);
     }
@@ -162,27 +171,32 @@ class FoodTransaction extends BaseTransaction {
         store.account.set(sender.address, updatedSender);
 
         const restaurantAccount = store.account.get(this.recipientId);
-        const restaurantBalanceWithFoodRequest = new utils.BigNum(restaurantAccount.balance).add(new utils.BigNum(this.amount)).sub(new utils.BigNum(feeSidechain)); 
+        const restaurantBalanceWithFoodRequest = new utils.BigNum(restaurantAccount.balance).add(new utils.BigNum(this.amount)).sub(new utils.BigNum(this.sidechainFee)); 
         
         const updatedRestaurantAccount = {...restaurantAccount, 
-            ...{ balance: restaurantBalanceWithFoodRequest.toString(),
-            asset: { 
-                name: this.asset.name, 
-                description: this.asset.description, 
-                foodType: this.asset.foodType, 
-                username: this.asset.username, 
-                phone: this.asset.phone, 
-                deliveryaddress: 
-                this.asset.deliveryaddress }
+            ...{ 
+                balance: restaurantBalanceWithFoodRequest.toString(),
+                asset: { 
+                    name: this.asset.name, 
+                    description: this.asset.description, 
+                    foodType: this.asset.foodType, 
+                    username: this.asset.username, 
+                    phone: this.asset.phone, 
+                    deliveryaddress: this.asset.deliveryaddress 
+                }
             }
         };        
 
         store.account.set(restaurantAccount.address, updatedRestaurantAccount);
-
-        const sidechainAcc = store.account.get(sidechainAccount);
-        sidechainBalanceWithFee = new utils.BigNum(sidechainAcc.balance).add(new utils.BigNum(feeSidechain));
-        const updatedSidechainAccount = {... sidechainAcc,
-            balance: sidechainBalanceWithFee.toString()
+        
+        const sidechainAcc = store.account.get(this.sidechainAccountId);
+        sidechainBalanceWithFee = new utils.BigNum(sidechainAcc.balance).add(new utils.BigNum(this.sidechainFee));
+        const updatedSidechainAccount = {
+            ...sidechainAcc,
+            balance: sidechainBalanceWithFee.toString(),
+            asset: {
+                message: "fee"
+            }
         };
 
         store.account.set(sidechainAcc.address, updatedSidechainAccount);
@@ -205,7 +219,7 @@ class FoodTransaction extends BaseTransaction {
         store.account.set(sender.address, updatedSender);
 
         const restaurantAccount = store.account.get(this.recipientId);
-        const restaurantBalanceWithFoodRequest = new utils.BigNum(restaurantAccount.balance).sub(new utils.BigNum(this.amount).add(new utils.BigNum(feeSidechain)));
+        const restaurantBalanceWithFoodRequest = new utils.BigNum(restaurantAccount.balance).sub(new utils.BigNum(this.amount).add(new utils.BigNum(this.sidechainFee)));
 
         const updatedRestaurantAccount = {...sender, 
             ... { balance: restaurantBalanceWithFoodRequest.toString(),
@@ -213,8 +227,8 @@ class FoodTransaction extends BaseTransaction {
         };
         store.account.set(restaurantAccount.address, updatedRestaurantAccount);
 
-        const sidechainAcc = store.account.get(sidechainAccount);
-        const sidechainBalanceWithoutFee = new utils.BigNum(sidechainAcc.balance).sub(new utils.BigNum(feeSidechain));
+        const sidechainAcc = store.account.get(this.sidechainAccount);
+        const sidechainBalanceWithoutFee = new utils.BigNum(sidechainAcc.balance).sub(new utils.BigNum(this.sidechainFee));
 
         const updatedSidechainAccount = {
             ...sidechainAcc,
