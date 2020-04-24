@@ -47,16 +47,7 @@ class RefundTransaction extends BaseTransaction {
                 "client lisk address",
                 this.recipientId
             ));
-        }
-
-        if (!utils.validatePublicKey(this.recipientPublicKey)){
-            errors.push(new TransactionError(
-                'Invalid client "Lisk public key" defined on transaction',
-                this.id,
-                "client public key",
-                this.recipientPublicKey
-            ));
-        }        
+        }              
 
         if (!this.asset.transactionId){
             errors.push(

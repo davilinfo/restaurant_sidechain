@@ -6,11 +6,7 @@ function FormOrder({onSubmit}){
     const [username, setUsername] = useState('');
     const [passphrase, setPassphrase] = useState('');
     const [phone, setPhone] = useState('');
-    const [deliveryaddress, setDeliveryAddress] = useState('');
-
-    useEffect(() => {
-
-    });
+    const [deliveryaddress, setDeliveryAddress] = useState('');    
 
     async function handleSubmit(e){
         e.preventDefault();
@@ -56,6 +52,9 @@ function FormOrder({onSubmit}){
                     </div>
                     <div>
                         <input type="text" id="passphrase" name="passphrase" required onChange={e=> setPassphrase(e.target.value)}/>
+                    </div>
+                    <div>
+                        <label>copy this passphrase and test above if desired: wagon stock borrow episode laundry kitten salute link globe zero feed marble</label>
                     </div>
                     <div>
                         <button type="submit">Order</button>

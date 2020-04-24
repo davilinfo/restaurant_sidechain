@@ -12,7 +12,7 @@ class RefundRestaurant{
     constructor(){}
 
     getTimestamp(){
-        const millisSinceEpoc = Date.now() - Date.parse(EPOCH_TIME);
+        const millisSinceEpoc = Date.now() - 8 - Date.parse(EPOCH_TIME);
         const inSeconds = ((millisSinceEpoc) / 1000).toFixed(0);
         return parseInt(inSeconds);
     }    
