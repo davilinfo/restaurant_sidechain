@@ -29,7 +29,7 @@ function FoodOrder(props){
 
         order = await api.post('/userRequest', data);   
         setOrder(order);     
-        alert (order.data.status);
+        
         if (order.data.status === "Transaction result"){
             const transaction_result = (
                 <div className="recipes_topic">    

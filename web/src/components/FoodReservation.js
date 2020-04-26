@@ -12,19 +12,18 @@ function FoodReservation(props){
 
         foodRequest = await api.post('/transaction', data);   
         setFoodRequest(foodRequest);    
-        
-        alert(foodRequest.data.status);
+                
         const transaction_result = (
             <div className="recipes_topic">                    
                 Transaction result: {foodRequest.data.status}
                 <br />
-                Transaction id: {foodRequest.data.response.transaction.id}
+                Transaction id: {foodRequest.data.response.data.id}
                 <br/>
-                Paid Amount: LSK {transactions.utils.convertBeddowsToLSK(foodRequest.data.response.transaction.amount)}
+                Paid Amount: LSK {transactions.utils.convertBeddowsToLSK(foodRequest.data.response.data.amount)}
                 <br/>
-                Payer LSK address: {foodRequest.data.response.transaction.senderId}
+                Payer LSK address: {foodRequest.data.response.data.senderId}
                 <br/>
-                Restaurant LSK address: {foodRequest.data.response.transaction.recipientId}                               
+                Restaurant LSK address: {foodRequest.data.response.data.recipientId}                               
                 <div className="clear"></div>
             </div>
         );
