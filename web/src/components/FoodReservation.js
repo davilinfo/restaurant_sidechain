@@ -13,6 +13,7 @@ function FoodReservation(props){
         foodRequest = await api.post('/transaction', data);   
         setFoodRequest(foodRequest);    
         
+        alert(foodRequest.data.status);
         const transaction_result = (
             <div className="recipes_topic">                    
                 Transaction result: {foodRequest.data.status}
