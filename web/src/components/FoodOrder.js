@@ -30,7 +30,7 @@ function FoodOrder(props){
         order = await api.post('/userRequest', data);   
         setOrder(order);     
         
-        if (order.data.status === "transaction result"){
+        if (order.data.status === "Transaction result"){
             const transaction_result = (
                 <div className="recipes_topic">    
                     <img src={`../${food.img}`} width="200" height="200" alt="" /> 
