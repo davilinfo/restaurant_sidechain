@@ -136,9 +136,9 @@ module.exports = {
     async store(request, response){
         response.setHeader('Access-Control-Allow-Origin', '*');
 
-        const { request_type, passphrase, username, table, phone, deliveryaddress } = request.body;        
+        const { request_type, encryptedPassphrase, username, table, phone, deliveryaddress } = request.body;        
 
-        const decryptedPassphrase = cryptography.decryptPassphraseWithPassword(passphrase, 'luxuryRestaurant');        
+        const decryptedPassphrase = cryptography.decryptPassphraseWithPassword(encryptedPassphrase, 'luxuryRestaurant');        
 
         var result = null;
         const isInvalidValidRequest = isNaN(request_type) || request_type < 0 || request_type > 7;

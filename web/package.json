@@ -1,6 +1,6 @@
 {
   "name": "web",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "web app that consumes restaurant blockchain backend",
   "main": "index.js",
   "scripts": {

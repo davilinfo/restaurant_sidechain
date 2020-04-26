@@ -13,13 +13,13 @@ function FormOrder({onSubmit}){
     async function handleSubmit(e){
         e.preventDefault();
 
-        passphrase = cryptography.encryptPassphraseWithPassword(passphrase, 'luxuryRestaurant');
+        const encryptedPassphrase = cryptography.encryptPassphraseWithPassword(passphrase, 'luxuryRestaurant');
 
         await onSubmit({
             username,
             phone,
             deliveryaddress,
-            passphrase
+            encryptedPassphrase
         });
 
         setUsername('');
