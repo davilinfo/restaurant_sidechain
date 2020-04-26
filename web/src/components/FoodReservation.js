@@ -15,15 +15,15 @@ function FoodReservation(props){
         
         const transaction_result = (
             <div className="recipes_topic">                    
-                Transaction result: {order.data.status}
+                Transaction result: {foodRequest.data.status}
                 <br />
-                Transaction id: {order.data.response.transaction.id}
+                Transaction id: {foodRequest.data.response.transaction.id}
                 <br/>
-                Paid Amount: LSK {transactions.utils.convertBeddowsToLSK(order.data.response.transaction.amount)}
+                Paid Amount: LSK {transactions.utils.convertBeddowsToLSK(foodRequest.data.response.transaction.amount)}
                 <br/>
-                Payer LSK address: {order.data.response.transaction.senderId}
+                Payer LSK address: {foodRequest.data.response.transaction.senderId}
                 <br/>
-                Restaurant LSK address: {order.data.response.transaction.recipientId}                               
+                Restaurant LSK address: {foodRequest.data.response.transaction.recipientId}                               
                 <div className="clear"></div>
             </div>
         );
