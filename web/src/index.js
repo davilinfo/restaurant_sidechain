@@ -5,6 +5,7 @@ import History from './components/History';
 import Menu from './components/Menu';
 import FoodOrder from './components/FoodOrder';
 import FoodRefund from './components/FoodRefund';
+import FoodReservation from './components/FoodReservation';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Contact from './components/Contact';
@@ -19,6 +20,7 @@ const routing = (
             <Route path="/Menu" component={Menu} />
             <Route path="/FoodOrder" component={FoodOrder} />
             <Route path="/Refund" component={FoodRefund} />
+            <Route path="/Reservation" component={FoodReservation} />
             <Route path="/Contact" component={Contact} />
         </Switch>
         <Footer/>        

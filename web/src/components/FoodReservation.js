@@ -1,31 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import api from '../services/api';
-import FormRefund from './FormRefund';
+import FormReservation from './FormReservation';
 import '../styles.css';
 const transactions = require("@liskhq/lisk-transactions");
 
-function FoodRefund(props){                   
-    var [order, setOrder] = useState([]);            
+function FoodReservation(props){                   
+    var [foodRequest, setFoodRequest] = useState([]);            
 
     async function handleSubmit(data){                
 
-        order = await api.post('/refund', data);   
-        setOrder(order);    
+        foodRequest = await api.post('/transaction', data);   
+        setFoodRequest(foodRequest);    
         
         const transaction_result = (
             <div className="recipes_topic">                    
                 Transaction result: {order.data.status}
                 <br />
-                Refund Transaction id: {order.data.response.transaction.id}
+                Transaction id: {order.data.response.transaction.id}
                 <br/>
                 Paid Amount: LSK {transactions.utils.convertBeddowsToLSK(order.data.response.transaction.amount)}
                 <br/>
                 Payer LSK address: {order.data.response.transaction.senderId}
                 <br/>
-                Restaurant LSK address: {order.data.response.transaction.recipientId}
-                <br/>
-                Broadcast info: {order.data.response.broadcastInfo.data.message}                
+                Restaurant LSK address: {order.data.response.transaction.recipientId}                               
                 <div className="clear"></div>
             </div>
         );
@@ -36,10 +34,10 @@ function FoodRefund(props){
     return (
         <div id="app">
             <div id="content" align="center">                
-                <FormRefund onSubmit={handleSubmit}></FormRefund>                
+                <FormReservation onSubmit={handleSubmit}></FormReservation>                
             </div>
         </div>
     );
 }
 
-export default FoodRefund;
+export default FoodReservation;

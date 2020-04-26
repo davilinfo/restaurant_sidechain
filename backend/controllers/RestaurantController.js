@@ -5,6 +5,7 @@ const RibsOnTheBarbecueMenu = require ('../menu/ribsonthebarbecue_menu');
 const BakedCheeseOysterEntrance = require('../entrances/baked_oyster_entrance');
 const Refund = require('../baseClasses/RefundRestaurant');
 const { food_type } = require ('../foodTypes/food_types.json');
+const cryptography = require('@liskhq/lisk-cryptography');
 
 /* Attention: please, keep the food describe in food_types.json equivalent on each RestaurantFood class*/
 
@@ -77,19 +78,37 @@ module.exports = {
     },
 
     /* 
-    method type: Get
+    method type: Post
     Returns the account detail from the respective passphrase supplied in the URL
     */
     async getAccount(request, response){
         response.setHeader('Access-Control-Allow-Origin', '*');
         var restaurant = new Refund();
         const { passphrase } = request.body;
-        return response.json({ response: await restaurant.getAccount(passphrase)});
+
+        const decryptedPassphrase = cryptography.decryptPassphraseWithPassword(passphrase, 'luxuryRestaurant');
+
+        return response.json({ response: await restaurant.getAccount(decryptedPassphrase)});
+    },
+
+    /*
+    method type: Post
+    Returns transaction detail by transaction id
+    */
+    async getTransactionById(request, response){
+        response.setHeader('Access-Control-Allow-Origin', '*');
+
+        const { transactionId } = request.body;
+
+        var restaurant = new Refund();
+        var result = await restaurant.getTransactionById(transactionId);
+
+        return response.json({ status: "Transaction result", response: result});
     },
 
     /* 
     method type: Post
-    Returns transaction detail related to the refund inforamtion supplied
+    Returns transaction detail related to the refund information supplied
     */
     async refund(request, response) {
         response.setHeader('Access-Control-Allow-Origin', '*');
@@ -99,13 +118,13 @@ module.exports = {
         var result = null;
         if (password == "pocFoodRestaurant"){
             const refund = new Refund();
-            result = await refund.commandRefund(transactionId, amount, recipientAddress);            
+            result = await refund.commandRefund(transactionId, amount, recipientAddress);                        
 
-            return response.json({ status: "transaction result", response: result});
+            return response.json({ status: "Transaction result", response: result});
         }else{
             return response.json({
-                status: "wrong password",
-                response: null
+                status: "validation error",
+                response: "wrong password"
             });
         }
     },
@@ -119,15 +138,17 @@ module.exports = {
 
         const { request_type, passphrase, username, table, phone, deliveryaddress } = request.body;        
 
+        const decryptedPassphrase = cryptography.decryptPassphraseWithPassword(passphrase, 'luxuryRestaurant');        
+
         var result = null;
         const isInvalidValidRequest = isNaN(request_type) || request_type < 0 || request_type > 7;
         console.log("registering payment");        
-        
+                
         const meat = generateDish(request_type);           
-        result = await meat.commandFood(passphrase, meat.getFood(), table, request_type, username, phone, deliveryaddress);                           
+        result = await meat.commandFood(decryptedPassphrase, meat.getFood(), table, request_type, username, phone, deliveryaddress);                           
         
         return response.json({
-            status: isInvalidValidRequest ? "invalid request type" : "transaction result",
+            status: isInvalidValidRequest ? "invalid request type" : "Transaction result",
             response: isInvalidValidRequest ? null : result
         });        
     },    

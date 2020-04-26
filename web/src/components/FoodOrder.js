@@ -30,31 +30,53 @@ function FoodOrder(props){
         order = await api.post('/userRequest', data);   
         setOrder(order);     
         
-        const transaction_result = (
-            <div className="recipes_topic">    
-                <img src={`../${food.img}`} width="200" height="200" alt="" /> 
-                <br />
-                <p>
-                Food description:  {food.description} 
-                </p>
-                <p>
-                Transaction result: {order.data.status}
-                <br />
-                Transaction id: {order.data.response.transaction.id}
-                <br/>
-                Paid Amount: LSK {transactions.utils.convertBeddowsToLSK(order.data.response.transaction.amount)}
-                <br/>
-                Payer address: {order.data.response.transaction.senderId}
-                <br/>
-                Restaurant address: {order.data.response.transaction.recipientId}
-                <br/>
-                Broadcast info: {order.data.response.broadcastInfo.data.message}
-                </p>
-                <div className="clear"></div>
-            </div>
-        );
+        if (order.data.status === "transaction result"){
+            const transaction_result = (
+                <div className="recipes_topic">    
+                    <img src={`../${food.img}`} width="200" height="200" alt="" /> 
+                    <br />
+                    <p>
+                    Food description:  {food.description} 
+                    </p>
+                    <p>
+                    {order.data.status}                    
+                    <br/>
+                    Transaction id: {order.data.response.transaction.id}
+                    <br/>
+                    Paid Amount: LSK {transactions.utils.convertBeddowsToLSK(order.data.response.transaction.amount)}
+                    <br/>
+                    Payer address: {order.data.response.transaction.senderId}
+                    <br/>
+                    Restaurant address: {order.data.response.transaction.recipientId}
+                    <br/>
+                    Broadcast info: {order.data.response.broadcastInfo.data.message}
+                    </p>
+                    <div className="clear"></div>
+                </div>
+            );
 
-        ReactDOM.render(transaction_result, document.getElementById('content'));        
+            ReactDOM.render(transaction_result, document.getElementById('content'));
+        }else{
+            const transaction_result = (
+                <div className="recipes_topic">    
+                    <img src={`../${food.img}`} width="200" height="200" alt="" /> 
+                    <br />
+                    <p>
+                    Food description:  {food.description} 
+                    </p>
+                    <p>
+                    {order.data.status}
+                    <br/>
+                    {order.data.response.transaction}
+                    <br/>
+                    Broadcast info: {order.data.response.broadcastInfo.data.message}
+                    </p>
+                    <div className="clear"></div>
+                </div>
+            );
+
+            ReactDOM.render(transaction_result, document.getElementById('content'));
+        }
     }        
 
     return (
