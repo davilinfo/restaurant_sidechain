@@ -17,9 +17,7 @@ function FoodReservation(props){
             <div className="recipes_topic">                    
                 Transaction result: {foodRequest.data.status}
                 <br />
-                Transaction id: {foodRequest.data.response.data.id}
-                <br/>
-                Paid Amount: LSK {transactions.utils.convertBeddowsToLSK(foodRequest.data.response.data.amount)}
+                Transaction id: {foodRequest.data.response.data.id}                
                 <br/>
                 Payer LSK address: {foodRequest.data.response.data.senderId}
                 <br/>
