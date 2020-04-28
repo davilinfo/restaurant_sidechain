@@ -13,9 +13,9 @@ function Header() {
             <li className="line"></li>
             <li className="btn_3"><NavLink exact activeClassName="active" to="/Menu">Menu</NavLink></li>      
             <li className="line"></li>
-            <li className="btn_4"><NavLink exact activeClassName="active" to="/Refund">Refund</NavLink></li>
+            <li className="btn_8"><NavLink exact activeClassName="active" to="/Refund">Refund</NavLink></li>
             <li className="line"></li>
-            <li className="btn_5"><NavLink exact activeClassName="active" to="/Reservation">Reservations</NavLink></li>
+            <li className="btn_7"><NavLink exact activeClassName="active" to="/Reservation">Reservations</NavLink></li>
             <li className="line"></li>
             <li className="btn_6"><NavLink exact activeClassName="active" to="/Contact">Contacts</NavLink></li>
         </ul>      

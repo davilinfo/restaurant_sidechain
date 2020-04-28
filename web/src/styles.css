@@ -45,6 +45,12 @@ p a:hover{ color:#FFF; text-decoration:none;}
 #header ul.menu li.btn_6 a{width:64px; background:url(./images/btn_6.gif) 0 0 no-repeat; }
 #header ul.menu li.btn_6 a:hover{width:64px; background:url(./images/btn_6_over.gif) 0 0 no-repeat;}
 
+#header ul.menu li.btn_7 a{width:77px; background:url(./images/btn_7.gif) 0 0 no-repeat; }
+#header ul.menu li.btn_7 a:hover{width:77px; background:url(./images/btn_7_over.gif) 0 0 no-repeat;}
+
+#header ul.menu li.btn_8 a{width:77px; background:url(./images/btn_8.gif) 0 0 no-repeat; }
+#header ul.menu li.btn_8 a:hover{width:77px; background:url(./images/btn_8_over.gif) 0 0 no-repeat;}
+
 #header ul.menu li.line{width:7px; background:url(./images/bullet1.gif) 0 4px no-repeat}
 
 /* CONTENT */
