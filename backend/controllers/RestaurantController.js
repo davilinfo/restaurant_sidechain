@@ -100,8 +100,9 @@ module.exports = {
 
         const { transactionId } = request.body;
 
+        const options = { "type": 20, "id": transactionId, "limit": 5 };
         var restaurant = new Refund();
-        var result = await restaurant.getTransactionById(transactionId);
+        var result = await restaurant.getTransactionById(options);
 
         return response.json({ status: "Transaction result", response: result});
     },
@@ -137,8 +138,9 @@ module.exports = {
         response.setHeader('Access-Control-Allow-Origin', '*');
 
         const { request_type, encryptedPassphrase, username, table, phone, deliveryaddress } = request.body;        
+        const password = 'luxuryRestaurant';
 
-        const decryptedPassphrase = cryptography.decryptPassphraseWithPassword(encryptedPassphrase, 'luxuryRestaurant');        
+        const decryptedPassphrase = cryptography.decryptPassphraseWithPassword(encryptedPassphrase, password);
 
         var result = null;
         const isInvalidValidRequest = isNaN(request_type) || request_type < 0 || request_type > 7;

@@ -12,10 +12,10 @@ function FoodReservation(props){
 
         foodRequest = await api.post('/transaction', data);   
         setFoodRequest(foodRequest);    
-                
+        alert(foodRequest.data.response);
         const transaction_result = (
             <div className="recipes_topic">                    
-                Transaction result: {foodRequest.data.status}
+                {foodRequest.data.status}
                 <br />
                 Transaction id: {foodRequest.data.response.data.id}                
                 <br/>

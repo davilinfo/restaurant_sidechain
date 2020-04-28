@@ -16,8 +16,8 @@ class RestaurantFood{
         return parseInt(inSeconds);
     }    
     
-    getTransactionById(id){        
-        return blockchainClient.transactions.get(id);
+    getTransactionById(options){
+        return blockchainClient.transactions.get(options);
     }
 
     broadcastTransaction(transaction){                        
