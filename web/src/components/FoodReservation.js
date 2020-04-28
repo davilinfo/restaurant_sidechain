@@ -25,7 +25,7 @@ function FoodReservation(props){
                 <br/>
                 Food name: {foodRequest.data.response.data.length > 0 ? foodRequest.data.response.data[0].asset.name : ""}
                 <br/>
-                Amount: {foodRequest.data.response.data.length > 0 ? foodRequest.data.response.data[0].amount : ""}
+                Amount: LSK {foodRequest.data.response.data.length > 0 ? transactions.utils.convertBeddowsToLSK(foodRequest.data.response.data[0].amount) : 0}
                 <br/>
                 Phone: {foodRequest.data.response.data.length > 0 ? foodRequest.data.response.data[0].asset.phone : ""}
                 <br/>
