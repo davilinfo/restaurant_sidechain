@@ -12,16 +12,26 @@ function FoodReservation(props){
 
         foodRequest = await api.post('/transaction', data);   
         setFoodRequest(foodRequest);    
-        alert(foodRequest.data.response);
+        
         const transaction_result = (
             <div className="recipes_topic">                    
                 {foodRequest.data.status}
                 <br />
-                Transaction id: {foodRequest.data.response.data.id}                
+                Transaction id: {foodRequest.data.response.data.length > 0 ? foodRequest.data.response.data[0].id : ""}                
                 <br/>
-                Payer LSK address: {foodRequest.data.response.data.senderId}
+                Payer LSK address: {foodRequest.data.response.data.length > 0 ? foodRequest.data.response.data[0].senderId : ""}
                 <br/>
-                Restaurant LSK address: {foodRequest.data.response.data.recipientId}                               
+                Restaurant LSK address: {foodRequest.data.response.data.length > 0 ? foodRequest.data.response.data[0].recipientId : ""}
+                <br/>
+                Food name: {foodRequest.data.response.data.length > 0 ? foodRequest.data.response.data[0].asset.name : ""}
+                <br/>
+                Amount: {foodRequest.data.response.data.length > 0 ? foodRequest.data.response.data[0].amount : ""}
+                <br/>
+                Phone: {foodRequest.data.response.data.length > 0 ? foodRequest.data.response.data[0].asset.phone : ""}
+                <br/>
+                Delivery address: {foodRequest.data.response.data.length > 0 ? foodRequest.data.response.data[0].asset.deliveryaddress : ""}
+                <br/>
+                User: {foodRequest.data.response.data.length > 0 ? foodRequest.data.response.data[0].asset.username : ""}
                 <div className="clear"></div>
             </div>
         );

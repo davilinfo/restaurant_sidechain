@@ -100,7 +100,7 @@ module.exports = {
 
         const { transactionId } = request.body;
 
-        const options = { "type": 20, "id": transactionId, "limit": 5 };
+        const options = { "type": 20, "id": transactionId, "limit": 1 };
         var restaurant = new Refund();
         var result = await restaurant.getTransactionById(options);
 
