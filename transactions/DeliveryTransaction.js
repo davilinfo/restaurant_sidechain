@@ -75,18 +75,18 @@ class DeliveryTransaction extends BaseTransaction {
         store.account.set(restaurantAccount.address, updatedRestaurant);
 
         const delivery = store.account.get(this.recipientId);
-        const delivery = new utils.BigNum(delivery.balance).add(new utils.BigNum(this.amount));
+        const deliveryPayed = new utils.BigNum(delivery.balance).add(new utils.BigNum(this.amount));
 
-        const clientUpdated = {
-            ...client,
-            ...{ balance: clientRefunded.toString(),
+        const deliveryUpdated = {
+            ...delivery,
+            ...{ balance: deliveryPayed.toString(),
                 asset: {
                     transactionId: this.asset.transactionId
                 }
             }
         };
         
-        store.account.set(client.address, clientUpdated);
+        store.account.set(delivery.address, deliveryUpdated);
         return [];
     }
 
@@ -100,19 +100,19 @@ class DeliveryTransaction extends BaseTransaction {
         }
         store.account.set(restaurantAccount.address, updatedRestaurant);
 
-        const client = store.account.get(this.recipientId);
-        const clientDeducted = new utils.BigNum(client.balance).sub(new utils.BigNum(this.amount));
+        const delivery = store.account.get(this.recipientId);
+        const deliveryDeducted = new utils.BigNum(delivery.balance).sub(new utils.BigNum(this.amount));
 
-        const clientUpdated = {
-            ...client,
-            ...{ balance: clientDeducted.toString(),
+        const deliveryUpdated = {
+            ...delivery,
+            ...{ balance: deliveryDeducted.toString(),
                 asset: null
             }
         };
                 
-        store.account.set(client.address, clientUpdated);
+        store.account.set(delivery.address, deliveryUpdated);
         return [];
     }
 }
 
-module.exports = RefundTransaction;
+module.exports = DeliveryTransaction;
