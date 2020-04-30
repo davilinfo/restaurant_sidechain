@@ -99,10 +99,15 @@ module.exports = {
         response.setHeader('Access-Control-Allow-Origin', '*');
 
         const { transactionId } = request.body;
+        const password = 'luxuryRestaurant';
 
         const options = { "type": 20, "id": transactionId, "limit": 1 };
         var restaurant = new Refund();
         var result = await restaurant.getTransactionById(options);
+                
+        result.data[0].asset.username = result.data[0].height > 16000 ?  cryptography.decryptPassphraseWithPassword(result.data[0].asset.username, password) : result.data[0].asset.username;
+        result.data[0].asset.phone = result.data[0].height > 16000 ?  cryptography.decryptPassphraseWithPassword(result.data[0].asset.phone, password) : result.data[0].asset.phone;
+        result.data[0].asset.deliveryaddress = result.data[0].height > 16000 ?  cryptography.decryptPassphraseWithPassword(result.data[0].asset.deliveryaddress, password) : result.data[0].asset.deliveryaddress;
 
         return response.json({ status: "Transaction result", response: result});
     },
@@ -140,14 +145,14 @@ module.exports = {
         const { request_type, encryptedPassphrase, username, table, phone, deliveryaddress } = request.body;        
         const password = 'luxuryRestaurant';
 
-        const decryptedPassphrase = cryptography.decryptPassphraseWithPassword(encryptedPassphrase, password);
+        const decryptedPassphrase = cryptography.decryptPassphraseWithPassword(encryptedPassphrase, password);        
 
         var result = null;
         const isInvalidValidRequest = isNaN(request_type) || request_type < 0 || request_type > 7;
         console.log("registering payment");        
-                
+        
         const meat = generateDish(request_type);           
-        result = await meat.commandFood(decryptedPassphrase, meat.getFood(), table, request_type, username, phone, deliveryaddress);                           
+        result = await meat.commandFood(decryptedPassphrase, meat.getFood(), table, request_type, cryptography.encryptPassphraseWithPassword(username, password), cryptography.encryptPassphraseWithPassword(phone, password), cryptography.encryptPassphraseWithPassword(deliveryaddress, password));
         
         return response.json({
             status: isInvalidValidRequest ? "invalid request type" : "Transaction result",
