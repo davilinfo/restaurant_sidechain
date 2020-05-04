@@ -24,7 +24,10 @@ function FoodOrderQrCode(props){
     
     async function handleSubmit(data){
 
+        data.request_type = foodType;
+
         order = await api.post('/storeQrCode', data);   
+        console.log(order.data.response);
         setOrder(order);
 
         const transaction_result = (
@@ -40,7 +43,9 @@ function FoodOrderQrCode(props){
                 <p>
                 {order.data.status}                    
                 <br/>
-                <ReactQrCode value={order.data.response}/>
+                <label>Point the camera of your phone to the qr code. Once loaded proceed with the payment</label>
+                <br/>
+                <ReactQrCode size="128" value={order.data.response}/>
                 </p>
                 <div className="clear"></div>
             </div>
@@ -63,8 +68,7 @@ function FoodOrderQrCode(props){
                     <br/>
                     Amount: {food.amount}
                     </p>
-                    <div className="clear"></div>
-                    <label>Point the camera of your phone to the qr code. Once loaded proceed with the payment</label>
+                    <div className="clear"></div>                    
                 </div>
                 <FormOrderQrCode onSubmit={handleSubmit}></FormOrderQrCode>
             </div>            

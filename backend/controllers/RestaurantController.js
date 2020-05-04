@@ -7,6 +7,7 @@ const Refund = require('../baseClasses/RefundRestaurant');
 const transactions = require("@liskhq/lisk-transactions");
 const { food_type } = require ('../foodTypes/food_types.json');
 const cryptography = require('@liskhq/lisk-cryptography');
+const Cryptr = require('cryptr');
 
 /* Attention: please, keep the food describe in food_types.json equivalent on each RestaurantFood class*/
 
@@ -164,8 +165,8 @@ module.exports = {
     async storeQrCodeUrlRestaurant(request, response){
         response.setHeader('Access-Control-Allow-Origin', '*');
         const { request_type, username, phone, deliveryaddress } = request.body;
-
-        const password = 'luxuryRestaurant';            
+     
+        const cryptr = new Cryptr('luxuryRestaurant');
 
         const meat = generateDish(request_type);
         const address = meat.getRestaurantAddress();                        
@@ -175,9 +176,9 @@ module.exports = {
         var result = null;
         result = "lisk://wallet?recipient=".concat(address)
             .concat("&amount=").concat(amount)
-            .concat("&username=").concat(cryptography.encryptPassphraseWithPassword(username, password))
-            .concat("&phone=").concat(cryptography.encryptPassphraseWithPassword(phone, password))
-            .concat("&deliveryaddress=").concat(cryptography.encryptPassphraseWithPassword(deliveryaddress, password));
+            .concat("&username=").concat(cryptr.encrypt(username))
+            .concat("&phone=").concat(cryptr.encrypt(phone))
+            .concat("&deliveryaddress=").concat(cryptr.encrypt(deliveryaddress));
 
         return response.json({ status: "Transaction result", response: result});
     },
