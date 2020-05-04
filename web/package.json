@@ -1,6 +1,6 @@
 {
   "name": "web",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "web app that consumes restaurant blockchain backend",
   "main": "index.js",
   "scripts": {
@@ -19,6 +19,7 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.19.2",
+    "qrcode-react": "^0.1.16",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-router": "^5.1.2",

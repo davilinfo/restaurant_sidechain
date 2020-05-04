@@ -4,6 +4,7 @@ const VanillaIceCreamDessert = require ('../dessert/vanillaicecream_dessert');
 const RibsOnTheBarbecueMenu = require ('../menu/ribsonthebarbecue_menu');
 const BakedCheeseOysterEntrance = require('../entrances/baked_oyster_entrance');
 const Refund = require('../baseClasses/RefundRestaurant');
+const transactions = require("@liskhq/lisk-transactions");
 const { food_type } = require ('../foodTypes/food_types.json');
 const cryptography = require('@liskhq/lisk-cryptography');
 
@@ -158,5 +159,26 @@ module.exports = {
             status: isInvalidValidRequest ? "invalid request type" : "Transaction result",
             response: isInvalidValidRequest ? null : result
         });        
-    },    
+    },
+    
+    async storeQrCodeUrlRestaurant(request, response){
+        response.setHeader('Access-Control-Allow-Origin', '*');
+        const { request_type, username, phone, deliveryaddress } = request.body;
+
+        const password = 'luxuryRestaurant';            
+
+        const meat = generateDish(request_type);
+        const address = meat.getRestaurantAddress();                        
+        const amount = `${transactions.utils.convertLSKToBeddows(meat.getFood().amount.toString())}`;
+        
+        /*cryptography characters ?!*/
+        var result = null;
+        result = "lisk://wallet?recipient=".concat(address)
+            .concat("&amount=").concat(amount)
+            .concat("&username=").concat(cryptography.encryptPassphraseWithPassword(username, password))
+            .concat("&phone=").concat(cryptography.encryptPassphraseWithPassword(phone, password))
+            .concat("&deliveryaddress=").concat(cryptography.encryptPassphraseWithPassword(deliveryaddress, password));
+
+        return response.json({ status: "Transaction result", response: result});
+    },
 }

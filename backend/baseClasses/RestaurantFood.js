@@ -20,6 +20,10 @@ class RestaurantFood{
         return blockchainClient.transactions.get(options);
     }
 
+    getRestaurantAddress(){
+        return restaurantAddress;
+    }
+
     broadcastTransaction(transaction){                        
         return blockchainClient.transactions.broadcast(transaction.toJSON());
     }
