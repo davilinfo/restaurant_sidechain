@@ -45,7 +45,7 @@ function FoodOrderQrCode(props){
                 <br/>
                 <label>Point the camera of your phone to the qr code. Once loaded proceed with the payment</label>
                 <br/>
-                <ReactQrCode size="128" value={order.data.response}/>
+                <ReactQrCode value={order.data.response}/>
                 </p>
                 <div className="clear"></div>
             </div>
