@@ -105,9 +105,11 @@ module.exports = {
         var restaurant = new Refund();
         var result = await restaurant.getTransactionById(options);
                 
-        result.data[0].asset.username = result.data[0].height > 16000 ?  cryptography.decryptPassphraseWithPassword(result.data[0].asset.username, password) : result.data[0].asset.username;
-        result.data[0].asset.phone = result.data[0].height > 16000 ?  cryptography.decryptPassphraseWithPassword(result.data[0].asset.phone, password) : result.data[0].asset.phone;
-        result.data[0].asset.deliveryaddress = result.data[0].height > 16000 ?  cryptography.decryptPassphraseWithPassword(result.data[0].asset.deliveryaddress, password) : result.data[0].asset.deliveryaddress;
+        if (result.data[0] !== underfined){
+            result.data[0].asset.username = result.data[0].height > 16000 ?  cryptography.decryptPassphraseWithPassword(result.data[0].asset.username, password) : result.data[0].asset.username;
+            result.data[0].asset.phone = result.data[0].height > 16000 ?  cryptography.decryptPassphraseWithPassword(result.data[0].asset.phone, password) : result.data[0].asset.phone;
+            result.data[0].asset.deliveryaddress = result.data[0].height > 16000 ?  cryptography.decryptPassphraseWithPassword(result.data[0].asset.deliveryaddress, password) : result.data[0].asset.deliveryaddress;
+        }
 
         return response.json({ status: "Transaction result", response: result});
     },
