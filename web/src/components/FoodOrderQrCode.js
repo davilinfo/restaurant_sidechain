@@ -70,7 +70,11 @@ function FoodOrderQrCode(props){
                     </p>
                     <div className="clear"></div>                    
                 </div>
-                <FormOrderQrCode onSubmit={handleSubmit}></FormOrderQrCode>
+                <div style={{backgroundColor: '#FFFFFF', width: 150, height: 150}}>
+                    <div style={{marginTop: 15}}>
+                        <FormOrderQrCode onSubmit={handleSubmit}></FormOrderQrCode>
+                    </div>
+                </div>
             </div>            
         </div>
     );

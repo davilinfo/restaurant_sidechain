@@ -103,13 +103,16 @@ module.exports = {
         const { transactionId } = request.body;
         const password = 'luxuryRestaurant';
 
-        const options = { "type": 20, "id": transactionId, "limit": 1 };
         var restaurant = new Refund();
+        const address = restaurant.getRestaurantAddress();
+        const options = { "type": 20, "id": transactionId, "limit": 1, "recipientId": address };        
         var result = await restaurant.getTransactionById(options);
                 
-        result.data[0].asset.username = result.data[0].height > 16000 ?  cryptography.decryptPassphraseWithPassword(result.data[0].asset.username, password) : result.data[0].asset.username;
-        result.data[0].asset.phone = result.data[0].height > 16000 ?  cryptography.decryptPassphraseWithPassword(result.data[0].asset.phone, password) : result.data[0].asset.phone;
-        result.data[0].asset.deliveryaddress = result.data[0].height > 16000 ?  cryptography.decryptPassphraseWithPassword(result.data[0].asset.deliveryaddress, password) : result.data[0].asset.deliveryaddress;
+        if (result.data[0] !== undefined){
+            result.data[0].asset.username = result.data[0].height > 16000 ?  cryptography.decryptPassphraseWithPassword(result.data[0].asset.username, password) : result.data[0].asset.username;
+            result.data[0].asset.phone = result.data[0].height > 16000 ?  cryptography.decryptPassphraseWithPassword(result.data[0].asset.phone, password) : result.data[0].asset.phone;
+            result.data[0].asset.deliveryaddress = result.data[0].height > 16000 ?  cryptography.decryptPassphraseWithPassword(result.data[0].asset.deliveryaddress, password) : result.data[0].asset.deliveryaddress;
+        }
 
         return response.json({ status: "Transaction result", response: result});
     },
