@@ -4,15 +4,18 @@ import '../styles.css';
 
 function FormReservation({onSubmit}){    
     const [transactionId, setTransaction] = useState('');
+    const [phone, setPhone] = useState('');
 
     async function handleSubmit(e){
         e.preventDefault();
 
         await onSubmit({
-            transactionId
+            transactionId,
+            phone
         });
         
         setTransaction('');
+        setPhone('');
     }
 
     return (
@@ -25,9 +28,15 @@ function FormReservation({onSubmit}){
                     </div>
                     <div>
                         <input type="text" id="transactionId" name="transactionId" required onChange={e=> setTransaction(e.target.value)}/>
+                    </div>
+                    <div>
+                        <label>Phone number</label>
+                    </div>
+                    <div>
+                        <input type="text" id="phone" name="phone" onChange={e=> setPhone(e.target.value)}/>
                     </div>                    
                     <div>
-                        <button type="submit">Retrieve information of transaction request</button>
+                        <button type="submit">Retrieve information of transaction requested</button>
                     </div>
                 </form>
             </div>
