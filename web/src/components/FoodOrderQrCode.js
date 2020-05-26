@@ -43,9 +43,13 @@ function FoodOrderQrCode(props){
                 <p>
                 {order.data.status}                    
                 <br/>
-                <label>Point the camera of your phone to the qr code. Once loaded proceed with the payment</label>
-                <br/>
-                <ReactQrCode value={order.data.response}/>
+                <label>Point the camera of your phone to the qr code. Once loaded proceed with the payment</label>                
+                <br/>                
+                <div id="divqrcode">
+                    <div id="divqrcode">
+                        <ReactQrCode value={order.data.response}/>
+                    </div>              
+                </div>              
                 </p>
                 <div className="clear"></div>
             </div>
@@ -71,8 +75,8 @@ function FoodOrderQrCode(props){
                     <div className="clear"></div>                    
                 </div>
                 <div style={{backgroundColor: '#FFFFFF', width: 150, height: 150}}>
-                    <div style={{marginTop: 15}}>
-                        <FormOrderQrCode onSubmit={handleSubmit}></FormOrderQrCode>
+                    <div style={{marginTop: 15, backgroundColor: '#FFFFFF', width: 150, height: 150}}>
+                        <FormOrderQrCode style={{marginTop: 10, }} onSubmit={handleSubmit}></FormOrderQrCode>
                     </div>
                 </div>
             </div>            

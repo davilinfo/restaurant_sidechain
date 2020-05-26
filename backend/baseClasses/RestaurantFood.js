@@ -31,7 +31,7 @@ class RestaurantFood{
     getAccount(passphrase){
         const address = getAddressFromPassphrase(passphrase);
         return blockchainClient.accounts.get({ address, limit: 1 });
-    };    
+    }    
 
     async commandFood(passphrase, food, table, request_type, username, phone, deliveryaddress) {        
 
@@ -58,6 +58,30 @@ class RestaurantFood{
 
         try{
             txFood.sign(passphrase);            
+            ResultSchema.broadcastInfo = await this.broadcastTransaction(txFood);
+            ResultSchema.transaction = txFood;   
+            console.log(ResultSchema);
+        }catch(e){
+            console.log(e);
+            ResultSchema.transaction = {
+                "message": "not completed"
+            };
+            ResultSchema.broadcastInfo = {
+                "meta": {
+                  "status": false
+                },
+                "data": {
+                  "message": e
+                },
+                "links": {}
+            }
+        }
+        
+        return ResultSchema;
+    }
+
+    async receivedSignedTransactionForBroadcast(txFood){
+        try{                                
             ResultSchema.broadcastInfo = await this.broadcastTransaction(txFood);
             ResultSchema.transaction = txFood;   
             console.log(ResultSchema);

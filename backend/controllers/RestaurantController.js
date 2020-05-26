@@ -3,6 +3,7 @@ const MoulesEntrance = require ('../entrances/moules_entrance');
 const VanillaIceCreamDessert = require ('../dessert/vanillaicecream_dessert');
 const RibsOnTheBarbecueMenu = require ('../menu/ribsonthebarbecue_menu');
 const BakedCheeseOysterEntrance = require('../entrances/baked_oyster_entrance');
+const RestaurantFood = require('../baseClasses/RestaurantFood');
 const Refund = require('../baseClasses/RefundRestaurant');
 const transactions = require("@liskhq/lisk-transactions");
 const { food_type } = require ('../foodTypes/food_types.json');
@@ -167,29 +168,55 @@ module.exports = {
         result = await meat.commandFood(decryptedPassphrase, meat.getFood(), table, request_type, cryptography.encryptPassphraseWithPassword(username, password), cryptography.encryptPassphraseWithPassword(phone, password), cryptography.encryptPassphraseWithPassword(deliveryaddress, password));
         
         return response.json({
-            status: isInvalidValidRequest ? "invalid request type" : "Transaction result",
+            status: isInvalidValidRequest ? "Invalid request type" : "Transaction result",
             response: isInvalidValidRequest ? null : result
         });        
     },
     
     async storeQrCodeUrlRestaurant(request, response){
         response.setHeader('Access-Control-Allow-Origin', '*');
-        const { request_type, username, phone, deliveryaddress } = request.body;
-     
-        const cryptr = new Cryptr('luxuryRestaurant');
+        const { request_type, username, phone, deliveryaddress } = request.body;            
 
         const meat = generateDish(request_type);
         const address = meat.getRestaurantAddress();                        
-        const amount = `${transactions.utils.convertLSKToBeddows(meat.getFood().amount.toString())}`;
+        const amount = `${transactions.utils.convertLSKToBeddows(meat.getFood().amount.toString())}`.toString();
         
         /*cryptography characters ?!*/
-        var result = null;
-        result = "lisk://wallet?recipient=".concat(address)
+        var result = "food://wallet?recipient=".concat(address)
             .concat("&amount=").concat(amount)
-            .concat("&username=").concat(cryptr.encrypt(username))
-            .concat("&phone=").concat(cryptr.encrypt(phone))
-            .concat("&deliveryaddress=").concat(cryptr.encrypt(deliveryaddress));
+            .concat("&username=").concat(username)
+            .concat("&phone=").concat(phone)
+            .concat("&deliveryaddress=").concat(deliveryaddress);
 
-        return response.json({ status: "Transaction result", response: result});
+        return response.json({ status: "Waiting payment", response: result});
+    },
+
+    async storeQrCodeUrlRestaurantAtPlace(request, response){
+        response.setHeader('Access-Control-Allow-Origin', '*');
+        const { request_type, username, phone, deliveryaddress } = request.body;            
+
+        const meat = generateDish(request_type);
+        const address = meat.getRestaurantAddress();                        
+        const amount = `${transactions.utils.convertLSKToBeddows(meat.getFood().amount.toString())}`.toString();
+                
+        var result = null;
+        result = "food://wallet?recipient=".concat(address)
+            .concat("&amount=").concat(amount);
+
+        return response.json({ status: "Waiting payment", response: result});
+    },
+
+    async storePayment(request, response){
+        response.setHeader('Access-Control-Allow-Origin', '*');
+        const { transaction, networkid } = request.body;            
+                
+        if (networkid === 'identifier'){
+            const meat = new RestaurantFood();
+            var result = await meat.receivedSignedTransactionForBroadcast(transaction);
+
+            return response.json({ status: "Transaction result", response: result});
+        }else{
+            return response.json({ status: "Invalid request", response: null});
+        }                    
     },
 }
