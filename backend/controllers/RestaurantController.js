@@ -180,10 +180,12 @@ module.exports = {
         const meat = generateDish(request_type);
         const address = meat.getRestaurantAddress();                        
         const amount = `${transactions.utils.convertLSKToBeddows(meat.getFood().amount.toString())}`.toString();
-        
-        /*cryptography characters ?!*/
+                
         var result = "food://wallet?recipient=".concat(address)
             .concat("&amount=").concat(amount)
+            .concat("&food=").concat(meat.getFood().name)
+            .concat("&foodtype=").concat(request_type.toString())
+            .concat("&timestamp=").concat(meat.getTimestamp())
             .concat("&username=").concat(username)
             .concat("&phone=").concat(phone)
             .concat("&deliveryaddress=").concat(deliveryaddress);
