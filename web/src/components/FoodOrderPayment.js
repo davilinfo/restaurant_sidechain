@@ -9,6 +9,7 @@ const cryptography = require('@liskhq/lisk-cryptography');
 const transactions = require("@liskhq/lisk-transactions");
 
 function FoodOrderPayment(props){            
+    /*
     var orderstring = document.location.pathname.split("/")[2];    
     orderstring = orderstring.split("&");
 
@@ -21,7 +22,7 @@ function FoodOrderPayment(props){
     food.username = orderstring[5].split('=')[1];
     food.phone = orderstring[6].split('=')[1];
     food.deliveryaddress = orderstring[7].split('=')[1];        
-
+    */
     var [order, setOrder] = useState([]);            
 
     async function handleSubmit(data){                
