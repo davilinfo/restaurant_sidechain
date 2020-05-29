@@ -72,7 +72,7 @@ function FoodOrderQrCode(props){
                 </div>     
                 </p>
                 
-                <FoodOrderPayment onSubmit={handlePayment}></FoodOrderPayment>                                    
+                <FoodOrderPayment orderstring={orderstring} onSubmit={handlePayment}></FoodOrderPayment>                                    
                 <div className="clear"></div>
             </div>
         );
