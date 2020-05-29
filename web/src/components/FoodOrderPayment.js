@@ -25,33 +25,7 @@ function FoodOrderPayment(props){
     var [order, setOrder] = useState([]);            
 
     async function handleSubmit(data){                
-        /*
-        const txFood = new FoodRequest({
-            asset: {
-                name: food.name,
-                description: food.description,
-                username: food.username,
-                phone: food.phone,
-                deliveryaddress: food.deliveryaddress,
-                foodType: food.foodtype
-            },
-            amount: food.amount,
-            recipientId: food.recipientAddress, //restaurant lisk address
-            timestamp: food.timestamp
-        });
-            
-        console.log(data);    
-        console.log(txFood);
-
-        try{
-            txFood.sign(data);
-        }catch(e){
-            console.log(e);
-        }
         
-        order = await api.post('/payment', JSON.stringify({ transaction: txFood, networkid: "identifier"}) );   
-        setOrder(order);    
-        */
         const transaction_result = (
             <div className="recipes_topic">                    
                 Testing             
