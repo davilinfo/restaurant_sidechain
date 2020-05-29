@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import ReactQrCode from 'qrcode-react';
 import api from '../services/api';
+import { Link, Route } from 'react-router-dom';
 import FormOrderQrCode from './FormOrderQrCode';
+import FoodOrderPayment from './FoodOrderPayment';
 import '../styles.css';
 
 function FoodOrderQrCode(props){        
@@ -10,6 +12,7 @@ function FoodOrderQrCode(props){
 
     var [food, setFood] = useState([]);
     var [order, setOrder] = useState([]);
+    var [orderstring, setOrderString] = useState('');
 
     useEffect (() => {
       async function loadFood(){
@@ -21,14 +24,31 @@ function FoodOrderQrCode(props){
              
       loadFood();
     }, []);         
-    
+
+    async function handlePayment(data){
+
+       //const payment_result = ();
+
+       //ReactDOM.render(payment_result, document.getElementById('content'));
+    }
+
     async function handleSubmit(data){
 
         data.request_type = foodType;
 
-        order = await api.post('/storeQrCode', data);   
-        console.log(order.data.response);
+        order = await api.post('/storeQrCode', data);           
         setOrder(order);
+        
+        orderstring = "recipient=".concat(order.data.response.split("&")[0].split("=")[1])
+        .concat("&amount=").concat(order.data.response.split("&")[1].split("=")[1])
+        .concat("&food=").concat(order.data.response.split("&")[2].split("=")[1])
+        .concat("&foodtype=").concat(order.data.response.split("&")[3].split("=")[1])
+        .concat("&timestamp=").concat(order.data.response.split("&")[4].split("=")[1])
+        .concat("&username=").concat(order.data.response.split("&")[5].split("=")[1])
+        .concat("&phone=").concat(order.data.response.split("&")[6].split("=")[1])
+        .concat("&deliveryaddress=").concat(order.data.response.split("&")[7].split("=")[1]);
+        
+        setOrderString(orderstring);        
 
         const transaction_result = (
             <div className="recipes_topic">    
@@ -49,8 +69,10 @@ function FoodOrderQrCode(props){
                     <div id="divqrcode">
                         <ReactQrCode value={order.data.response}/>
                     </div>              
-                </div>              
+                </div>     
                 </p>
+                
+                <FoodOrderPayment onSubmit={handlePayment}></FoodOrderPayment>                                    
                 <div className="clear"></div>
             </div>
         );
@@ -74,11 +96,9 @@ function FoodOrderQrCode(props){
                     </p>
                     <div className="clear"></div>                    
                 </div>
-                <div style={{backgroundColor: '#FFFFFF', width: 150, height: 150}}>
-                    <div style={{marginTop: 15, backgroundColor: '#FFFFFF', width: 150, height: 150}}>
-                        <FormOrderQrCode style={{marginTop: 10, }} onSubmit={handleSubmit}></FormOrderQrCode>
-                    </div>
-                </div>
+                
+                <FormOrderQrCode onSubmit={handleSubmit}></FormOrderQrCode>
+                    
             </div>            
         </div>
     );
