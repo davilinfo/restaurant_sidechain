@@ -212,25 +212,8 @@ module.exports = {
     },
 
     async storePayment(request, response){
-        response.setHeader('Access-Control-Allow-Origin', '*');
-
-        const { request_type, encryptedPassphrase, username, table, phone, deliveryaddress } = request.body;
-        var password = "luxuryRestaurant";
-        const decryptedPassphrase = encryptedPassphrase;
+        response.setHeader('Access-Control-Allow-Origin', '*');        
         
-        var result = null;
-        const isInvalidValidRequest = isNaN(request_type) || request_type < 0 || request_type > 7;
-        console.log("registering payment");        
-        
-        const meat = generateDish(request_type);           
-        result = await meat.commandFood(decryptedPassphrase, meat.getFood(), table, request_type, cryptography.encryptPassphraseWithPassword(username, password), cryptography.encryptPassphraseWithPassword(phone, password), cryptography.encryptPassphraseWithPassword(deliveryaddress, password));
-        
-        return response.json({
-            status: isInvalidValidRequest ? "Invalid request type" : "Transaction result",
-            response: isInvalidValidRequest ? null : result
-        });
-
-        /*
         const { transaction, networkid } = request.body;            
                 
         if (networkid === 'identifier'){
@@ -240,6 +223,6 @@ module.exports = {
             return response.json({ status: "Transaction result", response: result});
         }else{
             return response.json({ status: "Invalid request", response: null});
-        }*/
+        }
     },
 }
