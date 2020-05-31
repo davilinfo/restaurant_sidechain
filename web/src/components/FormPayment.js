@@ -2,15 +2,10 @@ import React, { useState, useEffect } from 'react';
 
 import '../styles.css';
 
-const FoodRequest = require('liskrestaurant_transactions');
 const cryptography = require('@liskhq/lisk-cryptography');
 
 function FormPayment({onSubmit}){         
-    const [passphrase, setPassphrase] = useState('');
-
-    useEffect(() => {
-
-    });
+    const [passphrase, setPassphrase] = useState('');   
 
     async function handleSubmit(e){
         e.preventDefault();

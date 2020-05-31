@@ -10,6 +10,7 @@ function FoodOrderPayment(props){
 
     async function handleSubmit(data){      
 
+        console.log(data);
         var food = {};
         var orderstring = props.orderstring;
         if (orderstring !== null && orderstring !== undefined){    
