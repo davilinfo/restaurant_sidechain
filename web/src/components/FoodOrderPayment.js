@@ -50,7 +50,7 @@ function FoodOrderPayment(props){
         
         order = await api.post('/payment', JSON.stringify({ transaction: txFood, networkid: "identifier"}) );   */
 
-        order = await api.post('/userRequest', food );
+        order = await api.post('/payment', food );
         setOrder(order);    
         
         /*const transaction_result = (

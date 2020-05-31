@@ -157,7 +157,7 @@ module.exports = {
 
         const { request_type, encryptedPassphrase, username, table, phone, deliveryaddress } = request.body;        
         const password = 'luxuryRestaurant';
-
+        
         const decryptedPassphrase = cryptography.decryptPassphraseWithPassword(encryptedPassphrase, password);        
 
         var result = null;
@@ -175,12 +175,14 @@ module.exports = {
     
     async storeQrCodeUrlRestaurant(request, response){
         response.setHeader('Access-Control-Allow-Origin', '*');
-        const { request_type, username, phone, deliveryaddress } = request.body;
-        const password = 'luxuryRestaurant';
+        const { request_type, username, phone, deliveryaddress, encryptedPassphrase } = request.body;
+        const password = 'luxuryRestaurant';        
 
+        var transaction = {};
+        var table = 1;
         const meat = generateDish(request_type);
         const address = meat.getRestaurantAddress();                        
-        const amount = `${transactions.utils.convertLSKToBeddows(meat.getFood().amount.toString())}`.toString();        
+        const amount = `${transactions.utils.convertLSKToBeddows(meat.getFood().amount.toString())}`.toString(); 
 
         var result = "food://wallet?recipient=".concat(address)
             .concat("&amount=").concat(amount)
@@ -211,6 +213,25 @@ module.exports = {
 
     async storePayment(request, response){
         response.setHeader('Access-Control-Allow-Origin', '*');
+
+        const { request_type, encryptedPassphrase, username, table, phone, deliveryaddress } = request.body;        
+        const password = 'luxuryRestaurant';
+        
+        const decryptedPassphrase = new Cryptr(password).decrypt(encryptedPassphrase);
+        
+        var result = null;
+        const isInvalidValidRequest = isNaN(request_type) || request_type < 0 || request_type > 7;
+        console.log("registering payment");        
+        
+        const meat = generateDish(request_type);           
+        result = await meat.commandFood(decryptedPassphrase, meat.getFood(), table, request_type, cryptography.encryptPassphraseWithPassword(username, password), cryptography.encryptPassphraseWithPassword(phone, password), cryptography.encryptPassphraseWithPassword(deliveryaddress, password));
+        
+        return response.json({
+            status: isInvalidValidRequest ? "Invalid request type" : "Transaction result",
+            response: isInvalidValidRequest ? null : result
+        });
+
+        /*
         const { transaction, networkid } = request.body;            
                 
         if (networkid === 'identifier'){
@@ -220,6 +241,6 @@ module.exports = {
             return response.json({ status: "Transaction result", response: result});
         }else{
             return response.json({ status: "Invalid request", response: null});
-        }                    
+        }*/
     },
 }

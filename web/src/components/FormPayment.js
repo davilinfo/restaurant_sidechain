@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import '../styles.css';
 
-const cryptography = require('@liskhq/lisk-cryptography');
+const Cryptr = require("cryptr");
 
 function FormPayment({onSubmit}){    
     const [passphrase, setPassphrase] = useState('');    
@@ -10,7 +10,7 @@ function FormPayment({onSubmit}){
     async function handleSubmit(e){
         e.preventDefault();
 
-        const encryptedPassphrase = cryptography.encryptPassphraseWithPassword(passphrase, 'luxuryRestaurant');
+        const encryptedPassphrase =  new Cryptr('luxuryRestaurant').encrypt(passphrase);
 
         await onSubmit({         
             encryptedPassphrase

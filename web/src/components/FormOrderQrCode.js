@@ -7,7 +7,7 @@ function FormOrderQrCode({onSubmit}){
     const [phone, setPhone] = useState('');
     const [deliveryaddress, setDeliveryAddress] = useState('');    
 
-    async function handleSubmitButton(e){
+    async function handleSubmit(e){
         e.preventDefault();
         
         await onSubmit({
@@ -18,13 +18,13 @@ function FormOrderQrCode({onSubmit}){
 
         setUsername('');
         setPhone('');
-        setDeliveryAddress('');
+        setDeliveryAddress('');        
     }
 
     return (
         <div id="app">
             <div id="content" align="center">                
-                <form onSubmit={handleSubmitButton}>
+                <form onSubmit={handleSubmit}>
                     <input type="hidden" id="request_type" name="request_type"></input>
                     <div>
                         <label>Your Name</label>
