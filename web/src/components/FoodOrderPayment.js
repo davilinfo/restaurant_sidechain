@@ -3,17 +3,10 @@ import ReactDOM from 'react-dom';
 import api from '../services/api';
 import FormPayment from './FormPayment';
 import '../styles.css';
-const liskCryptography = require('@liskhq/lisk-cryptography');
-const liskTransactions = require('@liskhq/lisk-transactions');
-const FoodRequest = require('liskrestaurant_transactions');
 
 function FoodOrderPayment(props){                   
     
     var [order, setOrder] = useState([]);                    
-
-    async function  getPublicKeyFromPassphrase(passphrase) {
-        return liskCryptography.getAddressAndPublicKeyFromPassphrase(passphrase).publicKey;
-    }
 
     async function handleSubmit(data){      
 
@@ -31,7 +24,7 @@ function FoodOrderPayment(props){
             food.phone = orderstring[6].split('=')[1];
             food.deliveryaddress = orderstring[7].split('=')[1];
             food.table = 1;
-            food.encryptedPassphrase = liskCryptography.encryptPassphraseWithPassword(data, 'luxuryRestaurant');
+            food.encryptedPassphrase = data;
         }                        
                  
         /*var txFood = new FoodRequest({
@@ -55,7 +48,7 @@ function FoodOrderPayment(props){
         txFood.sign(data);
         console.log("signed transaction");        
         
-        order = await api.post('/payment', JSON.stringify({ transaction: preparedTxn, networkid: "identifier"}) );   */
+        order = await api.post('/payment', JSON.stringify({ transaction: txFood, networkid: "identifier"}) );   */
 
         order = await api.post('/userRequest', food );
         setOrder(order);    
