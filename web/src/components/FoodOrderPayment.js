@@ -10,55 +10,25 @@ function FoodOrderPayment(props){
 
     async function handleSubmit(data){      
         
-        var food = {};
+        var food = new FormData();
         var orderstring = props.orderstring;
         if (orderstring !== null && orderstring !== undefined){    
             orderstring = orderstring.split("&");
                 
-            food.recipientAddress = orderstring[0].split('=')[1];
-            food.amount = orderstring[1].split('=')[1];
-            food.name = orderstring[2].split('=')[1];
-            food.request_type = orderstring[3].split('=')[1];
-            food.timestamp = orderstring[4].split('=')[1];
-            food.username = orderstring[5].split('=')[1];
-            food.phone = orderstring[6].split('=')[1];
-            food.deliveryaddress = orderstring[7].split('=')[1];
-            food.table = 1;
-            food.encryptedPassphrase = data;
-        }                        
-                 
-        /*var txFood = new FoodRequest({
-            asset: {
-                name: food.name,
-                description: food.name,
-                username: food.username,
-                phone: food.phone,
-                deliveryaddress: food.deliveryaddress,
-                foodType: food.request_type
-            },            
-            amount: food.amount,
-            senderPublicKey: getPublicKeyFromPassphrase(data),
-            recipientId: food.address,
-            timestamp: food.timestamp
-        });
-        
-        console.log(txFood);
-        console.log("transaction created");
+            food.append("recipientAddress", orderstring[0].split('=')[1]);
+            food.append("amount", orderstring[1].split('=')[1]);
+            food.append("name", orderstring[2].split('=')[1]);
+            food.append("request_type", orderstring[3].split('=')[1]);
+            food.append("timestamp", orderstring[4].split('=')[1]);
+            food.append("username", orderstring[5].split('=')[1]);
+            food.append("phone", orderstring[6].split('=')[1]);
+            food.append("deliveryaddress", orderstring[7].split('=')[1]);
+            food.append("table", 1);
+            food.append("encryptedPassphrase", data);            
+        }                                                 
 
-        txFood.sign(data);
-        console.log("signed transaction");        
-        
-        order = await api.post('/payment', JSON.stringify({ transaction: txFood, networkid: "identifier"}) );   */
-
-        order = await api.post('/payment', food );
-        setOrder(order);    
-        
-        /*const transaction_result = (
-            <div className="recipes_topic">                    
-                Testing             
-                <div className="clear"></div>
-            </div>
-        )*/
+        order = await api.post('/userRequest', food );
+        setOrder(order);                   
 
         const transaction_result = (
             <div className="recipes_topic">                    
