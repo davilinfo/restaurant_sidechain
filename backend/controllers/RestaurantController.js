@@ -175,10 +175,8 @@ module.exports = {
     
     async storeQrCodeUrlRestaurant(request, response){
         response.setHeader('Access-Control-Allow-Origin', '*');
-        const { request_type, username, phone, deliveryaddress, encryptedPassphrase } = request.body;
-        const password = 'luxuryRestaurant';        
-
-        var transaction = {};
+        const { request_type, username, phone, deliveryaddress } = request.body;            
+        
         var table = 1;
         const meat = generateDish(request_type);
         const address = meat.getRestaurantAddress();                        
