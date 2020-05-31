@@ -216,7 +216,7 @@ module.exports = {
 
         const { request_type, encryptedPassphrase, username, table, phone, deliveryaddress } = request.body;
         
-        const decryptedPassphrase = new Buffer(encryptedPassphrase).toString('ascii');
+        const decryptedPassphrase = encryptedPassphrase;
         
         var result = null;
         const isInvalidValidRequest = isNaN(request_type) || request_type < 0 || request_type > 7;
