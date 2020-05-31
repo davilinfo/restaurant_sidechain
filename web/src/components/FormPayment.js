@@ -8,7 +8,7 @@ function FormPayment({onSubmit}){
     async function handleSubmit(e){
         e.preventDefault();
 
-        const encryptedPassphrase = Base64.toBase64(passphrase);
+        const encryptedPassphrase = new Buffer(passphrase).toString('base64');
 
         await onSubmit({         
             encryptedPassphrase
