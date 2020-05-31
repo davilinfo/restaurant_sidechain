@@ -175,12 +175,13 @@ module.exports = {
     
     async storeQrCodeUrlRestaurant(request, response){
         response.setHeader('Access-Control-Allow-Origin', '*');
-        const { request_type, username, phone, deliveryaddress } = request.body;            
+        const { request_type, username, phone, deliveryaddress } = request.body;
+        const password = 'luxuryRestaurant';
 
         const meat = generateDish(request_type);
         const address = meat.getRestaurantAddress();                        
-        const amount = `${transactions.utils.convertLSKToBeddows(meat.getFood().amount.toString())}`.toString();
-                
+        const amount = `${transactions.utils.convertLSKToBeddows(meat.getFood().amount.toString())}`.toString();        
+
         var result = "food://wallet?recipient=".concat(address)
             .concat("&amount=").concat(amount)
             .concat("&food=").concat(meat.getFood().name)
@@ -188,7 +189,7 @@ module.exports = {
             .concat("&timestamp=").concat(meat.getTimestamp())
             .concat("&username=").concat(username)
             .concat("&phone=").concat(phone)
-            .concat("&deliveryaddress=").concat(deliveryaddress);
+            .concat("&deliveryaddress=").concat(deliveryaddress);                
 
         return response.json({ status: "Waiting payment", response: result});
     },

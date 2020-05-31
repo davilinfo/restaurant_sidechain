@@ -22,7 +22,7 @@ class RestaurantFood{
 
     getRestaurantAddress(){
         return restaurantAddress;
-    }
+    }    
 
     broadcastTransaction(transaction){                        
         return blockchainClient.transactions.broadcast(transaction.toJSON());
@@ -31,7 +31,7 @@ class RestaurantFood{
     getAccount(passphrase){
         const address = getAddressFromPassphrase(passphrase);
         return blockchainClient.accounts.get({ address, limit: 1 });
-    }    
+    }        
 
     async commandFood(passphrase, food, table, request_type, username, phone, deliveryaddress) {        
 
@@ -78,6 +78,30 @@ class RestaurantFood{
         }
         
         return ResultSchema;
+    }
+
+    async newFoodRequestObject(food, request_type, username, phone, deliveryaddress){        
+        food.request_type= request_type;
+        food.username= username;        
+        food.phone= phone;
+        food.deliveryaddress= deliveryaddress;
+        
+        const txFood = new FoodRequest({
+            id: this.getTimestamp(),
+            asset: {
+                name: food.name,
+                description: food.description,
+                username: food.username,
+                phone: food.phone,
+                deliveryaddress: food.deliveryaddress,
+                foodType: food.request_type
+            },
+            amount: `${transactions.utils.convertLSKToBeddows(food.amount.toString())}`,            
+            recipientId: restaurantAddress,
+            timestamp: this.getTimestamp()
+        });
+
+        return txFood;
     }
 
     async receivedSignedTransactionForBroadcast(txFood){

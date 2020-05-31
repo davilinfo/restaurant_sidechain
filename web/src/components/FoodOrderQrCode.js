@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import ReactQrCode from 'qrcode-react';
 import api from '../services/api';
-import { Link, Route } from 'react-router-dom';
 import FormOrderQrCode from './FormOrderQrCode';
 import FoodOrderPayment from './FoodOrderPayment';
 import '../styles.css';
@@ -12,7 +11,7 @@ function FoodOrderQrCode(props){
 
     var [food, setFood] = useState([]);
     var [order, setOrder] = useState([]);
-    var [orderstring, setOrderString] = useState('');
+    var [orderstring, setOrderString] = useState('');    
 
     useEffect (() => {
       async function loadFood(){
@@ -23,22 +22,15 @@ function FoodOrderQrCode(props){
       }
              
       loadFood();
-    }, []);         
-
-    async function handlePayment(data){
-
-       //const payment_result = ();
-
-       //ReactDOM.render(payment_result, document.getElementById('content'));
-    }
+    }, []);             
 
     async function handleSubmit(data){
-
+        
         data.request_type = foodType;
 
         order = await api.post('/storeQrCode', data);           
-        setOrder(order);
-        
+        setOrder(order);             
+
         orderstring = "recipient=".concat(order.data.response.split("&")[0].split("=")[1])
         .concat("&amount=").concat(order.data.response.split("&")[1].split("=")[1])
         .concat("&food=").concat(order.data.response.split("&")[2].split("=")[1])
@@ -48,19 +40,19 @@ function FoodOrderQrCode(props){
         .concat("&phone=").concat(order.data.response.split("&")[6].split("=")[1])
         .concat("&deliveryaddress=").concat(order.data.response.split("&")[7].split("=")[1]);
         
-        setOrderString(orderstring);        
+        setOrderString(orderstring);   
 
         const transaction_result = (
             <div className="recipes_topic">    
                 <img src={`../${food.img}`} width="200" height="200" alt="" /> 
                 <br />
                 <p>
-                Food description:  {food.description} 
+                Food description: {food.description} 
                 </p>
                 <p>
                 Amount: {food.amount}
                 </p>
-                <p>
+                <br/>
                 {order.data.status}                    
                 <br/>
                 <label>Point the camera of your phone to the qr code. Once loaded proceed with the payment</label>                
@@ -69,10 +61,9 @@ function FoodOrderQrCode(props){
                     <div id="divqrcode">
                         <ReactQrCode value={order.data.response}/>
                     </div>              
-                </div>     
-                </p>
+                </div>                     
                 
-                <FoodOrderPayment orderstring={orderstring} onSubmit={handlePayment}></FoodOrderPayment>                                    
+                <FoodOrderPayment orderstring={orderstring}></FoodOrderPayment>                                    
                 <div className="clear"></div>
             </div>
         );
@@ -84,19 +75,17 @@ function FoodOrderQrCode(props){
         <div id="app">
             <div id="content" align="center">
                 <img src={`../${food.img}`} width="200" height="200" alt="" />
-                <div className="recipes_topic">                     
-                    <p>
+                <div className="recipes_topic">                                         
                     {food.food}                    
                     <br />
                     <p style={{width: 300}}>
-                    Food description: {food.description}
-                    </p>
+                    Food description: {food.description}                    
+                    </p>                                
+                    Amount: {food.amount}        
                     <br/>
-                    Amount: {food.amount}
-                    </p>
                     <div className="clear"></div>                    
                 </div>
-                
+                <br/>
                 <FormOrderQrCode onSubmit={handleSubmit}></FormOrderQrCode>
                     
             </div>            

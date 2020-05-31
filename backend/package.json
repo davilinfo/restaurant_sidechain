@@ -22,6 +22,7 @@
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "http": "0.0.1-security",
-    "lisk-sdk": "^2.3.7"
+    "lisk-sdk": "^2.3.7",
+    "liskrestaurant_transactions": "^1.0.0"
   }
 }
