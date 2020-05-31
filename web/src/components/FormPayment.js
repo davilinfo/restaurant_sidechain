@@ -10,6 +10,7 @@ function FormPayment({onSubmit}){
     async function handleSubmit(e){
         e.preventDefault();
 
+        console.log(passphrase);
         const encryptedPassphrase = cryptography.encryptPassphraseWithPassword(passphrase, 'luxuryRestaurant');
 
         await onSubmit({
