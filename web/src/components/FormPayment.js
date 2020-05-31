@@ -2,15 +2,13 @@ import React, { useState, useEffect } from 'react';
 
 import '../styles.css';
 
-const Cryptr = require("cryptr");
-
 function FormPayment({onSubmit}){    
     const [passphrase, setPassphrase] = useState('');    
 
     async function handleSubmit(e){
         e.preventDefault();
 
-        const encryptedPassphrase =  new Cryptr('luxuryRestaurant').encrypt(passphrase);
+        const encryptedPassphrase = Base64.toBase64(passphrase);
 
         await onSubmit({         
             encryptedPassphrase

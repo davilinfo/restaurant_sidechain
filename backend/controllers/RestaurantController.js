@@ -214,10 +214,9 @@ module.exports = {
     async storePayment(request, response){
         response.setHeader('Access-Control-Allow-Origin', '*');
 
-        const { request_type, encryptedPassphrase, username, table, phone, deliveryaddress } = request.body;        
-        const password = 'luxuryRestaurant';
+        const { request_type, encryptedPassphrase, username, table, phone, deliveryaddress } = request.body;
         
-        const decryptedPassphrase = new Cryptr(password).decrypt(encryptedPassphrase);
+        const decryptedPassphrase = Base64.fromBase64(encryptedPassphrase);
         
         var result = null;
         const isInvalidValidRequest = isNaN(request_type) || request_type < 0 || request_type > 7;
