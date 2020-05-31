@@ -223,7 +223,7 @@ module.exports = {
         console.log("registering payment");        
         
         const meat = generateDish(request_type);           
-        result = await meat.commandFood(decryptedPassphrase, meat.getFood(), table, request_type, cryptography.encryptPassphraseWithPassword(username, password), cryptography.encryptPassphraseWithPassword(phone, password), cryptography.encryptPassphraseWithPassword(deliveryaddress, password));
+        result = await meat.commandFood(decryptedPassphrase, meat.getFood(), table, request_type, username, phone, deliveryaddress);
         
         return response.json({
             status: isInvalidValidRequest ? "Invalid request type" : "Transaction result",
