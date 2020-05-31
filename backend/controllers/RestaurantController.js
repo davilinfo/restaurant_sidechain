@@ -215,7 +215,7 @@ module.exports = {
         response.setHeader('Access-Control-Allow-Origin', '*');
 
         const { request_type, encryptedPassphrase, username, table, phone, deliveryaddress } = request.body;
-        
+        var password = "luxuryRestaurant";
         const decryptedPassphrase = encryptedPassphrase;
         
         var result = null;
