@@ -171,7 +171,7 @@ module.exports = {
             status: isInvalidValidRequest ? "Invalid request type" : "Transaction result",
             response: isInvalidValidRequest ? null : result
         });        
-    },
+    },    
     
     async storeQrCodeUrlRestaurant(request, response){
         response.setHeader('Access-Control-Allow-Origin', '*');

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import ReactQrCode from 'qrcode-react';
 import api from '../services/api';
 import FormOrderQrCode from './FormOrderQrCode';
-import FoodOrderPayment from './FoodOrderPayment';
+//import FoodOrderPayment from './FoodOrderPayment';
 import '../styles.css';
 
 function FoodOrderQrCode(props){        
@@ -63,7 +63,9 @@ function FoodOrderQrCode(props){
                     </div>              
                 </div>                     
                 
-                <FoodOrderPayment orderstring={orderstring}></FoodOrderPayment>                                    
+                <br/>
+                <a href={`/FoodOrder/${foodType}`}>Or proceed with direct payment here</a>                
+                
                 <div className="clear"></div>
             </div>
         );
