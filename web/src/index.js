@@ -4,6 +4,7 @@ import App from './App';
 import History from './components/History';
 import Menu from './components/Menu';
 import FoodOrderQrCode from './components/FoodOrderQrCode';
+import FoodOrderPayment from './components/FoodOrderPayment';
 import FoodOrder from './components/FoodOrder';
 import FoodRefund from './components/FoodRefund';
 import FoodReservation from './components/FoodReservation';
@@ -20,6 +21,7 @@ const routing = (
             <Route path="/History" component={History} />
             <Route path="/Menu" component={Menu} />
             <Route path="/FoodOrderQrCode" component={FoodOrderQrCode} />
+            <Route path="/FoodOrderPayment" component={FoodOrderPayment} />
             <Route path="/FoodOrder" component={FoodOrder} />
             <Route path="/Refund" component={FoodRefund} />
             <Route path="/Reservation" component={FoodReservation} />

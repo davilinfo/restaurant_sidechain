@@ -4,31 +4,29 @@ import api from '../services/api';
 import FormPayment from './FormPayment';
 import '../styles.css';
 
-function FoodOrderPayment(props){                   
-    
+function FoodOrderPayment(props){        
+    var querystring = document.location.href.split("?")[1];     
+
     var [order, setOrder] = useState([]);                    
 
-    async function handleSubmit(data){      
-        
-        var food = {};
-        var orderstring = props.orderstring;
+    async function handleSubmit(data){                              
+        var orderstring = decodeURI(querystring);
         if (orderstring !== null && orderstring !== undefined){    
             orderstring = orderstring.split("&");
                             
-            food.recipientAddress = orderstring[0].split('=')[1];
-            food.amount = orderstring[1].split('=')[1];
-            food.name = orderstring[2].split('=')[1];
-            food.request_type = orderstring[3].split('=')[1];
-            food.timestamp = orderstring[4].split('=')[1];
-            food.username = orderstring[5].split('=')[1];
-            food.phone = orderstring[6].split('=')[1];
-            food.deliveryaddress = orderstring[7].split('=')[1];
-            food.table = 1;
-            food.encryptedPassphrase = data;
+            data.recipientAddress = orderstring[0].split('=')[1];
+            data.amount = orderstring[1].split('=')[1];
+            data.name = orderstring[2].split('=')[1];
+            data.request_type = orderstring[3].split('=')[1];
+            data.timestamp = orderstring[4].split('=')[1];
+            data.username = orderstring[5].split('=')[1];
+            data.phone = orderstring[6].split('=')[1];
+            data.deliveryaddress = orderstring[7].split('=')[1];
+            data.table = 1;
+            data.user = 1;            
         }                        
-                 
-        console.log(food);
-        order = await api.post('/userRequest', food );
+                         
+        order = await api.post('/userRequest', data);
         setOrder(order);                  
 
         const transaction_result = (

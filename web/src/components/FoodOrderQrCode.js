@@ -31,14 +31,14 @@ function FoodOrderQrCode(props){
         order = await api.post('/storeQrCode', data);           
         setOrder(order);             
 
-        orderstring = "recipient=".concat(order.data.response.split("&")[0].split("=")[1])
+        orderstring = encodeURI("recipient=".concat(order.data.response.split("&")[0].split("=")[1])
         .concat("&amount=").concat(order.data.response.split("&")[1].split("=")[1])
         .concat("&food=").concat(order.data.response.split("&")[2].split("=")[1])
         .concat("&foodtype=").concat(order.data.response.split("&")[3].split("=")[1])
         .concat("&timestamp=").concat(order.data.response.split("&")[4].split("=")[1])
         .concat("&username=").concat(order.data.response.split("&")[5].split("=")[1])
         .concat("&phone=").concat(order.data.response.split("&")[6].split("=")[1])
-        .concat("&deliveryaddress=").concat(order.data.response.split("&")[7].split("=")[1]);
+        .concat("&deliveryaddress=").concat(order.data.response.split("&")[7].split("=")[1]));
         
         setOrderString(orderstring);   
 
@@ -64,7 +64,7 @@ function FoodOrderQrCode(props){
                 </div>                     
                 
                 <br/>
-                <a href={`/FoodOrder/${foodType}`}>Or proceed with direct payment here</a>                
+                <a href={`/FoodOrderPayment?${orderstring}`} querystring={`${orderstring}`}>Or proceed with direct payment here</a>                
                 
                 <div className="clear"></div>
             </div>
