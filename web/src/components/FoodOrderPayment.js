@@ -21,7 +21,7 @@ function FoodOrderPayment(props){
 
             const transaction_result = (
                 <div className="recipes_topic">                    
-                    Transaction result: {order.data.status}
+                    {order.data.status}
                     <br />
                     Transaction id: {order.data.response.transaction.id}
                     <br/>
@@ -72,7 +72,7 @@ function FoodOrderPayment(props){
 
         const transaction_result = (
             <div className="recipes_topic">                    
-                Transaction result: {order.data.status}
+                {order.data.status}
                 <br />
                 Transaction id: {order.data.response.transaction.id}
                 <br/>
