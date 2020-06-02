@@ -15,5 +15,6 @@ routes.post('/account', RestaurantController.getAccount);
 routes.post('/refund/', RestaurantController.refund);
 routes.post('/userRequest', RestaurantController.store);
 routes.post('/payment', RestaurantController.storePayment);
+routes.post('/cryptography', RestaurantController.cryptographyText);
 
 module.exports = routes;

@@ -214,8 +214,8 @@ module.exports = {
         
         const { transaction, networkid } = request.body;            
                 
-        if (networkid === 'identifier'){
-            const meat = new RestaurantFood();
+        if (networkid === 'identifier'){            
+            const meat = new RestaurantFood();            
             var result = await meat.receivedSignedTransactionForBroadcast(transaction);
 
             return response.json({ status: "Transaction result", response: result});
@@ -223,4 +223,15 @@ module.exports = {
             return response.json({ status: "Invalid request", response: null});
         }
     },
+
+    async cryptographyText(request, response){
+        response.setHeader('Access-Control-Allow-Origin', '*');
+        
+        const { text } = request.body;        
+        const password = 'luxuryRestaurant';
+
+        var encryptedText = cryptography.encryptPassphraseWithPassword(text, password); //new Cryptr(password).encrypt(text);
+
+        return response.json( { response: encryptedText} );
+    }
 }

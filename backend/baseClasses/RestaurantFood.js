@@ -28,6 +28,10 @@ class RestaurantFood{
         return blockchainClient.transactions.broadcast(transaction.toJSON());
     }
 
+    broadcastTransaction2(transaction){                        
+        return blockchainClient.transactions.broadcast(transaction);
+    }
+
     getAccount(passphrase){
         const address = getAddressFromPassphrase(passphrase);
         return blockchainClient.accounts.get({ address, limit: 1 });
@@ -106,7 +110,7 @@ class RestaurantFood{
 
     async receivedSignedTransactionForBroadcast(txFood){
         try{                                
-            ResultSchema.broadcastInfo = await this.broadcastTransaction(txFood);
+            ResultSchema.broadcastInfo = await this.broadcastTransaction2(txFood);
             ResultSchema.transaction = txFood;   
             console.log(ResultSchema);
         }catch(e){
