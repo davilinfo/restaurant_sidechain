@@ -10,7 +10,7 @@ configDevnet.components.storage.database = 'lisk_dev';
 configDevnet.components.storage.host = 'localhost';
 configDevnet.modules.http_api.access.public = true;
 
-configDevnet.app.genesisConfig.BLOCK_TIME = 5;
+configDevnet.app.genesisConfig.BLOCK_TIME = 10;
 
 const app = new Application(genesisBlockDevnet, configDevnet);
 
