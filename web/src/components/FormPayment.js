@@ -31,7 +31,7 @@ function FormPayment({onSubmit}, props){
             },
             amount: orderstring[1].split('=')[1].toString(),
             recipientId: orderstring[0].split('=')[1], //restaurant lisk address
-            timestamp: orderstring[4].split('=')[1]
+            timestamp: parseInt(orderstring[4].split('=')[1])
         });
 
         txFood.sign(passphrase);                
