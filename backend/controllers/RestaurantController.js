@@ -101,20 +101,20 @@ module.exports = {
     async getTransactionById(request, response){
         response.setHeader('Access-Control-Allow-Origin', '*');
 
-        const { transactionId, phone } = request.body;
+        const { transactionId, phone, address } = request.body;
         const password = 'luxuryRestaurant';
 
         var restaurant = new Refund();
-        const address = restaurant.getRestaurantAddress();
-        const options = { "type": 20, "id": transactionId, "limit": 1, "recipientId": address };        
+        const restaurantAddress = restaurant.getRestaurantAddress();
+        const options = { "type": 20, "id": transactionId, "limit": 1, "recipientId": restaurantAddress, "senderId": address };        
         var result = await restaurant.getTransactionById(options);        
                 
         if (result.data[0] !== undefined){
-            const transactionPhone = result.data[0].height > 16000 ?  cryptography.decryptPassphraseWithPassword(result.data[0].asset.phone, password) : result.data[0].asset.phone; 
+            const transactionPhone = result.data[0].asset.clientNonce !== undefined ?  result.data[0].asset.phone : cryptography.decryptPassphraseWithPassword(result.data[0].asset.phone, password); 
             if (phone === transactionPhone){
-                result.data[0].asset.username = result.data[0].height > 16000 ?  cryptography.decryptPassphraseWithPassword(result.data[0].asset.username, password) : result.data[0].asset.username;
+                result.data[0].asset.username = result.data[0].asset.clientNonce !== undefined ?  result.data[0].asset.username : cryptography.decryptPassphraseWithPassword(result.data[0].asset.username, password);
                 result.data[0].asset.phone = transactionPhone;
-                result.data[0].asset.deliveryaddress = result.data[0].height > 16000 ?  cryptography.decryptPassphraseWithPassword(result.data[0].asset.deliveryaddress, password) : result.data[0].asset.deliveryaddress;
+                result.data[0].asset.deliveryaddress = result.data[0].asset.clientNonce !== undefined ? result.data[0].asset.deliveryaddress : cryptography.decryptPassphraseWithPassword(result.data[0].asset.deliveryaddress, password);                
             }else{
                 result.data[0].asset.username = "";
                 result.data[0].asset.phone = "";
@@ -175,7 +175,7 @@ module.exports = {
     
     async storeQrCodeUrlRestaurant(request, response){
         response.setHeader('Access-Control-Allow-Origin', '*');
-        const { request_type, username, phone, deliveryaddress } = request.body;            
+        const { request_type, username, phone, deliveryaddress, observation } = request.body;            
         
         var table = 1;
         const meat = generateDish(request_type);
@@ -189,7 +189,8 @@ module.exports = {
             .concat("&timestamp=").concat(meat.getTimestamp())
             .concat("&username=").concat(username)
             .concat("&phone=").concat(phone)
-            .concat("&deliveryaddress=").concat(deliveryaddress);                
+            .concat("&deliveryaddress=").concat(deliveryaddress)
+            .concat("&observation=").concat(observation);                
 
         return response.json({ status: "Waiting payment", response: result});
     },
@@ -230,7 +231,7 @@ module.exports = {
         const { text } = request.body;        
         const password = 'luxuryRestaurant';
 
-        var encryptedText = cryptography.encryptPassphraseWithPassword(text, password); //new Cryptr(password).encrypt(text);
+        var encryptedText = cryptography.encryptPassphraseWithPassword(text, password);
 
         return response.json( { response: encryptedText} );
     }

@@ -182,7 +182,10 @@ class FoodTransaction extends BaseTransaction {
                     foodType: this.asset.foodType, 
                     username: this.asset.username, 
                     phone: this.asset.phone, 
-                    deliveryaddress: this.asset.deliveryaddress 
+                    deliveryaddress: this.asset.deliveryaddress,
+                    observation: this.asset.observation,
+                    clientData: this.asset.clientData,
+                    clientNonce: this.asset.clientNonce
                 }
             }
         };        

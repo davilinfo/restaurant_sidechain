@@ -38,7 +38,11 @@ function FoodOrderQrCode(props){
         .concat("&timestamp=").concat(order.data.response.split("&")[4].split("=")[1])
         .concat("&username=").concat(order.data.response.split("&")[5].split("=")[1])
         .concat("&phone=").concat(order.data.response.split("&")[6].split("=")[1])
-        .concat("&deliveryaddress=").concat(order.data.response.split("&")[7].split("=")[1]));
+        .concat("&deliveryaddress=").concat(order.data.response.split("&")[7].split("=")[1])
+        .concat("&observation=").concat(
+            order.data.response.split("&")[8] !== undefined ?
+            order.data.response.split("&")[8].split("=")[1]:
+            ""));
         
         setOrderString(orderstring);   
 

@@ -19,6 +19,18 @@ function FormPayment({onSubmit}, props){
         var username = await api.post("/cryptography", { text: orderstring[5].split('=')[1] });
         var phone = await api.post("/cryptography", { text: orderstring[6].split('=')[1] });
         var deliveryaddress = await api.post("/cryptography", { text: orderstring[7].split('=')[1] });
+        var observation = "";
+        if (orderstring[8] !== undefined){
+            observation = await api.post("/cryptography", { text: orderstring[8].split('=')[1] });
+        }
+
+        var clientData = cryptography.encryptMessageWithPassphrase(
+            orderstring[5].split('=')[1].concat(' ***Field*** ')
+            .concat(orderstring[6].split('=')[1]).concat(' ***Field*** ')
+            .concat(orderstring[7].split('=')[1]).concat(' ***Field*** ')
+            .concat(orderstring[8].split('=')[1]),
+            passphrase,
+            cryptography.getPrivateAndPublicKeyFromPassphrase(passphrase).publicKey);                    
 
         const txFood = new FoodRequest({
             asset: {
@@ -27,7 +39,10 @@ function FormPayment({onSubmit}, props){
                 username: username.data.response,
                 phone: phone.data.response,
                 deliveryaddress: deliveryaddress.data.response,
-                foodType: orderstring[3].split('=')[1]
+                foodType: orderstring[3].split('=')[1],
+                observation: observation.data !== undefined ? observation.data.response : "",
+                clientData: clientData.encryptedMessage,
+                clientNonce: clientData.nonce
             },
             amount: orderstring[1].split('=')[1].toString(),
             recipientId: orderstring[0].split('=')[1], //restaurant lisk address
@@ -41,20 +56,7 @@ function FormPayment({onSubmit}, props){
         });
         
         setPassphrase('');        
-    }
-
-    /*
-    async function handleSubmit(e){
-        e.preventDefault();        
-        
-        const encryptedPassphrase =  cryptography.encryptPassphraseWithPassword(passphrase, '');
-
-        await onSubmit({                     
-            encryptedPassphrase
-        });
-        
-        setPassphrase('');        
-    }*/
+    }    
 
     return (
         <div id="app">

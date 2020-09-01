@@ -6,13 +6,26 @@ import '../styles.css';
 const transactions = require("@liskhq/lisk-transactions");
 
 function FoodReservation(props){                   
-    var [foodRequest, setFoodRequest] = useState([]);            
+    var [foodRequest, setFoodRequest] = useState([]);     
+    var [phone, setPhone] = useState('');
+    var [deliveryAddress, setDeliveryAddress] = useState('');
+    var [username, setUsername] = useState('');
+    var [observation, setObservation] = useState('');
 
     async function handleSubmit(data){                
-
-        foodRequest = await api.post('/transaction', data);   
-        setFoodRequest(foodRequest);    
         
+        foodRequest = data.result.foodRequest;
+        phone = data.result.phone;
+        deliveryAddress = data.result.deliveryAddress;
+        username = data.result.user;
+        observation= data.result.observation;
+        
+        setFoodRequest(foodRequest);    
+        setPhone(phone);
+        setDeliveryAddress(deliveryAddress);
+        setObservation(observation);
+        setUsername(username);
+
         const transaction_result = (
             <div className="recipes_topic">                    
                 {foodRequest.data.status}
@@ -27,11 +40,13 @@ function FoodReservation(props){
                 <br/>
                 Amount: LSK {foodRequest.data.response.data.length > 0 ? transactions.utils.convertBeddowsToLSK(foodRequest.data.response.data[0].amount) : 0}
                 <br/>
-                Phone: {foodRequest.data.response.data.length > 0 ? foodRequest.data.response.data[0].asset.phone : ""}
+                Phone: {phone}
                 <br/>
-                Delivery address: {foodRequest.data.response.data.length > 0 ? foodRequest.data.response.data[0].asset.deliveryaddress : ""}
+                Delivery address: {deliveryAddress}
                 <br/>
-                User: {foodRequest.data.response.data.length > 0 ? foodRequest.data.response.data[0].asset.username : ""}
+                User: {username}
+                <br/>
+                Observation: {observation}
                 <div className="clear"></div>
             </div>
         );
