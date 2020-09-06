@@ -21,9 +21,9 @@ function FoodRefund(props){
                 <br/>
                 Paid Amount: LSK {transactions.utils.convertBeddowsToLSK(order.data.response.transaction.amount)}
                 <br/>
-                Payer LSK address: {order.data.response.transaction.senderId}
+                Restaurant LSK address: {order.data.response.transaction.senderId}
                 <br/>
-                Restaurant LSK address: {order.data.response.transaction.recipientId}
+                Client LSK address: {order.data.response.transaction.recipientId}
                 <br/>
                 Broadcast info: {order.data.response.broadcastInfo.data.message}                
                 <div className="clear"></div>
