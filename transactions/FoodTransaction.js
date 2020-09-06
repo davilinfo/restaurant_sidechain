@@ -130,6 +130,31 @@ class FoodTransaction extends BaseTransaction {
                 )
             );
         }
+
+        if (!this.asset.clientData || this.asset.clientData.length === 0){
+            errors.push(
+                new TransactionError(
+                    'Invalid "clientData" defined on transaction',
+                    this.id,
+                    '.clientData',
+                    this.amount,
+                    'Not empty'
+                )
+            );
+        }
+
+        if (!this.asset.clientNonce || this.asset.clientNonce.length === 0){
+            errors.push(
+                new TransactionError(
+                    'Invalid "clientNonce" defined on transaction',
+                    this.id,
+                    '.clientNonce',
+                    this.amount,
+                    'Not empty'
+                )
+            );
+        }
+
         return errors;
     }
 
