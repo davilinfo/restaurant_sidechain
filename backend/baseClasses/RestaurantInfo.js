@@ -2,7 +2,7 @@ const { encryptMessageWithPassphrase, getAddressAndPublicKeyFromPassphrase } = r
 const restaurantPassphrase = "unfair canvas settle chief pattern solar three village fat barely mean ethics";
 const restaurantAddress = '12155463429267245415L';
 
-static class RestaurantInfo {
+class RestaurantInfo {
 
     static getCryptographedMessage(message){        
         var restaurantClientData = encryptMessageWithPassphrase(
