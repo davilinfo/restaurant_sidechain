@@ -3,8 +3,7 @@ const { getAddressFromPassphrase } = require ("@liskhq/lisk-cryptography");
 const transactions = require("@liskhq/lisk-transactions");
 const blockchainClient = require ("../APIClient/blockchainClient");
 const Refund = require("../../transactions/RefundTransaction");
-const restaurantPassphrase = "unfair canvas settle chief pattern solar three village fat barely mean ethics";
-const restaurantAddress = '12155463429267245415L';
+const RestaurantInfo = require("../baseClasses/RestaurantInfo");
 const ResultSchema = require("../models/result");
 
 class RefundRestaurant{            
@@ -19,11 +18,7 @@ class RefundRestaurant{
 
     getTransactionById(options){        
         return blockchainClient.transactions.get(options);
-    }
-
-    getRestaurantAddress(){
-        return restaurantAddress;
-    }
+    }    
     
     broadcastTransaction(transaction){                        
         return blockchainClient.transactions.broadcast(transaction.toJSON());
@@ -46,7 +41,7 @@ class RefundRestaurant{
         });
         
         try{
-            txFood.sign(restaurantPassphrase); //restaurant passphrase
+            txFood.sign(RestaurantInfo.getRestaurantPassphrase());
             ResultSchema.broadcastInfo = await this.broadcastTransaction(txFood);
             ResultSchema.transaction = txFood;   
             console.log(ResultSchema);

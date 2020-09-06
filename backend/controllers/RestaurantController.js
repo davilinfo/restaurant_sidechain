@@ -8,7 +8,7 @@ const Refund = require('../baseClasses/RefundRestaurant');
 const transactions = require("@liskhq/lisk-transactions");
 const { food_type } = require ('../foodTypes/food_types.json');
 const cryptography = require('@liskhq/lisk-cryptography');
-const Cryptr = require('cryptr');
+const RestaurantInfo = require('../baseClasses/RestaurantInfo');
 
 /* Attention: please, keep the food describe in food_types.json equivalent on each RestaurantFood class*/
 
@@ -86,7 +86,7 @@ module.exports = {
     */
     async getAccount(request, response){
         response.setHeader('Access-Control-Allow-Origin', '*');
-        var restaurant = new Refund();
+        var restaurant = new RestaurantFood();
         const { passphrase } = request.body;
 
         const decryptedPassphrase = cryptography.decryptPassphraseWithPassword(passphrase, 'luxuryRestaurant');
@@ -104,8 +104,8 @@ module.exports = {
         const { transactionId, phone, address } = request.body;
         const password = 'luxuryRestaurant';
 
-        var restaurant = new Refund();
-        const restaurantAddress = restaurant.getRestaurantAddress();
+        var restaurant = new RestaurantFood();
+        const restaurantAddress = RestaurantInfo.getRestaurantAddress();
         const options = { "type": 20, "id": transactionId, "limit": 1, "recipientId": restaurantAddress, "senderId": address };        
         var result = await restaurant.getTransactionById(options);        
                 
@@ -229,9 +229,11 @@ module.exports = {
         response.setHeader('Access-Control-Allow-Origin', '*');
         
         const { text } = request.body;        
-        const password = 'luxuryRestaurant';
+        //const password = 'luxuryRestaurant';
+        
+        //var encryptedText = cryptography.encryptPassphraseWithPassword(text, password);
 
-        var encryptedText = cryptography.encryptPassphraseWithPassword(text, password);
+        var encryptedText = RestaurantInfo.getCryptographedMessage(text);
 
         return response.json( { response: encryptedText} );
     }
