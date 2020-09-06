@@ -80,20 +80,6 @@ module.exports = {
         })
     },
 
-    /* 
-    method type: Post
-    Returns the account detail from the respective passphrase supplied in the URL
-    */
-    async getAccount(request, response){
-        response.setHeader('Access-Control-Allow-Origin', '*');
-        var restaurant = new RestaurantFood();
-        const { passphrase } = request.body;
-
-        const decryptedPassphrase = cryptography.decryptPassphraseWithPassword(passphrase, 'luxuryRestaurant');
-
-        return response.json({ response: await restaurant.getAccount(decryptedPassphrase)});
-    },
-
     /*
     method type: Post
     Returns transaction detail by transaction id
@@ -228,10 +214,7 @@ module.exports = {
     async cryptographyText(request, response){
         response.setHeader('Access-Control-Allow-Origin', '*');
         
-        const { text } = request.body;        
-        //const password = 'luxuryRestaurant';
-        
-        //var encryptedText = cryptography.encryptPassphraseWithPassword(text, password);
+        const { text } = request.body;
 
         var encryptedText = RestaurantInfo.getCryptographedMessage(text);
 

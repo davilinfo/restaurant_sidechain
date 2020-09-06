@@ -11,7 +11,6 @@ routes.get('/list', RestaurantController.index)
 routes.get('/foodDetail/:id', RestaurantController.foodDetail);
 routes.post('/storeQrCode', RestaurantController.storeQrCodeUrlRestaurant);
 routes.post('/transaction', RestaurantController.getTransactionById);
-routes.post('/account', RestaurantController.getAccount);
 routes.post('/refund/', RestaurantController.refund);
 routes.post('/userRequest', RestaurantController.store);
 routes.post('/payment', RestaurantController.storePayment);
