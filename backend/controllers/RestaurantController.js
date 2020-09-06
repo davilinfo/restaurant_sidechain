@@ -179,7 +179,7 @@ module.exports = {
         
         var table = 1;
         const meat = generateDish(request_type);
-        const address = meat.getRestaurantAddress();                        
+        const address = RestaurantInfo.getRestaurantAddress();                        
         const amount = `${transactions.utils.convertLSKToBeddows(meat.getFood().amount.toString())}`.toString(); 
 
         var result = "food://wallet?recipient=".concat(address)
@@ -200,7 +200,7 @@ module.exports = {
         const { request_type, username, phone, deliveryaddress } = request.body;            
 
         const meat = generateDish(request_type);
-        const address = meat.getRestaurantAddress();                        
+        const address = RestaurantInfo.getRestaurantAddress();                        
         const amount = `${transactions.utils.convertLSKToBeddows(meat.getFood().amount.toString())}`.toString();
                 
         var result = null;
