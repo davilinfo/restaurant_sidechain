@@ -27,19 +27,7 @@ class MenuTransaction extends BaseTransaction {
 
     validateAsset(){
         const errors = [];                
-        
-        if (!this.amount || this.amount !== 0 ){
-            errors.push(
-                new TransactionError(
-                    'Invalid "value" defined on transaction',
-                    this.id,
-                    '.amount',
-                    this.amount,
-                    'No cost for new menu only fee'
-                )
-            );
-        }
-
+                
         if(!utils.validateAddress(this.recipientId)){
             errors.push(new TransactionError(
                 'Invalid client "Lisk address" defined on transaction',
