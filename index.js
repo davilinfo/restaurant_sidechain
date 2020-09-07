@@ -1,7 +1,7 @@
 const { Application, genesisBlockDevnet, configDevnet } = require ('lisk-sdk');
 const FoodTransaction = require('./transactions/FoodTransaction');
 const RefundTransaction = require('./transactions/RefundTransaction');
-
+const MenuTransaction = require('./transactions/MenuTransaction');
 
 configDevnet.app.label = 'restaurant-sidechain-app';
 configDevnet.components.storage.port = 5435;
@@ -16,6 +16,7 @@ const app = new Application(genesisBlockDevnet, configDevnet);
 
 app.registerTransaction(FoodTransaction);
 app.registerTransaction(RefundTransaction);
+app.registerTransaction(MenuTransaction);
 
 app.run()
     .then(() => app.logger.info('App started...') )
