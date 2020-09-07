@@ -63,85 +63,85 @@ class MenuTransaction extends BaseTransaction {
 
         for (var index=0; index < this.asset.items.length; index ++){
 
-            if (!this.asset.items[0].name || typeof this.asset.items[0].name !== 'string' || this.asset.items[0].length > 200){
+            if (!this.asset.items[0].name || typeof this.asset.items[index].name !== 'string' || this.asset.items[index].length > 200){
                 errors.push(
                     new TransactionError(
                         'Invalid "name" defined on transaction',
                         this.id,
                         '.name',
-                        this.asset.items[0].name,
+                        this.asset.items[index].name,
                         'A string value no longer than 200 characters'
                     )
                 );
             }
     
-            if (!this.asset.items[0].description || typeof this.asset.items[0].description !== 'string' || this.asset.items[0].description.length > 2000){
+            if (!this.asset.items[index].description || typeof this.asset.items[index].description !== 'string' || this.asset.items[index].description.length > 2000){
                 errors.push(
                     new TransactionError(
                         'Invalid "description" defined on transaction',
                         this.id,
                         '.description',
-                        this.asset.items[0].description,
+                        this.asset.items[index].description,
                         'A string value no longer than 2000 characters'
                     )
                 );
             }
     
-            if (!this.asset.items[0].price || this.asset.price < 0 ){
+            if (!this.asset.items[index].price || this.asset.items[index].price < 0 ){
                 errors.push(
                     new TransactionError(
                         'Invalid "price" defined on transaction',
                         this.id,
                         '.price',
-                        this.asset.items[0].price,
+                        this.asset.items[index].price,
                         'A number value bigger than 0'
                     )
                 );
             }
     
-            if (!this.asset.items[0].discount || this.asset.discount < 0 ){
+            if (!this.asset.items[index].discount || this.asset.items[index].discount < 0 ){
                 errors.push(
                     new TransactionError(
                         'Invalid "discount" defined on transaction',
                         this.id,
                         '.discount',
-                        this.asset.items[0].discount,
+                        this.asset.items[index].discount,
                         'A number value bigger than or equal 0'
                     )
                 );
             }
     
-            if (!this.asset.items[0].type){
+            if (!this.asset.items[index].type){
                 errors.push(
                     new TransactionError(
                         'Invalid "type" defined on transaction',
                         this.id,
                         '.type',
-                        this.asset.items[0].type,
+                        this.asset.items[index].type,
                         'A number value bigger than 0'
                     )
                 );
             }
 
-            if (!this.asset.items[0].category){
+            if (!this.asset.items[index].category){
                 errors.push(
                     new TransactionError(
                         'Invalid "category" defined on transaction',
                         this.id,
                         '.category',
-                        this.asset.items[0].category,
+                        this.asset.items[index].category,
                         'A number value bigger than 0'
                     )
                 );
             }
 
-            if (!this.asset.items[0].img){
+            if (!this.asset.items[index].img){
                 errors.push(
                     new TransactionError(
                         'Invalid "img" defined on transaction',
                         this.id,
                         '.img',
-                        this.asset.items[0].img,
+                        this.asset.items[index].img,
                         'A string http address of the food image'
                     )
                 );
