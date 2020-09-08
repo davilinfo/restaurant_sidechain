@@ -64,6 +64,24 @@ let txMenu = new Menu({
                 "discount": 0.3,
                 "type": 6,
                 "category": 2
+            },
+            {
+                "name": "Heineken beer can",
+                "description": "Heineken beer can",
+                "img": "images/heineken_can.jpg",
+                "price": 3,
+                "discount": 1,
+                "type": 7,
+                "category": 4
+            },
+            {
+                "name": "Bottle of water",
+                "description": "Bottle of water",
+                "img": "images/bottle_water.jpg",
+                "price": 2,
+                "discount": 1,
+                "type": 8,
+                "category": 4
             }
         ]
     },
