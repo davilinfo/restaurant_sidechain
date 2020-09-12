@@ -6,6 +6,7 @@ import '../styles.css';
 
 function FoodItemDetail(props){
     const { food } = props;
+    console.log(food.type);
 
     return (        
         <>            
@@ -13,7 +14,7 @@ function FoodItemDetail(props){
                 <div className="recipes_topic"> 
                     <img src={food.img} width="72" height="72" alt="" />
                     <br></br>
-                    <span className="headline">{food.food}</span> <br />
+                    <span className="headline">{food.name}</span> <br />
                     {food.description}
                     <div className="clear"></div>
                 </div>

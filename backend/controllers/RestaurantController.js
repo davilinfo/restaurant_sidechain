@@ -1,64 +1,72 @@
-const OysterEntrance = require ('../entrances/oyster_entrance');
-const MoulesEntrance = require ('../entrances/moules_entrance');
-const VanillaIceCreamDessert = require ('../dessert/vanillaicecream_dessert');
-const RibsOnTheBarbecueMenu = require ('../menu/ribsonthebarbecue_menu');
-const BakedCheeseOysterEntrance = require('../entrances/baked_oyster_entrance');
 const RestaurantFood = require('../baseClasses/RestaurantFood');
 const Refund = require('../baseClasses/RefundRestaurant');
 const transactions = require("@liskhq/lisk-transactions");
-const { food_type } = require ('../foodTypes/food_types.json');
 const cryptography = require('@liskhq/lisk-cryptography');
 const RestaurantInfo = require('../baseClasses/RestaurantInfo');
 
-/* Attention: please, keep the food describe in food_types.json equivalent on each RestaurantFood class*/
+/* Attention: please, perform a MenuTransaction to establish a menu for this restaurant*/
 
-function generateDish(foodType){
-    switch (foodType.toString()) {
-        case "1":
-            return new OysterEntrance();
-            break;
-    
-        case "2":
-            return new MoulesEntrance();                       
-            break;
+    var generateDish = async (foodType) => {        
 
-        case "3":
-            return new VanillaIceCreamDessert();
-            break;
+        var restaurant = new RestaurantFood();
+        const restaurantAddress = RestaurantInfo.getRestaurantAddress();
+        const options = { "type": 800, "recipientId": restaurantAddress, "senderId": restaurantAddress };
+        var itemIndex = 0;
+        var food = require("../models/food");   
         
-        case "4": /* Decorator design pattern. Menu applies discount in desserts */            
-            return new RibsOnTheBarbecueMenu(new VanillaIceCreamDessert());
-            break;
+        const result = await restaurant.getTransactionById(options);
         
-        case "5":
-            return new BakedCheeseOysterEntrance();            
-            break;
+        itemIndex = result.data.length -1;
         
-        case "6": /* Decorator design pattern. Full menu with entrance, principal and dessert. Menu applies discount*/                           
-            const ribsmenu = new RibsOnTheBarbecueMenu(new VanillaIceCreamDessert());
-            ribsmenu.getFood().discount = 0.6;
-            const menu = new BakedCheeseOysterEntrance(ribsmenu);            
-            menu.getFood().img = "images/baked-oysters-plus-ribs.jpg";
-            return menu;
+        if (result.data[itemIndex] !== undefined) {                             
+            
+            for (var index = 0; index < result.data[itemIndex].asset.items.length; index++) {
+                if (result.data[itemIndex].asset.items[index].type == parseInt(foodType)) {
+                    food.name = result.data[itemIndex].asset.items[index].name;
+                    food.description = result.data[itemIndex].asset.items[index].description;
+                    food.amount = result.data[itemIndex].asset.items[index].price;
+                    food.discount = result.data[itemIndex].asset.items[index].discount;
+                    food.img = result.data[itemIndex].asset.items[index].img;
+                    food.request_type = result.data[itemIndex].asset.items[index].type;
+                    food.getTimestamp = function() {
+                        return restaurant.getTimestamp();
+                    }
 
-            break;
-
-        default:
-            return "invalid request type";
+                    console.log("food detail: ".concat(food));
+                    return food;  
+                }
+            }
         }
-}
+        return "invalid request";        
+    }
 
-module.exports = {
+module.exports = {    
     /* 
     method type: Get
-    Index method that retrieves all food types listed on /foodTypes/food_types.json 
+    Index method that retrieves menu from the latest MenuTransaction performed for this restaurant 
+    to perform a MenuTransaction please read the readme file on the backend folder, there is a dish1_commands folder with a menu_transaction.request.js file
     */ 
     async index(request, response){
         response.setHeader('Access-Control-Allow-Origin', '*');
-        console.log(food_type);
+
+        var restaurant = new RestaurantFood();
+        const restaurantAddress = RestaurantInfo.getRestaurantAddress();
+        const options = { "type": 800, "recipientId": restaurantAddress, "senderId": restaurantAddress };        
+        var result = await restaurant.getTransactionById(options);
+        var itemIndex = result.data.length-1;     
+
+        if (result.data[itemIndex] !== undefined){
+            console.log(result.data[itemIndex].asset.items);            
+
+            return response.json({
+                status: "ok",
+                result: result.data[itemIndex].asset.items
+            })
+        }
+        
         return response.json({
-            status: "ok",
-            result: food_type
+            status: "error",
+            result: null
         })
     },
 
@@ -70,7 +78,7 @@ module.exports = {
         response.setHeader('Access-Control-Allow-Origin', '*');        
         var ID = request.params.id;
         const isInvalidValidRequest = isNaN(ID) || ID < 0 || ID > 7;
-        var rsp = generateDish(ID).getFood();
+        var rsp = await generateDish(ID);        
         console.log(ID);        
         console.log(rsp);
 
@@ -150,8 +158,8 @@ module.exports = {
         const isInvalidValidRequest = isNaN(request_type) || request_type < 0 || request_type > 7;
         console.log("registering payment");        
         
-        const meat = generateDish(request_type);           
-        result = await meat.commandFood(decryptedPassphrase, meat.getFood(), table, request_type, cryptography.encryptPassphraseWithPassword(username, password), cryptography.encryptPassphraseWithPassword(phone, password), cryptography.encryptPassphraseWithPassword(deliveryaddress, password));
+        const meat = await generateDish(request_type);           
+        result = await meat.commandFood(decryptedPassphrase, meat, table, request_type, cryptography.encryptPassphraseWithPassword(username, password), cryptography.encryptPassphraseWithPassword(phone, password), cryptography.encryptPassphraseWithPassword(deliveryaddress, password));
         
         return response.json({
             status: isInvalidValidRequest ? "Invalid request type" : "Transaction result",
@@ -164,13 +172,13 @@ module.exports = {
         const { request_type, username, phone, deliveryaddress, observation } = request.body;            
         
         var table = 1;
-        const meat = generateDish(request_type);
+        const meat = await generateDish(request_type);
         const address = RestaurantInfo.getRestaurantAddress();                        
-        const amount = `${transactions.utils.convertLSKToBeddows(meat.getFood().amount.toString())}`.toString(); 
+        const amount = `${transactions.utils.convertLSKToBeddows(meat.amount.toString())}`.toString(); 
 
         var result = "food://wallet?recipient=".concat(address)
             .concat("&amount=").concat(amount)
-            .concat("&food=").concat(meat.getFood().name)
+            .concat("&food=").concat(meat.name)
             .concat("&foodtype=").concat(request_type.toString())
             .concat("&timestamp=").concat(meat.getTimestamp())
             .concat("&username=").concat(username)
@@ -185,9 +193,9 @@ module.exports = {
         response.setHeader('Access-Control-Allow-Origin', '*');
         const { request_type, username, phone, deliveryaddress } = request.body;            
 
-        const meat = generateDish(request_type);
+        const meat = await generateDish(request_type);
         const address = RestaurantInfo.getRestaurantAddress();                        
-        const amount = `${transactions.utils.convertLSKToBeddows(meat.getFood().amount.toString())}`.toString();
+        const amount = `${transactions.utils.convertLSKToBeddows(meat.amount.toString())}`.toString();
                 
         var result = null;
         result = "food://wallet?recipient=".concat(address)

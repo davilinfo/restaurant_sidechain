@@ -15,6 +15,7 @@ function App() {
         console.log("loading foods");        
         const response = await api.get('/list');        
         foods = response.data.result;
+        console.log(foods);
         setFoods(foods);
       }      
       
@@ -66,6 +67,15 @@ function App() {
                     }              
                     </ul>
                     <div className="clear"></div>
+                    <br></br>
+                    <p className="headline2">You have the option to choose the following beverages.</p>
+                    <ul >
+                    {                       
+                        foods.filter(entrances=> entrances.category === 4 ).map(food => (
+                            <FoodItem key={food.type} food={food}></FoodItem>
+                        ))
+                    }              
+                    </ul>
                 </div>
             </div>
             <div id="rightPan">

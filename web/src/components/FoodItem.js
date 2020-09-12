@@ -6,7 +6,7 @@ function FoodItem(props){
     const { food } = props;
 
     return (
-        <li> {food.food} </li>       
+        <li> {food.name} </li>       
     );
 }
 
