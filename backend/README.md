@@ -13,6 +13,9 @@ npm ci
 
 /*open the baseClasses folder and specify the restaurant address, passphrase in RestaurantInfo.js file*/
 
+/*run dish command to include all the menu items of your restaurant from inside of restaurant_sidechains folder.Change the file menu_transaction_request.js properly*/
+node dish_commands/menu_transaction_request.js | tee >(curl -X POST -H "Content-Type: application/json" -d @- localhost:4000/api/transactions)
+
 /*ok you are ready to run the backend*/
 node index.js
 
