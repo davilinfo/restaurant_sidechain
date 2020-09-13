@@ -17,8 +17,8 @@ npm run build
 
 /*After have sidechain, backend and web site running and tested you can start this step*/
 
-Configuring new food type inside luxury restaurant
-/*running a dish command to include all the menu items of your restaurant from inside of restaurant_sidechains folder. Change the file menu_transaction_request.js properly and then run the following command from the restaurant_sidechain folder:*/ 
+/*If you didn't configure the menu items of the restaurant yet then the next is to Configure new food types inside luxury restaurant
+running a dish command to include all the menu items of your restaurant from inside of restaurant_sidechains folder. Change the file menu_transaction_request.js properly and then run the following command from the restaurant_sidechain folder:*/ 
 node dish_commands/menu_transaction_request.js | tee >(curl -X POST -H "Content-Type: application/json" -d @- localhost:4000/api/transactions)
 
 /*this command will create a transaction and broadcast it into de restaurant sidechain, after confirmed the website of the restauraunt will have all menu items described in the MenuTransaction*/
