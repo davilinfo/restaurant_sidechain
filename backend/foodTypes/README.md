@@ -1,2 +1,0 @@
-# food options
-Inside food_types.json should be listed all food offered by the restaurant sidechain and its respectives types. Based on the type in this file the RestaurantController userRequest's post method will load the respective transaction class and then proceed and sign a transaction and then broadcast to the restaurant sidechain
