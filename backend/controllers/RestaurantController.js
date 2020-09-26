@@ -10,7 +10,8 @@ const RestaurantInfo = require('../baseClasses/RestaurantInfo');
 
         var restaurant = new RestaurantFood();
         const restaurantAddress = RestaurantInfo.getRestaurantAddress();
-        const options = { "type": 800, "recipientId": restaurantAddress, "senderId": restaurantAddress };
+        const options = { "type": 800, "recipientId": restaurantAddress, "senderId": restaurantAddress,
+        "sort": 'timestamp:desc', "limit": 1 };
         var itemIndex = 0;
         var food = require("../models/food");   
         
@@ -51,7 +52,8 @@ module.exports = {
 
         var restaurant = new RestaurantFood();
         const restaurantAddress = RestaurantInfo.getRestaurantAddress();
-        const options = { "type": 800, "recipientId": restaurantAddress, "senderId": restaurantAddress };        
+        const options = { "type": 800, "recipientId": restaurantAddress, "senderId": restaurantAddress,
+            "sort": 'timestamp:desc', "limit": 1 };        
         var result = await restaurant.getTransactionById(options);
         var itemIndex = result.data.length-1;     
 
