@@ -10,10 +10,10 @@ const getTimestamp = () => {
 
 let txRefund = new Refund({
     asset: {
-        transactionId: '15511989460955749890'
-    },
-    amount: `${transactions.utils.convertLSKToBeddows('48')}`,
-    recipientId: '16313739661670634666L', //restaurant lisk address
+        transactionId: '15511989460955749890',
+        amount: `${transactions.utils.convertLSKToBeddows('48')}`,
+        recipientId: '16313739661670634666L', //restaurant lisk address
+    },    
     timestamp: getTimestamp()
 });
 

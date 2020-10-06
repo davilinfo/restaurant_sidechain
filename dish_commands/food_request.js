@@ -11,10 +11,10 @@ const getTimestamp = () => {
 let txEntrance1 = new Entrance({
     asset: {
         name: 'oysters',
-        description: '12 fresh oysters served in a plate'
-    },
-    amount: `${transactions.utils.convertLSKToBeddows('48')}`,
-    recipientId: '8890555343333224116L', //restaurant lisk address
+        description: '12 fresh oysters served in a plate',
+        amount: `${transactions.utils.convertLSKToBeddows('48')}`,
+        recipientId: '8890555343333224116L', //restaurant lisk address
+    },    
     timestamp: getTimestamp()
 });
 
