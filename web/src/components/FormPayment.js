@@ -75,7 +75,7 @@ function FormPayment({onSubmit}, props){
                         <input type="password" id="passphrase" name="passphrase" required onChange={e=> setPassphrase(e.target.value)}/>
                     </div>
                     <div>
-                        <label>copy this passphrase and test above if desired: wagon stock borrow episode laundry kitten salute link globe zero feed marble</label>
+                        <label>copy this passphrase and test above if desired: creek own stem final gate scrub live shallow stage host concert they</label>
                     </div>
                     <div>
                         <button type="submit">Order</button>
