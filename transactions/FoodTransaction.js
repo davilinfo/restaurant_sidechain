@@ -1,6 +1,6 @@
 const {
     BaseTransaction,
-    TransactionError,
+    TransactionError, 
     utils
 } = require('@liskhq/lisk-transactions');
 
