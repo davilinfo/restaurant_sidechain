@@ -27,7 +27,7 @@ class MenuTransaction extends BaseTransaction {
 
     validateAsset(){
         const errors = [];                
-                
+        /*        
         if(!utils.validateAddress(this.asset.recipientId)){
             errors.push(new TransactionError(
                 'Invalid client "Lisk address" defined on transaction',
@@ -35,7 +35,8 @@ class MenuTransaction extends BaseTransaction {
                 "client lisk address",
                 this.senderId
             ));
-        }              
+        }   
+        */           
 
         if (!this.asset.items){
             errors.push(
@@ -140,14 +141,14 @@ class MenuTransaction extends BaseTransaction {
                     new TransactionError(
                         'Invalid "recipient" defined on transaction',
                         this.id,
-                        '.recipientId',
+                        '.asset.recipientId',
                         this.asset.recipientId,
                         'Only the restaurant can define its own food menu.'
                     )
                 );
             }
 
-        }        
+        }   
 
         return errors;
     }

@@ -2,20 +2,31 @@ const RestaurantFood = require('../baseClasses/RestaurantFood');
 const Refund = require('../baseClasses/RefundRestaurant');
 const transactions = require("@liskhq/lisk-transactions");
 const cryptography = require('@liskhq/lisk-cryptography');
+const { EPOCH_TIME } = require ("@liskhq/lisk-constants");
+const blockchainClient = require ("../APIClient/blockchainClient");
 const RestaurantInfo = require('../baseClasses/RestaurantInfo');
 
 /* Attention: please, perform a MenuTransaction to establish a menu for this restaurant*/
 
-    var generateDish = async (foodType) => {        
+    var currentTimestamp = async () => {
+        const millisSinceEpoc = Date.now() - 8 - Date.parse(EPOCH_TIME);
+        const inSeconds = ((millisSinceEpoc) / 1000).toFixed(0);
+        return parseInt(inSeconds);
+    }
 
-        var restaurant = new RestaurantFood();
+    var getTransactionById = async (options) => {
+        return blockchainClient.transactions.get(options);
+    }
+
+    var generateDish = async (foodType) => {        
+        
         const restaurantAddress = RestaurantInfo.getRestaurantAddress();
         const options = { "type": 800, "recipientId": restaurantAddress, "senderId": restaurantAddress,
         "sort": 'timestamp:desc', "limit": 1 };
         var itemIndex = 0;
         var food = require("../models/food");   
         
-        const result = await restaurant.getTransactionById(options);
+        const result = await getTransactionById(options);
         
         itemIndex = result.data.length -1;
         
@@ -29,9 +40,7 @@ const RestaurantInfo = require('../baseClasses/RestaurantInfo');
                     food.discount = result.data[itemIndex].asset.items[index].discount;
                     food.img = result.data[itemIndex].asset.items[index].img;
                     food.request_type = result.data[itemIndex].asset.items[index].type;
-                    food.getTimestamp = function() {
-                        return restaurant.getTimestamp();
-                    }
+                    food.timestamp = await currentTimestamp;
 
                     console.log("food detail: ".concat(food));
                     return food;  
@@ -49,12 +58,11 @@ module.exports = {
     */ 
     async index(request, response){
         response.setHeader('Access-Control-Allow-Origin', '*');
-
-        var restaurant = new RestaurantFood();
+        
         const restaurantAddress = RestaurantInfo.getRestaurantAddress();
-        const options = { "type": 800, "recipientId": restaurantAddress, "senderId": restaurantAddress,
-            "sort": 'timestamp:desc', "limit": 1 };        
-        var result = await restaurant.getTransactionById(options);
+        const options = { type: 800, recipientId: restaurantAddress, senderId: restaurantAddress,
+            sort: 'timestamp:desc', limit: 1 };        
+        const result = await getTransactionById(options);
         var itemIndex = result.data.length-1;     
 
         if (result.data[itemIndex] !== undefined){
@@ -97,26 +105,11 @@ module.exports = {
     async getTransactionById(request, response){
         response.setHeader('Access-Control-Allow-Origin', '*');
 
-        const { transactionId, phone, address } = request.body;
-        const password = 'luxuryRestaurant';
+        const { transactionId, address } = request.body;        
 
-        var restaurant = new RestaurantFood();
         const restaurantAddress = RestaurantInfo.getRestaurantAddress();
-        const options = { "type": 820, "id": transactionId, "limit": 1, "recipientId": restaurantAddress, "senderId": address };        
-        var result = await restaurant.getTransactionById(options);        
-                
-        if (result.data[0] !== undefined){
-            const transactionPhone = result.data[0].asset.clientNonce !== undefined ?  result.data[0].asset.phone : cryptography.decryptPassphraseWithPassword(result.data[0].asset.phone, password); 
-            if (phone === transactionPhone){
-                result.data[0].asset.username = result.data[0].asset.clientNonce !== undefined ?  result.data[0].asset.username : cryptography.decryptPassphraseWithPassword(result.data[0].asset.username, password);
-                result.data[0].asset.phone = transactionPhone;
-                result.data[0].asset.deliveryaddress = result.data[0].asset.clientNonce !== undefined ? result.data[0].asset.deliveryaddress : cryptography.decryptPassphraseWithPassword(result.data[0].asset.deliveryaddress, password);                
-            }else{
-                result.data[0].asset.username = "";
-                result.data[0].asset.phone = "";
-                result.data[0].asset.deliveryaddress = "";
-            }
-        }
+        const options = { type: 820, id: transactionId, limit: 1, recipientId: restaurantAddress, senderId: address };        
+        var result = await getTransactionById(options);
 
         return response.json({ status: "Transaction result", response: result});
     },
@@ -147,9 +140,12 @@ module.exports = {
     /*
     method type: Post
     Returns transaction detail related to food requested
+    deprecated
     */
     async store(request, response){
         response.setHeader('Access-Control-Allow-Origin', '*');
+
+        return response.json ({ status: "deprecated" });
 
         const { request_type, encryptedPassphrase, username, table, phone, deliveryaddress } = request.body;        
         const password = 'luxuryRestaurant';
@@ -172,8 +168,7 @@ module.exports = {
     async storeQrCodeUrlRestaurant(request, response){
         response.setHeader('Access-Control-Allow-Origin', '*');
         const { request_type, username, phone, deliveryaddress, observation } = request.body;            
-        
-        var table = 1;
+                
         const meat = await generateDish(request_type);
         const address = RestaurantInfo.getRestaurantAddress();                        
         const amount = `${transactions.utils.convertLSKToBeddows(meat.amount.toString())}`.toString(); 
@@ -182,7 +177,7 @@ module.exports = {
             .concat("&amount=").concat(amount)
             .concat("&food=").concat(meat.name)
             .concat("&foodtype=").concat(request_type.toString())
-            .concat("&timestamp=").concat(meat.getTimestamp())
+            .concat("&timestamp=").concat(meat.timestamp)
             .concat("&username=").concat(username)
             .concat("&phone=").concat(phone)
             .concat("&deliveryaddress=").concat(deliveryaddress)
@@ -193,7 +188,7 @@ module.exports = {
 
     async storeQrCodeUrlRestaurantAtPlace(request, response){
         response.setHeader('Access-Control-Allow-Origin', '*');
-        const { request_type, username, phone, deliveryaddress } = request.body;            
+        const { request_type } = request.body;            
 
         const meat = await generateDish(request_type);
         const address = RestaurantInfo.getRestaurantAddress();                        
