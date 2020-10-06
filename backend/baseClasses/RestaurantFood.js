@@ -34,7 +34,7 @@ class RestaurantFood{
     }        
 
     async commandFood(passphrase, food, table, request_type, username, phone, deliveryaddress) {        
-
+        
         food.table= table;
         food.request_type= request_type;
         food.username= username;        

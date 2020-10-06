@@ -60,7 +60,7 @@ module.exports = {
         response.setHeader('Access-Control-Allow-Origin', '*');
         
         const restaurantAddress = RestaurantInfo.getRestaurantAddress();
-        const options = { type: 800, recipientId: restaurantAddress, senderId: restaurantAddress,
+        const options = { type: 800, senderId: restaurantAddress,
             sort: 'timestamp:desc', limit: 1 };        
         const result = await getTransaction(options);
         var itemIndex = result.data.length-1;     
