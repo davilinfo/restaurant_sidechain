@@ -21,8 +21,8 @@ const RestaurantInfo = require('../baseClasses/RestaurantInfo');
     var generateDish = async (foodType) => {        
         
         const restaurantAddress = RestaurantInfo.getRestaurantAddress();
-        const options = { "type": 800, "recipientId": restaurantAddress, "senderId": restaurantAddress,
-        "sort": 'timestamp:desc', "limit": 1 };
+        const options = { type: 800, senderId: restaurantAddress,
+        sort: 'timestamp:desc', limit: 1 };
         var itemIndex = 0;
         var food = require("../models/food");   
         
@@ -86,10 +86,10 @@ module.exports = {
     */
     async foodDetail(request, response){
         response.setHeader('Access-Control-Allow-Origin', '*');        
-        var ID = request.params.id;
-        const isInvalidValidRequest = isNaN(ID) || ID < 0 || ID > 7;
-        var rsp = await generateDish(ID);        
-        console.log(ID);        
+        var typeId = request.params.id;
+        const isInvalidValidRequest = isNaN(typeId) || typeId < 0 || typeId > 50;
+        var rsp = await generateDish(typeId);        
+        console.log(typeId);        
         console.log(rsp);
 
         response.json({
