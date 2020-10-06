@@ -10,13 +10,19 @@ const getTimestamp = () => {
     return parseInt(inSeconds);
 }
 
+const networkIdentifier = getNetworkIdentifier(
+    "23ce0366ef0a14a91e5fd4b1591fc880ffbef9d988ff8bebf8f3666b0c09597d",
+    "Lisk",
+);
+
 const api = new APIClient(['http://localhost:4000']);
 
 var address = "12155463429267245415L";
 let tx = new transactions.TransferTransaction({
     amount: `${transactions.utils.convertLSKToBeddows('2000')}`,
     recipientId: address,
-    timestamp: getTimestamp()
+    timestamp: getTimestamp(),
+    networkIdentifier: networkIdentifier
 });
 
 tx.sign('creek own stem final gate scrub live shallow stage host concert they'); // Genesis account with address: 16313739661670634666L
