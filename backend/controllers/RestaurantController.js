@@ -14,7 +14,7 @@ const RestaurantInfo = require('../baseClasses/RestaurantInfo');
         return parseInt(inSeconds);
     }
 
-    var getTransactionById = async (options) => {
+    var getTransaction = async (options) => {
         return blockchainClient.transactions.get(options);
     }
 
@@ -26,7 +26,7 @@ const RestaurantInfo = require('../baseClasses/RestaurantInfo');
         var itemIndex = 0;
         var food = require("../models/food");   
         
-        const result = await getTransactionById(options);
+        const result = await getTransaction(options);
         
         itemIndex = result.data.length -1;
         
@@ -62,7 +62,7 @@ module.exports = {
         const restaurantAddress = RestaurantInfo.getRestaurantAddress();
         const options = { type: 800, recipientId: restaurantAddress, senderId: restaurantAddress,
             sort: 'timestamp:desc', limit: 1 };        
-        const result = await getTransactionById(options);
+        const result = await getTransaction(options);
         var itemIndex = result.data.length-1;     
 
         if (result.data[itemIndex] !== undefined){
@@ -109,7 +109,7 @@ module.exports = {
 
         const restaurantAddress = RestaurantInfo.getRestaurantAddress();
         const options = { type: 820, id: transactionId, limit: 1, recipientId: restaurantAddress, senderId: address };        
-        var result = await getTransactionById(options);
+        var result = await getTransaction(options);
 
         return response.json({ status: "Transaction result", response: result});
     },
