@@ -23,6 +23,6 @@
     "fs": "0.0.1-security",
     "http": "0.0.1-security",
     "lisk-sdk": "^3.0.1",
-    "liskrestaurant_transactions": "^1.0.0"
+    "liskrestaurant_transactions": "^3.0.0"
   }
 }
