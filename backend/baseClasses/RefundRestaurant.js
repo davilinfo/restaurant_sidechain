@@ -1,5 +1,5 @@
 const { EPOCH_TIME } = require ("@liskhq/lisk-constants");
-const { getAddressFromPassphrase } = require ("@liskhq/lisk-cryptography");
+const { getAddressFromPassphrase, getNetworkIdentifier } = require ("@liskhq/lisk-cryptography");
 const transactions = require("@liskhq/lisk-transactions");
 const blockchainClient = require ("../APIClient/blockchainClient");
 const Refund = require("../../transactions/RefundTransaction");
@@ -31,13 +31,19 @@ class RefundRestaurant{
 
     async commandRefund(transactionId, amount, recipientAddress) {
         
+        const networkIdentifier = getNetworkIdentifier(
+            "23ce0366ef0a14a91e5fd4b1591fc880ffbef9d988ff8bebf8f3666b0c09597d",
+            "Lisk",
+        );
+
         const txFood = new Refund({
             asset: {               
                 transactionId: transactionId
             },
             amount: `${transactions.utils.convertLSKToBeddows(amount.toString())}`,            
             recipientId: recipientAddress, //refund lisk address
-            timestamp: this.getTimestamp()
+            timestamp: this.getTimestamp(),
+            networkIdentifier: networkIdentifier
         });
         
         try{

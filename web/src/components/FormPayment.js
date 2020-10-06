@@ -32,6 +32,11 @@ function FormPayment({onSubmit}, props){
             passphrase,
             cryptography.getPrivateAndPublicKeyFromPassphrase(passphrase).publicKey);                    
 
+        const networkIdentifier = cryptography.getNetworkIdentifier(
+            "23ce0366ef0a14a91e5fd4b1591fc880ffbef9d988ff8bebf8f3666b0c09597d",
+            "Lisk",
+        );
+
         const txFood = new FoodRequest({
             asset: {
                 name: orderstring[2].split('=')[1],
@@ -46,7 +51,8 @@ function FormPayment({onSubmit}, props){
             },
             amount: orderstring[1].split('=')[1].toString(),
             recipientId: orderstring[0].split('=')[1], //restaurant lisk address
-            timestamp: parseInt(orderstring[4].split('=')[1])
+            timestamp: parseInt(orderstring[4].split('=')[1]),
+            networkIdentifier: networkIdentifier
         });
 
         txFood.sign(passphrase);                

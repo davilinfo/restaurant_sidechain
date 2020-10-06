@@ -1,5 +1,6 @@
 const Menu = require("../transactions/MenuTransaction");
 const transactions = require("@liskhq/lisk-transactions");
+const { getNetworkIdentifier } = require('@liskhq/lisk-cryptography');
 const { EPOCH_TIME } = require("@liskhq/lisk-constants");
 
 const getTimestamp = () => {
@@ -7,6 +8,12 @@ const getTimestamp = () => {
     const inSeconds = ((millisSinceEpoc) / 1000).toFixed(0);
     return parseInt(inSeconds);
 }
+
+const networkIdentifier = getNetworkIdentifier(
+    "23ce0366ef0a14a91e5fd4b1591fc880ffbef9d988ff8bebf8f3666b0c09597d",
+    "Lisk",
+);
+var address = "12155463429267245415L";
 
 let txMenu = new Menu({
     asset: {
@@ -83,11 +90,14 @@ let txMenu = new Menu({
                 "type": 8,
                 "category": 4
             }
-        ]
+        ],
+        amount: "0",
+        recipientId: address,
     },
-    amount: `${transactions.utils.convertLSKToBeddows('0')}`,
-    recipientId: '12155463429267245415L',
-    timestamp: getTimestamp()
+    amount: "0",
+    recipientId: address,
+    timestamp: getTimestamp(),    
+    networkIdentifier: networkIdentifier
 });
 
 //signing transaction
