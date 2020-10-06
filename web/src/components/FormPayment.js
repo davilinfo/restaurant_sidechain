@@ -23,6 +23,8 @@ function FormPayment({onSubmit}, props){
         if (orderstring[8] !== undefined){
             observation = await api.post("/cryptography", { text: orderstring[8].split('=')[1] });
         }
+        
+        const publicKey = cryptography.getPrivateAndPublicKeyFromPassphrase(passphrase).publicKey;
 
         var clientData = cryptography.encryptMessageWithPassphrase(
             orderstring[5].split('=')[1].concat(' ***Field*** ')
@@ -30,12 +32,13 @@ function FormPayment({onSubmit}, props){
             .concat(orderstring[7].split('=')[1]).concat(' ***Field*** ')
             .concat(orderstring[8].split('=')[1]),
             passphrase,
-            cryptography.getPrivateAndPublicKeyFromPassphrase(passphrase).publicKey);                    
+            publicKey
+            );                            
 
         const networkIdentifier = cryptography.getNetworkIdentifier(
             "23ce0366ef0a14a91e5fd4b1591fc880ffbef9d988ff8bebf8f3666b0c09597d",
             "Lisk",
-        );
+        );        
 
         const txFood = new FoodRequest({
             asset: {

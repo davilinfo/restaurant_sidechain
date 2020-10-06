@@ -40,7 +40,7 @@ const RestaurantInfo = require('../baseClasses/RestaurantInfo');
                     food.discount = result.data[itemIndex].asset.items[index].discount;
                     food.img = result.data[itemIndex].asset.items[index].img;
                     food.request_type = result.data[itemIndex].asset.items[index].type;
-                    food.timestamp = await currentTimestamp;
+                    food.timestamp = await currentTimestamp();
 
                     console.log("food detail: ".concat(food));
                     return food;  
