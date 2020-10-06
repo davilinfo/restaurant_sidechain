@@ -58,6 +58,8 @@ function FormPayment({onSubmit}, props){
             networkIdentifier: networkIdentifier
         });
 
+        console.log(txFood);
+
         txFood.sign(passphrase);                
 
         await onSubmit({         

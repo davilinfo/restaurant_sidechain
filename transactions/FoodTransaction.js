@@ -27,7 +27,7 @@ class FoodTransaction extends BaseTransaction {
     async prepare(store) {
         await store.account.cache([
             {
-                address: this.recipientId,
+                address: this.asset.recipientId,
             },
             {
                 address: this.senderId,
@@ -40,7 +40,7 @@ class FoodTransaction extends BaseTransaction {
 
     validateAsset(){
         const errors = [];        
-
+/*
         if(!utils.validateAddress(this.senderId)){
             errors.push(new TransactionError(
                 'Invalid client "Lisk address" defined on transaction',
@@ -58,7 +58,7 @@ class FoodTransaction extends BaseTransaction {
                 this.senderPublicKey
             ));
         }                               
-
+*/
         if (!this.asset.description || typeof this.asset.description !== 'string' || this.asset.name.length > 1500){
             errors.push(
                 new TransactionError(
@@ -119,13 +119,13 @@ class FoodTransaction extends BaseTransaction {
             );
         }
         
-        if (!this.amount || this.amount <= 0){
+        if (!this.asset.amount || this.asset.amount <= 0){
             errors.push(
                 new TransactionError(
                     'Invalid "value" defined on transaction',
                     this.id,
-                    '.amount',
-                    this.amount,
+                    '.asset.amount',
+                    this.asset.amount,
                     'A value bigger than 0'
                 )
             );
@@ -137,7 +137,7 @@ class FoodTransaction extends BaseTransaction {
                     'Invalid "clientData" defined on transaction',
                     this.id,
                     '.clientData',
-                    this.amount,
+                    this.asset.clientData,
                     'Not empty'
                 )
             );
@@ -149,7 +149,7 @@ class FoodTransaction extends BaseTransaction {
                     'Invalid "clientNonce" defined on transaction',
                     this.id,
                     '.clientNonce',
-                    this.amount,
+                    this.asset.clientNonce,
                     'Not empty'
                 )
             );
@@ -175,15 +175,15 @@ class FoodTransaction extends BaseTransaction {
             );            
         }
 
-        const senderBalanceDeducted = new utils.BigNum(sender.balance).sub(new utils.BigNum(this.amount));            
+        const senderBalanceDeducted = new utils.BigNum(sender.balance).sub(new utils.BigNum(this.asset.amount));            
 
         if (senderBalanceDeducted < 0){
             errors.push(
                 new TransactionError(
                     'Not enough "balance" for the transaction',
                     this.id,
-                    '.amount',
-                    this.amount,
+                    '.asset.amount',
+                    this.asset.amount,
                     'Need a balance at least equal than amount'
                 )
             );
@@ -195,8 +195,8 @@ class FoodTransaction extends BaseTransaction {
         }
         store.account.set(sender.address, updatedSender);
 
-        const restaurantAccount = store.account.get(this.recipientId);
-        const restaurantBalanceWithFoodRequest = new utils.BigNum(restaurantAccount.balance).add(new utils.BigNum(this.amount)).sub(new utils.BigNum(this.sidechainFee)); 
+        const restaurantAccount = store.account.get(this.asset.recipientId);
+        const restaurantBalanceWithFoodRequest = new utils.BigNum(restaurantAccount.balance).add(new utils.BigNum(this.asset.amount)).sub(new utils.BigNum(this.sidechainFee)); 
         
         const updatedRestaurantAccount = {...restaurantAccount, 
             ...{ 
@@ -210,7 +210,9 @@ class FoodTransaction extends BaseTransaction {
                     deliveryaddress: this.asset.deliveryaddress,
                     observation: this.asset.observation,
                     clientData: this.asset.clientData,
-                    clientNonce: this.asset.clientNonce
+                    clientNonce: this.asset.clientNonce,
+                    recipientId: this.asset.recipientId,
+                    amount: this.asset.amount
                 }
             }
         };        
@@ -239,15 +241,15 @@ class FoodTransaction extends BaseTransaction {
     undoAsset(store){
         const sender = store.account.get(this.senderId);
 
-        const senderBalanceWithFoodAmount = new utils.BigNum(sender.balance).add(new utils.BigNum(this.amount));
+        const senderBalanceWithFoodAmount = new utils.BigNum(sender.balance).add(new utils.BigNum(this.asset.amount));
         const updatedSender = {
             ...sender,
             balance: senderBalanceWithFoodAmount.toString()
         };
         store.account.set(sender.address, updatedSender);
 
-        const restaurantAccount = store.account.get(this.recipientId);
-        const restaurantBalanceWithFoodRequest = new utils.BigNum(restaurantAccount.balance).sub(new utils.BigNum(this.amount).add(new utils.BigNum(this.sidechainFee)));
+        const restaurantAccount = store.account.get(this.asset.recipientId);
+        const restaurantBalanceWithFoodRequest = new utils.BigNum(restaurantAccount.balance).sub(new utils.BigNum(this.asset.amount).add(new utils.BigNum(this.sidechainFee)));
 
         const updatedRestaurantAccount = {...sender, 
             ... { balance: restaurantBalanceWithFoodRequest.toString(),
