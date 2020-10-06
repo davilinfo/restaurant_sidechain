@@ -7,7 +7,7 @@ const {
 
 class RefundTransaction extends BaseTransaction {
     static get TYPE() {
-        return 19;
+        return 819;
     }
 
     static get FEE () {

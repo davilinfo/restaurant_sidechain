@@ -7,7 +7,7 @@ const {
 
 class DeliveryTransaction extends BaseTransaction {
     static get TYPE() {
-        return 19;
+        return 821;
     }
 
     static get FEE () {

@@ -15,7 +15,7 @@ class FoodTransaction extends BaseTransaction {
     }
 
     static get TYPE() {
-        return 20;
+        return 820;
     }
 
     static get FEE () {

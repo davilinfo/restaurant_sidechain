@@ -102,7 +102,7 @@ module.exports = {
 
         var restaurant = new RestaurantFood();
         const restaurantAddress = RestaurantInfo.getRestaurantAddress();
-        const options = { "type": 20, "id": transactionId, "limit": 1, "recipientId": restaurantAddress, "senderId": address };        
+        const options = { "type": 820, "id": transactionId, "limit": 1, "recipientId": restaurantAddress, "senderId": address };        
         var result = await restaurant.getTransactionById(options);        
                 
         if (result.data[0] !== undefined){
