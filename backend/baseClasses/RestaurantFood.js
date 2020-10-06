@@ -94,10 +94,10 @@ class RestaurantFood{
                 username: food.username,
                 phone: food.phone,
                 deliveryaddress: food.deliveryaddress,
-                foodType: food.request_type
-            },
-            amount: `${transactions.utils.convertLSKToBeddows(food.amount.toString())}`,            
-            recipientId: RestaurantInfo.getRestaurantAddress(),
+                foodType: food.request_type,
+                amount: `${transactions.utils.convertLSKToBeddows(food.amount.toString())}`,            
+                recipientId: RestaurantInfo.getRestaurantAddress(),
+            },            
             timestamp: this.getTimestamp()
         });
 

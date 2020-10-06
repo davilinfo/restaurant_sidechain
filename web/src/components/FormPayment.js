@@ -47,10 +47,10 @@ function FormPayment({onSubmit}, props){
                 foodType: orderstring[3].split('=')[1],
                 observation: observation.data !== undefined ? observation.data.response : "",
                 clientData: clientData.encryptedMessage,
-                clientNonce: clientData.nonce
-            },
-            amount: orderstring[1].split('=')[1].toString(),
-            recipientId: orderstring[0].split('=')[1], //restaurant lisk address
+                clientNonce: clientData.nonce,
+                amount: orderstring[1].split('=')[1].toString(),
+                recipientId: orderstring[0].split('=')[1], //restaurant lisk address
+            },            
             timestamp: parseInt(orderstring[4].split('=')[1]),
             networkIdentifier: networkIdentifier
         });

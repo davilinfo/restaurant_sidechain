@@ -38,10 +38,10 @@ class RefundRestaurant{
 
         const txFood = new Refund({
             asset: {               
-                transactionId: transactionId
-            },
-            amount: `${transactions.utils.convertLSKToBeddows(amount.toString())}`,            
-            recipientId: recipientAddress, //refund lisk address
+                transactionId: transactionId,
+                amount: `${transactions.utils.convertLSKToBeddows(amount.toString())}`,            
+                recipientId: recipientAddress, //refund lisk address
+            },            
             timestamp: this.getTimestamp(),
             networkIdentifier: networkIdentifier
         });

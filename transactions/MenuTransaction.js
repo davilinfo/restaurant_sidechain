@@ -17,7 +17,7 @@ class MenuTransaction extends BaseTransaction {
     async prepare(store) {
         await store.account.cache([
             {
-                address: this.recipientId,
+                address: this.asset.recipientId,
             },
             {
                 address: this.senderId,
@@ -28,7 +28,7 @@ class MenuTransaction extends BaseTransaction {
     validateAsset(){
         const errors = [];                
                 
-        if(!utils.validateAddress(this.recipientId)){
+        if(!utils.validateAddress(this.asset.recipientId)){
             errors.push(new TransactionError(
                 'Invalid client "Lisk address" defined on transaction',
                 this.id,
@@ -135,13 +135,13 @@ class MenuTransaction extends BaseTransaction {
                 );
             }
 
-            if (this.senderId !== this.recipientId){
+            if (this.senderId !== this.asset.recipientId){
                 errors.push(
                     new TransactionError(
                         'Invalid "recipient" defined on transaction',
                         this.id,
                         '.recipientId',
-                        this.recipientId,
+                        this.asset.recipientId,
                         'Only the restaurant can define its own food menu.'
                     )
                 );
@@ -162,7 +162,7 @@ class MenuTransaction extends BaseTransaction {
         }
         store.account.set(restaurantAccount.address, updatedRestaurant);
 
-        const client = store.account.get(this.recipientId);
+        const client = store.account.get(this.asset.recipientId);
         const clientRestaurant = new utils.BigNum(client.balance).add(new utils.BigNum(this.amount));
 
         const clientUpdated = {
@@ -188,7 +188,7 @@ class MenuTransaction extends BaseTransaction {
         }
         store.account.set(restaurantAccount.address, updatedRestaurant);
 
-        const client = store.account.get(this.recipientId);
+        const client = store.account.get(this.asset.recipientId);
         const clientDeducted = new utils.BigNum(client.balance).sub(new utils.BigNum(this.amount));
 
         const clientUpdated = {

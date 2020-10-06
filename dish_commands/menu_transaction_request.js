@@ -90,9 +90,7 @@ let txMenu = new Menu({
                 "type": 8,
                 "category": 4
             }
-        ],
-        amount: "0",
-        recipientId: address,
+        ]        
     },
     amount: "0",
     recipientId: address,
