@@ -154,7 +154,7 @@ class MenuTransaction extends BaseTransaction {
 
     applyAsset(store){            
         const restaurantAccount = store.account.get(this.senderId);
-        const restaurantAccountBalanceDeducted= new utils.BigNum(restaurantAccount.balance).sub(new utils.BigNum(this.amount));
+        const restaurantAccountBalanceDeducted= new utils.BigNum(restaurantAccount.balance).sub(new utils.BigNum(this.asset.amount));
 
         const updatedRestaurant = {
             ...restaurantAccount,
@@ -163,7 +163,7 @@ class MenuTransaction extends BaseTransaction {
         store.account.set(restaurantAccount.address, updatedRestaurant);
 
         const client = store.account.get(this.asset.recipientId);
-        const clientRestaurant = new utils.BigNum(client.balance).add(new utils.BigNum(this.amount));
+        const clientRestaurant = new utils.BigNum(client.balance).add(new utils.BigNum(this.asset.amount));
 
         const clientUpdated = {
             ...client,
@@ -180,7 +180,7 @@ class MenuTransaction extends BaseTransaction {
 
     undoAsset(store){
         const restaurantAccount = store.account.get(this.senderId);
-        const restaurantAccountWithMenuRequest= new utils.BigNum(restaurantAccount.balance).add(new utils.BigNum(this.amount));
+        const restaurantAccountWithMenuRequest= new utils.BigNum(restaurantAccount.balance).add(new utils.BigNum(this.asset.amount));
 
         const updatedRestaurant = {
             ...restaurantAccount,
@@ -189,7 +189,7 @@ class MenuTransaction extends BaseTransaction {
         store.account.set(restaurantAccount.address, updatedRestaurant);
 
         const client = store.account.get(this.asset.recipientId);
-        const clientDeducted = new utils.BigNum(client.balance).sub(new utils.BigNum(this.amount));
+        const clientDeducted = new utils.BigNum(client.balance).sub(new utils.BigNum(this.asset.amount));
 
         const clientUpdated = {
             ...client,
