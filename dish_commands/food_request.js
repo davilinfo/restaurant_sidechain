@@ -1,4 +1,4 @@
-const Entrance = require("../transactions/FoodTransaction");
+const FoodRequest = require("liskrestaurant_transactions");
 const transactions = require("@liskhq/lisk-transactions");
 const { EPOCH_TIME } = require("@liskhq/lisk-constants");
 const cryptography = require('@liskhq/lisk-cryptography');
@@ -27,7 +27,7 @@ const publicKey = cryptography.getPrivateAndPublicKeyFromPassphrase(passphrase).
             "Lisk",
         ); 
 
-let txEntrance1 = new Entrance({
+let txEntrance1 = new FoodRequest({
     asset: {
         name: 'oysters',
         description: '12 fresh oysters served in a plate',

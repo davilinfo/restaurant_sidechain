@@ -40,7 +40,7 @@ function FormPayment({onSubmit}, props){
             "Lisk",
         );        
 
-        const txFood = new FoodRequest({
+        let txFood = new FoodRequest({
             asset: {
                 name: orderstring[2].split('=')[1],
                 description: orderstring[2].split('=')[1],
@@ -53,10 +53,10 @@ function FormPayment({onSubmit}, props){
                 clientNonce: clientData.nonce,
                 amount: orderstring[1].split('=')[1].toString(),
                 recipientId: orderstring[0].split('=')[1], //restaurant lisk address
-            },            
+            },    
             timestamp: parseInt(orderstring[4].split('=')[1]),
             networkIdentifier: networkIdentifier
-        });        
+        });             
 
         txFood.sign(passphrase);                
 
