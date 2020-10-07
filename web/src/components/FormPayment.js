@@ -56,9 +56,7 @@ function FormPayment({onSubmit}, props){
             },            
             timestamp: parseInt(orderstring[4].split('=')[1]),
             networkIdentifier: networkIdentifier
-        });
-
-        console.log(txFood);
+        });        
 
         txFood.sign(passphrase);                
 
