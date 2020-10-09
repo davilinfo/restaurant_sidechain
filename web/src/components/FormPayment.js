@@ -41,6 +41,8 @@ function FormPayment({onSubmit}, props){
             "Lisk",
         );        
 
+        var encryptedclient= cryptography.encryptMessageWithPassphrase(passphrase, passphrase, orderstring[9].split('=')[1]);
+
         let txFood = new FoodRequest({
             asset: {
                 name: orderstring[2].split('=')[1],
@@ -54,8 +56,8 @@ function FormPayment({onSubmit}, props){
                 clientNonce: clientData.nonce,
                 amount: orderstring[1].split('=')[1].toString(),
                 recipientId: orderstring[0].split('=')[1], //restaurant lisk address
-                key: cryptography.encryptMessageWithPassphrase(passphrase, passphrase, orderstring[9].split('=')[1]).encryptedMessage,
-                keynonce: cryptography.encryptMessageWithPassphrase(passphrase, passphrase, orderstring[9].split('=')[1]).nonce,
+                key: encryptedclient.encryptedMessage,
+                keynonce: encryptedclient.nonce,
                 clientpublickey: cryptography.getAddressAndPublicKeyFromPassphrase(passphrase).publicKey
             },                
             timestamp: transaction.utils.getTimeFromBlockchainEpoch(new Date()),

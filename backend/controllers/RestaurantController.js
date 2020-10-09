@@ -233,7 +233,7 @@ module.exports = {
                     recipientId: transaction.asset.recipientId, //restaurant lisk address
                 },    
                 timestamp: transactions.utils.getTimeFromBlockchainEpoch(new Date()),
-                networkIdentifier: transaction.networkIdentifier
+                networkIdentifier: transaction.asset.networkIdentifier
             });
 
             console.log("transaction: ");
