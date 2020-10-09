@@ -232,7 +232,7 @@ module.exports = {
                     amount: transaction.amount,
                     recipientId: transaction.recipientId, //restaurant lisk address
                 },    
-                timestamp: transaction.utils.getTimeFromBlockchainEpoch(new Date()),
+                timestamp: transactions.utils.getTimeFromBlockchainEpoch(new Date()),
                 networkIdentifier: transaction.networkIdentifier
             });
 
