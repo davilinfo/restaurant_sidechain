@@ -36,10 +36,10 @@ function FormPayment({onSubmit}, props){
             publicKey
             );                            
 
-        const networkIdentifier = cryptography.getNetworkIdentifier(
+        /*const networkIdentifier = cryptography.getNetworkIdentifier(
             "23ce0366ef0a14a91e5fd4b1591fc880ffbef9d988ff8bebf8f3666b0c09597d",
             "Lisk",
-        );        
+        );*/        
 
         var encryptedclient= cryptography.encryptMessageWithPassphrase(passphrase, passphrase, orderstring[9].split('=')[1]);
 
