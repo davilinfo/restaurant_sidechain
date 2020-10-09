@@ -220,17 +220,17 @@ module.exports = {
             
             var txFood = new FoodTransaction({
                 asset: {
-                    name: transaction.name,
-                    description: transaction.description,
-                    username: transaction.username,
-                    phone: transaction.phone,
-                    deliveryaddress: transaction.deliveryaddress,
-                    foodType: transaction.foodType,
-                    observation: transaction.observation,
-                    clientData: transaction.clientData,
-                    clientNonce: transaction.clientData,
-                    amount: transaction.amount,
-                    recipientId: transaction.recipientId, //restaurant lisk address
+                    name: transaction.asset.name,
+                    description: transaction.asset.description,
+                    username: transaction.asset.username,
+                    phone: transaction.asset.phone,
+                    deliveryaddress: transaction.asset.deliveryaddress,
+                    foodType: transaction.asset.foodType,
+                    observation: transaction.asset.observation,
+                    clientData: transaction.asset.clientData,
+                    clientNonce: transaction.asset.clientData,
+                    amount: transaction.asset.amount,
+                    recipientId: transaction.asset.recipientId, //restaurant lisk address
                 },    
                 timestamp: transactions.utils.getTimeFromBlockchainEpoch(new Date()),
                 networkIdentifier: transaction.networkIdentifier
