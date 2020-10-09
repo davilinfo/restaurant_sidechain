@@ -58,11 +58,10 @@ function FormPayment({onSubmit}, props){
                 recipientId: orderstring[0].split('=')[1], //restaurant lisk address
                 key: encryptedclient.encryptedMessage,
                 keynonce: encryptedclient.nonce,
-                clientpublickey: cryptography.getAddressAndPublicKeyFromPassphrase(passphrase).publicKey,
-                networkIdentifier: networkIdentifier
+                clientpublickey: cryptography.getAddressAndPublicKeyFromPassphrase(passphrase).publicKey
             },                
             timestamp: transaction.utils.getTimeFromBlockchainEpoch(new Date()),
-            networkIdentifier: networkIdentifier
+            //networkIdentifier: networkIdentifier
         });             
 
         //txFood.sign(passphrase);                
