@@ -104,7 +104,7 @@ class RestaurantFood{
 
     async receivedSignedTransactionForBroadcast(txFood){
         try{                                
-            ResultSchema.broadcastInfo = await this.broadcastTransaction2(txFood);
+            ResultSchema.broadcastInfo = await this.broadcastTransaction(txFood);
             ResultSchema.transaction = txFood;   
             console.log(ResultSchema);
         }catch(e){

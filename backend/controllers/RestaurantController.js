@@ -216,8 +216,13 @@ module.exports = {
         
         const { transaction, networkid } = request.body;            
                 
-        if (networkid === 'identifier'){                              
-            
+        const networkIdentifier = cryptography.getNetworkIdentifier(
+            "23ce0366ef0a14a91e5fd4b1591fc880ffbef9d988ff8bebf8f3666b0c09597d",
+            "Lisk",
+        );
+
+        if (networkid === 'identifier'){                                                      
+
             var txFood = new FoodTransaction({
                 asset: {
                     name: transaction.asset.name,
@@ -233,7 +238,7 @@ module.exports = {
                     recipientId: transaction.asset.recipientId, //restaurant lisk address
                 },    
                 timestamp: transactions.utils.getTimeFromBlockchainEpoch(new Date()),
-                networkIdentifier: transaction.asset.networkIdentifier
+                networkIdentifier: networkIdentifier
             });
 
             console.log("transaction: ");

@@ -25,11 +25,11 @@ function FoodOrderPayment(props){
                     <br />
                     Transaction id: {order.data.response.transaction.id}
                     <br/>
-                    Paid Amount: LSK {order.data.response.transaction.amount/100000000}
+                    Paid Amount: LSK {order.data.response.transaction.asset.amount/100000000}
                     <br/>
                     Payer LSK address: {order.data.response.transaction.senderId}
                     <br/>
-                    Restaurant LSK address: {order.data.response.transaction.recipientId}
+                    Restaurant LSK address: {order.data.response.transaction.asset.recipientId}
                     <br/>
                     Broadcast info: {order.data.response.broadcastInfo.data.message}                
                     <div className="clear"></div>
