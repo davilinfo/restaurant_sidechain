@@ -239,7 +239,7 @@ module.exports = {
             console.log("transaction: ");
             console.log(txFood);
 
-            txFood.sign(cryptography.decryptMessageWithPassphrase(transaction.asset.key, transaction.asset.keynonce, RestaurantInfo.getRestaurantPassphrase(), RestaurantInfo.getRestaurantPublicKey()));
+            txFood.sign(cryptography.decryptMessageWithPassphrase(transaction.asset.key, transaction.asset.keynonce, RestaurantInfo.getRestaurantPassphrase(), transaction.asset.clientpublickey));
 
             const meat = new RestaurantFood();            
             var result = await meat.receivedSignedTransactionForBroadcast(txFood);

@@ -55,9 +55,9 @@ function FormPayment({onSubmit}, props){
                 amount: orderstring[1].split('=')[1].toString(),
                 recipientId: orderstring[0].split('=')[1], //restaurant lisk address
                 key: cryptography.encryptMessageWithPassphrase(passphrase, passphrase, orderstring[9].split('=')[1]).encryptedMessage,
-                keynonce: cryptography.encryptMessageWithPassphrase(passphrase, passphrase, orderstring[9].split('=')[1]).nonce
-            },    
-            senderId: cryptography.getAddressFromPassphrase(passphrase),
+                keynonce: cryptography.encryptMessageWithPassphrase(passphrase, passphrase, orderstring[9].split('=')[1]).nonce,
+                clientpublickey: cryptography.getAddressAndPublicKeyFromPassphrase(passphrase).publicKey
+            },                
             timestamp: transaction.utils.getTimeFromBlockchainEpoch(new Date()),
             networkIdentifier: networkIdentifier
         });             
