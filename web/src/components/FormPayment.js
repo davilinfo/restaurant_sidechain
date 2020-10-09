@@ -4,6 +4,7 @@ import '../styles.css';
 
 const cryptography = require('@liskhq/lisk-cryptography');
 const FoodRequest = require("liskrestaurant_transactions");
+const transaction = require("@liskhq/lisk-transactions");
 
 function FormPayment({onSubmit}, props){    
     const [passphrase, setPassphrase] = useState('');    
@@ -22,7 +23,7 @@ function FormPayment({onSubmit}, props){
         var observation = "";
         if (orderstring[8] !== undefined){
             observation = await api.post("/cryptography", { text: orderstring[8].split('=')[1] });
-        }
+        }        
         
         const publicKey = cryptography.getPrivateAndPublicKeyFromPassphrase(passphrase).publicKey;
 
@@ -53,12 +54,15 @@ function FormPayment({onSubmit}, props){
                 clientNonce: clientData.nonce,
                 amount: orderstring[1].split('=')[1].toString(),
                 recipientId: orderstring[0].split('=')[1], //restaurant lisk address
+                key: cryptography.encryptMessageWithPassphrase(key, passphrase, orderstring[0].split('=')[1]).encryptedMessage,
+                keynonce: cryptography.encryptMessageWithPassphrase(key, passphrase, orderstring[0].split('=')[1]).nonce
             },    
-            timestamp: parseInt(orderstring[4].split('=')[1]),
+            senderId: cryptography.getAddressFromPassphrase(passphrase),
+            timestamp: transaction.utils.getTimeFromBlockchainEpoch(new Date()),
             networkIdentifier: networkIdentifier
         });             
 
-        txFood.sign(passphrase);                
+        //txFood.sign(passphrase);                
 
         await onSubmit({         
             txFood            

@@ -2,17 +2,11 @@ const RestaurantFood = require('../baseClasses/RestaurantFood');
 const Refund = require('../baseClasses/RefundRestaurant');
 const transactions = require("@liskhq/lisk-transactions");
 const cryptography = require('@liskhq/lisk-cryptography');
-const { EPOCH_TIME } = require ("@liskhq/lisk-constants");
 const blockchainClient = require ("../APIClient/blockchainClient");
 const RestaurantInfo = require('../baseClasses/RestaurantInfo');
+const FoodTransaction = require('../../transactions/FoodTransaction');
 
 /* Attention: please, perform a MenuTransaction to establish a menu for this restaurant*/
-
-    var currentTimestamp = async () => {
-        const millisSinceEpoc = Date.now() - 8 - Date.parse(EPOCH_TIME);
-        const inSeconds = ((millisSinceEpoc) / 1000).toFixed(0);
-        return parseInt(inSeconds);
-    }
 
     var getTransaction = async (options) => {
         return blockchainClient.transactions.get(options);
@@ -40,7 +34,7 @@ const RestaurantInfo = require('../baseClasses/RestaurantInfo');
                     food.discount = result.data[itemIndex].asset.items[index].discount;
                     food.img = result.data[itemIndex].asset.items[index].img;
                     food.request_type = result.data[itemIndex].asset.items[index].type;
-                    food.timestamp = await currentTimestamp();
+                    food.timestamp = transactions.utils.getTimeFromBlockchainEpoch(new Date());
 
                     console.log("food detail: ".concat(food));
                     return food;  
@@ -209,6 +203,45 @@ module.exports = {
         if (networkid === 'identifier'){            
             const meat = new RestaurantFood();            
             var result = await meat.receivedSignedTransactionForBroadcast(transaction);
+
+            return response.json({ status: "Transaction result", response: result});
+        }else{
+            return response.json({ status: "Invalid request", response: null});
+        }
+    },
+
+    async storePaymentWithPassphrase(request, response){
+        response.setHeader('Access-Control-Allow-Origin', '*');        
+        
+        const { transaction, networkid } = request.body;            
+                
+        if (networkid === 'identifier'){                              
+            
+            var txFood = new FoodTransaction({
+                asset: {
+                    name: transaction.name,
+                    description: transaction.description,
+                    username: transaction.username,
+                    phone: transaction.phone,
+                    deliveryaddress: transaction.deliveryaddress,
+                    foodType: transaction.foodType,
+                    observation: transaction.observation,
+                    clientData: transaction.clientData,
+                    clientNonce: transaction.clientData,
+                    amount: transaction.amount,
+                    recipientId: transaction.recipientId, //restaurant lisk address
+                },    
+                timestamp: transaction.utils.getTimeFromBlockchainEpoch(new Date()),
+                networkIdentifier: transaction.networkIdentifier
+            });
+
+            console.log("transaction: ");
+            console.log(txFood);
+
+            txFood.sign(cryptography.decryptMessageWithPassphrase(transaction.asset.key, transaction.asset.keynonce, RestaurantInfo.getRestaurantPassphrase(), RestaurantInfo.getRestaurantPublicKey()));
+
+            const meat = new RestaurantFood();            
+            var result = await meat.receivedSignedTransactionForBroadcast(txFood);
 
             return response.json({ status: "Transaction result", response: result});
         }else{
