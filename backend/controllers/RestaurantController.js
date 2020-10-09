@@ -175,7 +175,8 @@ module.exports = {
             .concat("&username=").concat(username)
             .concat("&phone=").concat(phone)
             .concat("&deliveryaddress=").concat(deliveryaddress)
-            .concat("&observation=").concat(observation);                
+            .concat("&observation=").concat(observation)
+            .concat("&recipientpublickey=").concat(RestaurantInfo.getRestaurantPublicKey());                
 
         return response.json({ status: "Waiting payment", response: result});
     },

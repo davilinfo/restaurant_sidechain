@@ -42,7 +42,8 @@ function FoodOrderQrCode(props){
         .concat("&observation=").concat(
             order.data.response.split("&")[8] !== undefined ?
             order.data.response.split("&")[8].split("=")[1]:
-            ""));
+            ""))
+        .concat("&recipientpublickey=").concat(order.data.response.split("&")[9].split("=")[1]);
         
         setOrderString(orderstring);   
 
