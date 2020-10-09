@@ -12,9 +12,10 @@ const api = new APIClient(['http://localhost:4000']);
 
 var address = "12155463429267245415L";
 let tx = new transactions.TransferTransaction({
-    asset: { amount: `${transactions.utils.convertLSKToBeddows('20000')}` ,
+    asset: { amount: transactions.utils.convertLSKToBeddows('200000') ,
     recipientId: address
     },    
+    timestamp: utils.getTimeFromBlockchainEpoch(new Date()),
     networkIdentifier: networkIdentifier
 });
 

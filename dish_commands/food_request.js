@@ -39,7 +39,7 @@ let txEntrance1 = new FoodRequest({
         clientData: clientData.encryptedMessage,
         clientNonce: clientData.nonce,
         amount: `${transactions.utils.convertLSKToBeddows('48')}`,
-        recipientId: '8267852054491906256L', //restaurant lisk address
+        recipientId: '12155463429267245415L', //restaurant lisk address
     },    
     timestamp: getTimestamp(),
     networkIdentifier: networkIdentifier
