@@ -22,18 +22,11 @@ function FormSearch({onSubmit}){
         var clientData = "";
         var result = "";         
         
-        try{
-            alert(foodRequest.data.response.data.length);
-            alert(foodRequest.data.response.data[0].asset.clientNonce);
-            alert(foodRequest.data.response.data[0].asset.clientData);
-            alert(publicKey);
+        try{           
 
             if (foodRequest.data.response.data.length > 0 && foodRequest.data.response.data[0].asset.clientNonce !== undefined){
                 clientData =  cryptography.decryptMessageWithPassphrase(foodRequest.data.response.data[0].asset.clientData, foodRequest.data.response.data[0].asset.clientNonce, passphrase, publicKey);
-            }
-            
-            alert(clientData);
-
+            }                        
             
             result = {  foodRequest: foodRequest,                
                 deliveryAddress: clientData !== "" ? clientData.split(' ***Field*** ')[2] : foodRequest.data.response.data[0].asset.deliveryaddress,
