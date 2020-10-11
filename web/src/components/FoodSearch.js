@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import FormReservation from './FormReservation';
+import FormSearch from './FormSearch';
 import '../styles.css';
 const transactions = require("@liskhq/lisk-transactions");
 
-function FoodReservation(props){                   
+function FoodSearch(props){                   
     var [foodRequest, setFoodRequest] = useState([]);         
     var [deliveryAddress, setDeliveryAddress] = useState('');
     var [username, setUsername] = useState('');
@@ -30,11 +30,11 @@ function FoodReservation(props){
                 <br/>
                 Payer LSK address: {foodRequest.data.response.data.length > 0 ? foodRequest.data.response.data[0].senderId : ""}
                 <br/>
-                Restaurant LSK address: {foodRequest.data.response.data.length > 0 ? foodRequest.data.response.data[0].recipientId : ""}
+                Restaurant LSK address: {foodRequest.data.response.data.length > 0 ? foodRequest.data.response.data[0].asset.recipientId : ""}
                 <br/>
                 Food name: {foodRequest.data.response.data.length > 0 ? foodRequest.data.response.data[0].asset.name : ""}
                 <br/>
-                Amount: LSK {foodRequest.data.response.data.length > 0 ? transactions.utils.convertBeddowsToLSK(foodRequest.data.response.data[0].amount) : 0}                
+                Amount: LSK {foodRequest.data.response.data.length > 0 ? transactions.utils.convertBeddowsToLSK(foodRequest.data.response.data[0].asset.amount) : 0}                
                 <br/>
                 Delivery address: {deliveryAddress}
                 <br/>
@@ -51,10 +51,10 @@ function FoodReservation(props){
     return (
         <div id="app">
             <div id="content" align="center">                
-                <FormReservation onSubmit={handleSubmit}></FormReservation>                
+                <FormSearch onSubmit={handleSubmit}></FormSearch>                
             </div>
         </div>
     );
 }
 
-export default FoodReservation;
+export default FoodSearch;

@@ -12,10 +12,10 @@ function App() {
     var [foods, setFoods] = useState([]);      
     useEffect (() => {
       async function loadFoods(){
-        console.log("loading foods");        
+        
         const response = await api.get('/list');        
         foods = response.data.result;
-        console.log(foods);
+        
         setFoods(foods);
       }      
       

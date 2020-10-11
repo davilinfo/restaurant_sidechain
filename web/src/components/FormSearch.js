@@ -4,7 +4,7 @@ import api from '../services/api';
 
 const cryptography = require('@liskhq/lisk-cryptography');
 
-function FormReservation({onSubmit}){    
+function FormSearch({onSubmit}){    
     const [transactionId, setTransaction] = useState('');    
     const [passphrase, setPassphrase] = useState('');
 
@@ -23,7 +23,18 @@ function FormReservation({onSubmit}){
         var result = "";         
         
         try{
-            clientData = foodRequest.data.response.data.length > 0 && foodRequest.data.response.data[0].asset.clientNonce !== undefined ? cryptography.decryptMessageWithPassphrase(foodRequest.data.response.data[0].asset.clientData, foodRequest.data.response.data[0].asset.clientNonce, passphrase, publicKey) : "";
+            alert(foodRequest.data.response.data.length);
+            alert(foodRequest.data.response.data[0].asset.clientNonce);
+            alert(foodRequest.data.response.data[0].asset.clientData);
+            alert(publicKey);
+
+            if (foodRequest.data.response.data.length > 0 && foodRequest.data.response.data[0].asset.clientNonce !== undefined){
+                clientData =  cryptography.decryptMessageWithPassphrase(foodRequest.data.response.data[0].asset.clientData, foodRequest.data.response.data[0].asset.clientNonce, passphrase, publicKey);
+            }
+            
+            alert(clientData);
+
+            
             result = {  foodRequest: foodRequest,                
                 deliveryAddress: clientData !== "" ? clientData.split(' ***Field*** ')[2] : foodRequest.data.response.data[0].asset.deliveryaddress,
                 user: clientData !== "" ? clientData.split(' ***Field*** ')[0] : foodRequest.data.response.data[0].asset.username,
@@ -72,4 +83,4 @@ function FormReservation({onSubmit}){
     );
 }
 
-export default FormReservation;
+export default FormSearch;

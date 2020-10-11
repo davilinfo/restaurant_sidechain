@@ -6,7 +6,7 @@ import FoodOrderQrCode from './components/FoodOrderQrCode';
 import FoodOrderPayment from './components/FoodOrderPayment';
 import FoodOrder from './components/FoodOrder';
 import FoodRefund from './components/FoodRefund';
-import FoodReservation from './components/FoodReservation';
+import FoodSearch from './components/FoodSearch';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Contact from './components/Contact';
@@ -16,13 +16,13 @@ const routing = (
     <Router>        
         <Header />        
         <Switch>
-            <Route exact path="/" component={App} />
+            <Route exact="true" path="/" component={App} />
             <Route path="/History" component={History} />
             <Route path="/FoodOrderQrCode" component={FoodOrderQrCode} />
             <Route path="/FoodOrderPayment" component={FoodOrderPayment} />
             <Route path="/FoodOrder" component={FoodOrder} />
             <Route path="/Refund" component={FoodRefund} />
-            <Route path="/Reservation" component={FoodReservation} />
+            <Route path="/Reservation" component={FoodSearch} />
             <Route path="/Contact" component={Contact} />
         </Switch>
         <Footer/>        

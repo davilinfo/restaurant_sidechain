@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import ReactQrCode from 'qrcode-react';
 import api from '../services/api';
 import FormOrderQrCode from './FormOrderQrCode';
-//import FoodOrderPayment from './FoodOrderPayment';
 import '../styles.css';
 
 function FoodOrderQrCode(props){        

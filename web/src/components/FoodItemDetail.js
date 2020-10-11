@@ -10,7 +10,7 @@ function FoodItemDetail(props){
 
     return (        
         <>            
-            <Link exact to={`/FoodOrderQrCode/${food.type}`}>
+            <Link exact="true" to={`/FoodOrderQrCode/${food.type}`}>
                 <div className="recipes_topic"> 
                     <img src={food.img} width="72" height="72" alt="" />
                     <br></br>

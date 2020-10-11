@@ -233,7 +233,7 @@ module.exports = {
                     foodType: transaction.asset.foodType,
                     observation: transaction.asset.observation,
                     clientData: transaction.asset.clientData,
-                    clientNonce: transaction.asset.clientData,
+                    clientNonce: transaction.asset.clientNonce,
                     amount: transaction.asset.amount,
                     recipientId: transaction.asset.recipientId, //restaurant lisk address
                 },    
