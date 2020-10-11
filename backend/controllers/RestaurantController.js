@@ -102,7 +102,7 @@ module.exports = {
         const { transactionId, address } = request.body;        
 
         const restaurantAddress = RestaurantInfo.getRestaurantAddress();
-        const options = { type: 820, id: transactionId, limit: 1, recipientId: restaurantAddress, senderId: address };        
+        const options = { type: 820, id: transactionId, limit: 1, senderId: address };        
         var result = await getTransaction(options);
 
         return response.json({ status: "Transaction result", response: result});
