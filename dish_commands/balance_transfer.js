@@ -1,7 +1,5 @@
 const transactions = require('@liskhq/lisk-transactions');
-const { getNetworkIdentifier } = require('@liskhq/lisk-cryptography');
 const { APIClient } = require('@liskhq/lisk-api-client');
-const { Mnemonic } = require('@liskhq/lisk-passphrase');
 
 const api = new APIClient(['http://localhost:4000']);
 
