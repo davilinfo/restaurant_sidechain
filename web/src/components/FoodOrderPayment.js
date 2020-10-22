@@ -12,7 +12,7 @@ function FoodOrderPayment(props){
     /*this function should be uncommented if is desired to sign transaction at frontend*/
     async function handleSubmit(data){                                                          
                
-        order = await api.post('/payment', {transaction: data.txFood, networkid: 'identifier'});
+        order = await api.post('/clientPayment', {transaction: data.txFood, networkid: 'identifier'});
         console.log(order);
         
         setOrder(order);                  

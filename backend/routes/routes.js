@@ -13,7 +13,8 @@ routes.post('/storeQrCode', RestaurantController.storeQrCodeUrlRestaurant);
 routes.post('/transaction', RestaurantController.getTransactionById);
 routes.post('/refund/', RestaurantController.refund);
 routes.post('/userRequest', RestaurantController.store);
-routes.post('/payment', RestaurantController.storePayment);
+routes.post('/clientPayment', RestaurantController.storePayment);
+routes.post('/payment', RestaurantController.storePaymentWithPassphrase);
 routes.post('/cryptography', RestaurantController.cryptographyText);
 
 module.exports = routes;

@@ -51,7 +51,7 @@ export default function AppPayment({navigation}) {
       <Text>Proceed with the payment</Text>
       <Button
         title="Store"
-        onPress={() => WebBrowser.openBrowserAsync(`http://www.liskrestaurant.com:3000/FoodOrderPayment?${foodscanned}`)}
+        onPress={() => WebBrowser.openBrowserAsync(`http://www.liskrestaurant.com:5000/FoodOrderPayment?${foodscanned}`)}
       />
       </View>
       }

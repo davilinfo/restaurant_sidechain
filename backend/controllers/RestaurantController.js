@@ -21,6 +21,9 @@ const FoodTransaction = require('../../transactions/FoodTransaction');
         var food = require("../models/food");   
         
         const result = await getTransaction(options);
+
+        const millisSinceEpoc = Date.now() - 8 - Date.parse(EPOCH_TIME);
+        const inSeconds = ((millisSinceEpoc) / 1000).toFixed(0);
         
         itemIndex = result.data.length -1;
         
@@ -34,7 +37,7 @@ const FoodTransaction = require('../../transactions/FoodTransaction');
                     food.discount = result.data[itemIndex].asset.items[index].discount;
                     food.img = result.data[itemIndex].asset.items[index].img;
                     food.request_type = result.data[itemIndex].asset.items[index].type;
-                    food.timestamp = transactions.utils.getTimeFromBlockchainEpoch(new Date());
+                    food.timestamp = parseInt(inSeconds);
 
                     console.log("food detail: ".concat(food));
                     return food;  
@@ -214,12 +217,7 @@ module.exports = {
     async storePaymentWithPassphrase(request, response){
         response.setHeader('Access-Control-Allow-Origin', '*');        
         
-        const { transaction, networkid } = request.body;            
-                
-        const networkIdentifier = cryptography.getNetworkIdentifier(
-            "23ce0366ef0a14a91e5fd4b1591fc880ffbef9d988ff8bebf8f3666b0c09597d",
-            "Lisk",
-        );
+        const { transaction, networkid } = request.body;                                    
 
         if (networkid === 'identifier'){                                                      
 
@@ -238,9 +236,9 @@ module.exports = {
                     keynonce: transaction.asset.keynonce,  
                     clientpublickey: transaction.asset.clientpublickey              
                 },    
-                amount: transaction.asset.amount,
-                recipientId: transaction.asset.recipientId, //restaurant lisk address
-                timestamp: transactions.utils.getTimeFromBlockchainEpoch(new Date())                
+                amount: transaction.amount,
+                recipientId: transaction.recipientId, //restaurant lisk address
+                timestamp: transaction.timestamp
             });
 
             console.log("transaction: ");
