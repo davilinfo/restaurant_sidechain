@@ -32,6 +32,8 @@ function FormPayment({onSubmit}, props){
             passphrase,
             cryptography.getPrivateAndPublicKeyFromPassphrase(passphrase).publicKey);                    
 
+        var encryptedclient= cryptography.encryptMessageWithPassphrase(passphrase, passphrase, orderstring[9].split('=')[1]);
+
         const txFood = new FoodRequest({
             asset: {
                 name: orderstring[2].split('=')[1],
@@ -42,7 +44,10 @@ function FormPayment({onSubmit}, props){
                 foodType: orderstring[3].split('=')[1],
                 observation: observation.data !== undefined ? observation.data.response : "",
                 clientData: clientData.encryptedMessage,
-                clientNonce: clientData.nonce
+                clientNonce: clientData.nonce,
+                key: encryptedclient.encryptedMessage,
+                keynonce: encryptedclient.nonce,
+                clientpublickey: cryptography.getAddressAndPublicKeyFromPassphrase(passphrase).publicKey
             },
             amount: orderstring[1].split('=')[1].toString(),
             recipientId: orderstring[0].split('=')[1], //restaurant lisk address
