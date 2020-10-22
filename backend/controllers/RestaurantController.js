@@ -1,5 +1,6 @@
 const RestaurantFood = require('../baseClasses/RestaurantFood');
 const Refund = require('../baseClasses/RefundRestaurant');
+const { EPOCH_TIME } = require ("@liskhq/lisk-constants");
 const transactions = require("@liskhq/lisk-transactions");
 const cryptography = require('@liskhq/lisk-cryptography');
 const blockchainClient = require ("../APIClient/blockchainClient");

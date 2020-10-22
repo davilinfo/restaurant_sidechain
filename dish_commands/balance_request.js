@@ -1,4 +1,5 @@
 const transactions = require('@liskhq/lisk-transactions');
+const { EPOCH_TIME } = require ("@liskhq/lisk-constants");
 const { APIClient } = require('@liskhq/lisk-api-client');
 
 const api = new APIClient(['http://localhost:4000']);
