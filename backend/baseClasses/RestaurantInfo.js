@@ -20,6 +20,9 @@ class RestaurantInfo {
         return restaurantPassphrase;
     }
 
+    static getRestaurantPublicKey(){
+        return getAddressAndPublicKeyFromPassphrase(restaurantPassphrase).publicKey;
+    }
 }
 
 module.exports = RestaurantInfo;

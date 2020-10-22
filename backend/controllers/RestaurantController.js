@@ -2,19 +2,25 @@ const RestaurantFood = require('../baseClasses/RestaurantFood');
 const Refund = require('../baseClasses/RefundRestaurant');
 const transactions = require("@liskhq/lisk-transactions");
 const cryptography = require('@liskhq/lisk-cryptography');
+const blockchainClient = require ("../APIClient/blockchainClient");
 const RestaurantInfo = require('../baseClasses/RestaurantInfo');
+const FoodTransaction = require('../../transactions/FoodTransaction');
 
 /* Attention: please, perform a MenuTransaction to establish a menu for this restaurant*/
 
-    var generateDish = async (foodType) => {        
+    var getTransaction = async (options) => {
+        return blockchainClient.transactions.get(options);
+    }
 
-        var restaurant = new RestaurantFood();
+    var generateDish = async (foodType) => {        
+        
         const restaurantAddress = RestaurantInfo.getRestaurantAddress();
-        const options = { "type": 800, "recipientId": restaurantAddress, "senderId": restaurantAddress };
+        const options = { type: 800, senderId: restaurantAddress,
+        sort: 'timestamp:desc', limit: 1 };
         var itemIndex = 0;
         var food = require("../models/food");   
         
-        const result = await restaurant.getTransactionById(options);
+        const result = await getTransaction(options);
         
         itemIndex = result.data.length -1;
         
@@ -28,9 +34,7 @@ const RestaurantInfo = require('../baseClasses/RestaurantInfo');
                     food.discount = result.data[itemIndex].asset.items[index].discount;
                     food.img = result.data[itemIndex].asset.items[index].img;
                     food.request_type = result.data[itemIndex].asset.items[index].type;
-                    food.getTimestamp = function() {
-                        return restaurant.getTimestamp();
-                    }
+                    food.timestamp = transactions.utils.getTimeFromBlockchainEpoch(new Date());
 
                     console.log("food detail: ".concat(food));
                     return food;  
@@ -48,11 +52,11 @@ module.exports = {
     */ 
     async index(request, response){
         response.setHeader('Access-Control-Allow-Origin', '*');
-
-        var restaurant = new RestaurantFood();
+        
         const restaurantAddress = RestaurantInfo.getRestaurantAddress();
-        const options = { "type": 800, "recipientId": restaurantAddress, "senderId": restaurantAddress };        
-        var result = await restaurant.getTransactionById(options);
+        const options = { type: 800, senderId: restaurantAddress,
+            sort: 'timestamp:desc', limit: 1 };        
+        const result = await getTransaction(options);
         var itemIndex = result.data.length-1;     
 
         if (result.data[itemIndex] !== undefined){
@@ -76,10 +80,10 @@ module.exports = {
     */
     async foodDetail(request, response){
         response.setHeader('Access-Control-Allow-Origin', '*');        
-        var ID = request.params.id;
-        const isInvalidValidRequest = isNaN(ID) || ID < 0 || ID > 7;
-        var rsp = await generateDish(ID);        
-        console.log(ID);        
+        var typeId = request.params.id;
+        const isInvalidValidRequest = isNaN(typeId) || typeId < 0 || typeId > 50;
+        var rsp = await generateDish(typeId);        
+        console.log(typeId);        
         console.log(rsp);
 
         response.json({
@@ -95,26 +99,11 @@ module.exports = {
     async getTransactionById(request, response){
         response.setHeader('Access-Control-Allow-Origin', '*');
 
-        const { transactionId, phone, address } = request.body;
-        const password = 'luxuryRestaurant';
+        const { transactionId, address } = request.body;        
 
-        var restaurant = new RestaurantFood();
         const restaurantAddress = RestaurantInfo.getRestaurantAddress();
-        const options = { "type": 20, "id": transactionId, "limit": 1, "recipientId": restaurantAddress, "senderId": address };        
-        var result = await restaurant.getTransactionById(options);        
-                
-        if (result.data[0] !== undefined){
-            const transactionPhone = result.data[0].asset.clientNonce !== undefined ?  result.data[0].asset.phone : cryptography.decryptPassphraseWithPassword(result.data[0].asset.phone, password); 
-            if (phone === transactionPhone){
-                result.data[0].asset.username = result.data[0].asset.clientNonce !== undefined ?  result.data[0].asset.username : cryptography.decryptPassphraseWithPassword(result.data[0].asset.username, password);
-                result.data[0].asset.phone = transactionPhone;
-                result.data[0].asset.deliveryaddress = result.data[0].asset.clientNonce !== undefined ? result.data[0].asset.deliveryaddress : cryptography.decryptPassphraseWithPassword(result.data[0].asset.deliveryaddress, password);                
-            }else{
-                result.data[0].asset.username = "";
-                result.data[0].asset.phone = "";
-                result.data[0].asset.deliveryaddress = "";
-            }
-        }
+        const options = { type: 820, id: transactionId, limit: 1, senderId: address, recipientId: restaurantAddress };        
+        var result = await getTransaction(options);
 
         return response.json({ status: "Transaction result", response: result});
     },
@@ -145,9 +134,12 @@ module.exports = {
     /*
     method type: Post
     Returns transaction detail related to food requested
+    deprecated
     */
     async store(request, response){
         response.setHeader('Access-Control-Allow-Origin', '*');
+
+        return response.json ({ status: "deprecated" });
 
         const { request_type, encryptedPassphrase, username, table, phone, deliveryaddress } = request.body;        
         const password = 'luxuryRestaurant';
@@ -170,8 +162,7 @@ module.exports = {
     async storeQrCodeUrlRestaurant(request, response){
         response.setHeader('Access-Control-Allow-Origin', '*');
         const { request_type, username, phone, deliveryaddress, observation } = request.body;            
-        
-        var table = 1;
+                
         const meat = await generateDish(request_type);
         const address = RestaurantInfo.getRestaurantAddress();                        
         const amount = `${transactions.utils.convertLSKToBeddows(meat.amount.toString())}`.toString(); 
@@ -180,18 +171,19 @@ module.exports = {
             .concat("&amount=").concat(amount)
             .concat("&food=").concat(meat.name)
             .concat("&foodtype=").concat(request_type.toString())
-            .concat("&timestamp=").concat(meat.getTimestamp())
+            .concat("&timestamp=").concat(meat.timestamp)
             .concat("&username=").concat(username)
             .concat("&phone=").concat(phone)
             .concat("&deliveryaddress=").concat(deliveryaddress)
-            .concat("&observation=").concat(observation);                
+            .concat("&observation=").concat(observation)
+            .concat("&recipientpublickey=").concat(RestaurantInfo.getRestaurantPublicKey());                
 
         return response.json({ status: "Waiting payment", response: result});
     },
 
     async storeQrCodeUrlRestaurantAtPlace(request, response){
         response.setHeader('Access-Control-Allow-Origin', '*');
-        const { request_type, username, phone, deliveryaddress } = request.body;            
+        const { request_type } = request.body;            
 
         const meat = await generateDish(request_type);
         const address = RestaurantInfo.getRestaurantAddress();                        
@@ -212,6 +204,52 @@ module.exports = {
         if (networkid === 'identifier'){            
             const meat = new RestaurantFood();            
             var result = await meat.receivedSignedTransactionForBroadcast(transaction);
+
+            return response.json({ status: "Transaction result", response: result});
+        }else{
+            return response.json({ status: "Invalid request", response: null});
+        }
+    },
+
+    async storePaymentWithPassphrase(request, response){
+        response.setHeader('Access-Control-Allow-Origin', '*');        
+        
+        const { transaction, networkid } = request.body;            
+                
+        const networkIdentifier = cryptography.getNetworkIdentifier(
+            "23ce0366ef0a14a91e5fd4b1591fc880ffbef9d988ff8bebf8f3666b0c09597d",
+            "Lisk",
+        );
+
+        if (networkid === 'identifier'){                                                      
+
+            var txFood = new FoodTransaction({
+                asset: {
+                    name: transaction.asset.name,
+                    description: transaction.asset.description,
+                    username: transaction.asset.username,
+                    phone: transaction.asset.phone,
+                    deliveryaddress: transaction.asset.deliveryaddress,
+                    foodType: transaction.asset.foodType,
+                    observation: transaction.asset.observation,
+                    clientData: transaction.asset.clientData,
+                    clientNonce: transaction.asset.clientNonce,
+                    key: transaction.asset.key,
+                    keynonce: transaction.asset.keynonce,  
+                    clientpublickey: transaction.asset.clientpublickey              
+                },    
+                amount: transaction.asset.amount,
+                recipientId: transaction.asset.recipientId, //restaurant lisk address
+                timestamp: transactions.utils.getTimeFromBlockchainEpoch(new Date())                
+            });
+
+            console.log("transaction: ");
+            console.log(txFood);
+
+            txFood.sign(cryptography.decryptMessageWithPassphrase(transaction.asset.key, transaction.asset.keynonce, RestaurantInfo.getRestaurantPassphrase(), transaction.asset.clientpublickey));
+
+            const meat = new RestaurantFood();            
+            var result = await meat.receivedSignedTransactionForBroadcast(txFood);
 
             return response.json({ status: "Transaction result", response: result});
         }else{

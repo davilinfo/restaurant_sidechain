@@ -15,7 +15,7 @@ class FoodTransaction extends BaseTransaction {
     }
 
     static get TYPE() {
-        return 20;
+        return 820;
     }
 
     static get FEE () {
@@ -89,7 +89,7 @@ class FoodTransaction extends BaseTransaction {
                     'Invalid "delivery address" defined on transaction',
                     this.id,
                     '.deliveryaddress',
-                    this.asset.phone,
+                    this.asset.deliveryaddress,
                     'A string value bigger than 0'
                 )
             );
