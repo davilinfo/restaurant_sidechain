@@ -5,8 +5,7 @@ import api from '../services/api';
 const cryptography = require('@liskhq/lisk-cryptography');
 
 function FormReservation({onSubmit}){    
-    const [transactionId, setTransaction] = useState('');
-    const [phone, setPhone] = useState('');
+    const [transactionId, setTransaction] = useState('');    
     const [passphrase, setPassphrase] = useState('');
 
     async function handleSubmit(e){
@@ -16,8 +15,7 @@ function FormReservation({onSubmit}){
         const publicKey = cryptography.getAddressAndPublicKeyFromPassphrase(passphrase).publicKey;
 
         var foodRequest = await api.post('/transaction', {
-            transactionId,
-            phone,
+            transactionId,            
             address
         });                          
 
@@ -46,8 +44,7 @@ function FormReservation({onSubmit}){
             result
         });
         
-        setTransaction('');
-        setPhone('');
+        setTransaction('');        
         setPassphrase('');
     }
 
@@ -61,13 +58,7 @@ function FormReservation({onSubmit}){
                     </div>
                     <div>
                         <input type="text" id="transactionId" name="transactionId" required onChange={e=> setTransaction(e.target.value)}/>
-                    </div>
-                    <div>
-                        <label>Phone number</label>
-                    </div>
-                    <div>
-                        <input type="text" id="phone" name="phone" onChange={e=> setPhone(e.target.value)}/>
-                    </div>     
+                    </div>                    
                     <div>
                         <label>Passphrase</label>
                     </div>
