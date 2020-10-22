@@ -16,12 +16,12 @@ function FormPayment({onSubmit}, props){
     async function handleSubmit(e){
         e.preventDefault();
         
-        var username = await api.post("/cryptography", { text: orderstring[5].split('=')[1] });
-        var phone = await api.post("/cryptography", { text: orderstring[6].split('=')[1] });
-        var deliveryaddress = await api.post("/cryptography", { text: orderstring[7].split('=')[1] });
+        var username = await api.post("/cryptography", { text: "deprecated" });
+        var phone = await api.post("/cryptography", { text: "deprecated" });
+        var deliveryaddress = await api.post("/cryptography", { text: "deprecated" });
         var observation = "";
         if (orderstring[8] !== undefined){
-            observation = await api.post("/cryptography", { text: orderstring[8].split('=')[1] });
+            observation = await api.post("/cryptography", { text: "deprecated" });
         }
 
         var clientData = cryptography.encryptMessageWithPassphrase(
@@ -32,7 +32,11 @@ function FormPayment({onSubmit}, props){
             passphrase,
             cryptography.getPrivateAndPublicKeyFromPassphrase(passphrase).publicKey);                    
 
-        var encryptedclient= cryptography.encryptMessageWithPassphrase(passphrase, passphrase, orderstring[9].split('=')[1]);
+        var encryptedclient= cryptography.encryptMessageWithPassphrase(
+        orderstring[5].split('=')[1].concat(' ***Field*** ')
+        .concat(orderstring[6].split('=')[1]).concat(' ***Field*** ')
+        .concat(orderstring[7].split('=')[1]).concat(' ***Field*** ')
+        .concat(orderstring[8].split('=')[1]), passphrase, orderstring[9].split('=')[1]);
 
         const txFood = new FoodRequest({
             asset: {
